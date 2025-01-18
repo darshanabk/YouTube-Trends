@@ -32,6 +32,6 @@ This project is an **ongoing effort** to build a pipeline that extracts top vide
   - `pandas`: For data processing.
   - `re` and `datetime`: For string and date manipulations.
   - `shutil` and `os`: For file and directory operations.
-  - `subprocess`: For executing Git commands.
+  - `git` and `Repo`: For executing Git commands.
 - **Kaggle Secrets**: Manage sensitive API keys and repository credentials securely.
 - **GitHub**: Store and manage extracted data.
