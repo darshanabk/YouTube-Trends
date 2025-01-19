@@ -10,7 +10,7 @@ This project is an **ongoing effort** to build a pipeline that extracts top vide
 
 2. **Data Segmentation by Time**:
    - Analyze videos published in different timeframes:
-     - **Today**
+     - **Yesterday**
      - **Last 30 Days**
      - **Last 1 Year**
      - **Last 5 Years**
