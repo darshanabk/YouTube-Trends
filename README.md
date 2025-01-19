@@ -8,21 +8,14 @@ This project is an **ongoing effort** to build a pipeline that extracts top vide
    - Fetch top videos based on keywords using the YouTube Data API.
    - Extract details like video title, channel name, view count, likes, comments, and tags.
 
-2. **Data Segmentation by Time**:
-   - Analyze videos published in different timeframes:
-     - **Yesterday**
-     - **Last 30 Days**
-     - **Last 1 Year**
-     - **Last 5 Years**
-
-3. **Data Storage**:
+2. **Data Storage**:
    - Save extracted data into JSON files with timestamps for record-keeping.
 
-4. **GitHub Integration**:
+3. **GitHub Integration**:
    - Automatically push the extracted JSON files to a GitHub repository.
    - Maintain a structured directory system in the repository for organized data storage.
 
-5. **Error Handling**:
+4. **Error Handling**:
    - Ensures smooth operation by handling API and GitHub errors.
 
 ## Tools and Technologies
