@@ -1,30 +1,34 @@
 # YouTube Video Data Extraction and GitHub Automation
 
-This project is an **ongoing effort** to build a pipeline that extracts top video details from YouTube using the YouTube Data API, processes the data, and pushes it to a GitHub repository. The goal is to automate the process of fetching, analyzing, and storing data for insights into video trends over different time periods.
+This project is **an ongoing** initiative to develop a pipeline that retrieves the top video details based on specific keywords, sorted by the most viewed count, from YouTube using the YouTube Data API. The pipeline processes the data and uploads it to a GitHub repository, aiming to automate the fetching, analysis, and storage of data for actionable insights.
 
-## Features
+## Source - Layer -1 Raw data
 
 1. **YouTube Data Extraction**:
    - Fetch top videos based on keywords using the YouTube Data API.
    - Extract details like video title, channel name, view count, likes, comments, and tags.
 
-2. **Data Storage**:
+3. **Data Storage**:
    - Save extracted data into JSON files with timestamps for record-keeping.
 
-3. **GitHub Integration**:
+4. **GitHub Integration**:
    - Automatically push the extracted JSON files to a GitHub repository.
    - Maintain a structured directory system in the repository for organized data storage.
 
-4. **Error Handling**:
+5. **Error Handling**:
    - Ensures smooth operation by handling API and GitHub errors.
 
-## Tools and Technologies
-
-- **YouTube Data API**: Fetch video details.
-- **Python Libraries**:
-  - `pandas`: For data processing.
-  - `re` and `datetime`: For string and date manipulations.
-  - `shutil` and `os`: For file and directory operations.
-  - `git` and `Repo`: For executing Git commands.
-- **Kaggle Secrets**: Manage sensitive API keys and repository credentials securely.
-- **GitHub**: Store and manage extracted data.
+6. **Tools and Technologies**:
+   - **YouTube Data API**: Fetch video details.
+   - **Python Libraries**:
+     - `pandas`: For data processing.
+     - `re` and `datetime`: For string and date manipulations.
+     - `shutil` and `os`: For file and directory operations.
+     - `git` and `Repo`: For executing Git commands.
+     - `pytz` and `timedelta`: For handling time zones and time differences.
+     - `IPython.display`: For displaying JSON responses in Jupyter Notebooks.
+   - **Kaggle Secrets**: Manage sensitive API keys and repository credentials securely.
+   - **GitHub**: Store and manage extracted data.
+   - **Additional Libraries**:
+     - `from googleapiclient.discovery import build`: For interacting with the YouTube API.
+     - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle.
