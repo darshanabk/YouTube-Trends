@@ -10,7 +10,7 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
   - [Raw Data Collection](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Source/Daily)
   - This directory stores the JSON files with extracted raw data.
 
-### Features:
+###1. Features:
    - **YouTube Data Extraction**:
       - Fetch top videos based on keywords using the YouTube Data API.
       - Extract details like video title, channel name, view count, likes, comments, and tags.
@@ -36,6 +36,6 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
         - `IPython.display`: For displaying JSON responses in Jupyter Notebooks.
       - **Kaggle Secrets**: Manage sensitive API keys and repository credentials securely.
       - **GitHub**: Store and manage extracted data.
-### Additional Libraries:
+###2. Additional Libraries:
    - `from googleapiclient.discovery import build`: For interacting with the YouTube API.
    - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle.
