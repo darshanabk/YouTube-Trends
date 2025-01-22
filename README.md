@@ -3,6 +3,7 @@
 This project is **an ongoing** initiative to develop a pipeline that retrieves the top video details based on specific keywords, sorted by the most viewed count, from YouTube using the YouTube Data API. The pipeline processes the data and uploads it to a GitHub repository, aiming to automate the fetching, analysis, and storage of data for actionable insights.
 
 ## Source - Layer -1 Raw data
+[View Script](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/sourcedaily.ipynb)
 
 1. **YouTube Data Extraction**:
    - Fetch top videos based on keywords using the YouTube Data API.
