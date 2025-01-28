@@ -28,3 +28,41 @@ S_2025-01-28_17:56:35_504_records.json
 
 ### Purpose:
 This naming convention helps in identifying the source, timestamp, and the number of records in each file. It aids in organizing and accessing raw data for future processing and analysis.
+
+---
+# DataCleaning File Format
+
+### File Format:
+
+**Structure:**  
+`DC_YYYY-MM-DD_HH:MM:SS_<record_count>_records.json`
+
+### Components:
+
+- **DC**: Represents that this file is from the **Data Cleaning** process.  
+- **YYYY-MM-DD_HH:MM:SS**: The timestamp when the data cleaning was performed:  
+  - **YYYY**: Four-digit year.  
+  - **MM**: Two-digit month.  
+  - **DD**: Two-digit day.  
+  - **HH**: Two-digit hour (24-hour format).  
+  - **MM**: Two-digit minute.  
+  - **SS**: Two-digit second.  
+- **<record_count>**: The total count of video records after the cleaning process.  
+- **_records.json**: Indicates the file format containing the cleaned video records in JSON format.  
+
+
+### Example:
+
+**File Name:**  
+`DC_2025-01-28_19:55:17_402_records.json`  
+
+**Explanation:**  
+- **DC**: Denotes the file is from the Data Cleaning stage.  
+- **2025-01-28_19:55:17**: Indicates the timestamp of data cleaning (28th January 2025, 19:55:17).  
+- **402**: The number of records remaining after the cleaning process.  
+- **_records.json**: File format for cleaned video records in JSON format.  
+
+### Purpose:
+
+This naming convention ensures consistency and clarity, making it easier to distinguish between raw and cleaned data files, track the time of cleaning, and identify the count of processed records.
+
