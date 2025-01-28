@@ -49,3 +49,52 @@
   }
 ]
 
+```
+Below is a detailed tabular column for all the fields specified in data structure. The column includes **Field Name**, **Min Length**, **Max Length**, **Value Type**, **Special Format/Notes**, and **KPI**. 
+
+| **Field Name**                    | **Min Length** | **Max Length** | **Value Type**      | **Special Format/Notes**                                                                                     | **KPI** |
+|-----------------------------------|----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------|---------|
+| `currentDate`                     | 10             | 10             | String (ISO 8601)  | Date in ISO 8601 format, e.g., `2025-01-28`.                                                                | No      |
+| `channelId`                       | 24             | 24             | String              | Unique identifier for the channel, e.g., `UCdngmbVKX1Tgre699-XLlUA`.                                        | Yes     |
+| `channelName`                     | 1              | 100            | String              | Name of the YouTube channel, e.g., `TechWorld with Nana`.                                                   | Yes     |
+| `videoId`                         | 11             | 11             | String              | Unique identifier for the video, e.g., `3c-iBn73dDE`.                                                       | Yes     |
+| `videoTitle`                      | 1              | 100            | String              | Title of the video, e.g., `Docker Tutorial for Beginners [FULL COURSE in 3 Hours]`.                         | Yes     |
+| `videoPublishYear`                | 4              | 4              | Integer             | Year when the video was published, e.g., `2020`.                                                            | No      |
+| `videoPublishMonth`               | 1              | 2              | Integer             | Month when the video was published, e.g., `10`.                                                             | No      |
+| `videoPublishDay`                 | 1              | 2              | Integer             | Day when the video was published, e.g., `21`.                                                               | No      |
+| `videoPublishTime`                | 8              | 8              | String (HH:MM:SS)   | Time when the video was published in 24-hour format, e.g., `19:26:53`.                                      | No      |
+| `videoPublishedOn`                | 20             | 20             | String (ISO 8601)  | Full ISO 8601 timestamp, e.g., `2020-10-21T19:26:53Z`.                                                      | No      |
+| `videoPublishedOnInSeconds`       | 10             | 10             | Integer             | Timestamp in seconds, e.g., `1603308413`.                                                                   | No      |
+| `videoUniqueId`                   | 11             | 11             | String              | Alias for `videoId`.                                                                                        | Yes     |
+| `videoViewCount`                  | 0              | N/A            | Integer             | Total number of views, e.g., `5473802`.                                                                     | Yes     |
+| `videoLikeCount`                  | 0              | N/A            | Integer             | Total number of likes, e.g., `93038`.                                                                       | Yes     |
+| `videoFavoriteCount`              | 0              | N/A            | Integer             | Total number of favorites, e.g., `0`.                                                                       | No      |
+| `videoCommentCount`               | 0              | N/A            | Integer             | Total number of comments, e.g., `4539`.                                                                     | Yes     |
+| `videoDescription`                | 0              | 5000           | String              | Description of the video, e.g., `Full Docker Tutorial...`.                                                  | No      |
+| `videoTags`                       | 0              | N/A            | Array of Strings    | Tags associated with the video, e.g., `["docker tutorial", "docker course"]`. **Count**: Min: `0`, Max: `500`. | No      |
+| `videoCategoryId`                 | 1              | 3              | Integer             | ID representing the video category, e.g., `27`.                                                             | No      |
+| `videoLiveBroadcastContent`       | 4              | 20             | String              | Type of live broadcast content, e.g., `none`.                                                               | No      |
+| `videoDefaultLanguage`            | 2              | 3              | String              | Default language of the video, e.g., `en`.                                                                  | No      |
+| `videoDefaultAudioLanguage`       | 2              | 3              | String              | Default audio language of the video, e.g., `en`.                                                            | No      |
+| `videoDuration`                   | 5              | 15             | String (ISO 8601)  | Video duration in ISO 8601 format, e.g., `PT2H46M15S`.                                                      | No      |
+| `videoDurationInSeconds`          | 1              | N/A            | Integer             | Duration of the video in seconds, e.g., `9975`.                                                             | No      |
+| `videoDimension`                  | 2              | 3              | String              | Dimension of the video, e.g., `2d`.                                                                         | No      |
+| `videoDefinition`                 | 2              | 2              | String              | Quality of the video, e.g., `hd`.                                                                           | No      |
+| `videoCaption`                    | 4              | 5              | Boolean             | Whether the video has captions, e.g., `true`.                                                               | No      |
+| `videoLicensedContent`            | 4              | 5              | Boolean             | Whether the video contains licensed content, e.g., `true`.                                                  | No      |
+| `videoProjection`                 | 5              | 12             | String              | Projection type of the video, e.g., `rectangular`.                                                          | No      |
+| `channelIdUnique`                 | 24             | 24             | String              | Alias for `channelId`.                                                                                      | Yes     |
+| `channelTitleCheck`               | 1              | 100            | String              | Alias for `channelName`.                                                                                    | Yes     |
+| `channelDescription`              | 0              | 5000           | String              | Description of the YouTube channel, e.g., `Helping millions of engineers...`.                               | No      |
+| `channelCustomUrl`                | 3              | 100            | String              | Custom URL of the channel, e.g., `@techworldwithnana`.                                                      | No      |
+| `channelPublishYear`              | 4              | 4              | Integer             | Year when the channel was created, e.g., `2019`.                                                            | No      |
+| `channelPublishMonth`             | 1              | 2              | Integer             | Month when the channel was created, e.g., `10`.                                                             | No      |
+| `channelPublishDay`               | 1              | 2              | Integer             | Day when the channel was created, e.g., `6`.                                                                | No      |
+| `channelPublishTime`              | 8              | 8              | String (HH:MM:SS)   | Time when the channel was created in 24-hour format, e.g., `08:50:17`.                                      | No      |
+| `channelPublishedOn`              | 20             | 20             | String (ISO 8601)  | Full ISO 8601 timestamp, e.g., `2019-10-06T08:50:17Z`.                                                      | No      |
+| `channelPublishedOnInSeconds`     | 10             | 10             | Integer             | Timestamp in seconds, e.g., `1570351817`.                                                                   | No      |
+| `channelCountry`                  | 2              | 2              | String              | Country of the channel, e.g., `AT`.                                                                         | No      |
+| `channelViewCount`                | 0              | N/A            | Integer             | Total number of views for the channel, e.g., `64177976`.                                                    | Yes     |
+| `channelSubscriberCount`          | 0              | N/A            | Integer             | Total number of subscribers, e.g., `1200000`.                                                               | Yes     |
+| `channelVideoCount`               | 0              | N/A            | Integer             | Total number of videos in the channel, e.g., `126`.                                                         | Yes     |
+
