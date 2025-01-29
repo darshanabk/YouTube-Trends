@@ -81,5 +81,6 @@
 <!-- - [Geonames Country Info](http://www.geonames.org/countries/)  -->
 - [Wikipedia - List of Countries by Continent](https://en.wikipedia.org/wiki/List_of_countries_by_continent)  
 <!-- - [ISO 3166-1 Continent Codes](https://www.iso.org/obp/ui/#iso:code:3166:AF)  -->
+<!-- from [Geonames](http://www.geonames.org/countries/) or [Country Codes Dataset (GitHub)](https://github.com/datasets/country-codes) -->
 
 ---
