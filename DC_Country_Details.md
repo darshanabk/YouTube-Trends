@@ -1,6 +1,6 @@
-# 🌍 Country & IT Hub Mapping
+# Country & IT Hub Mapping
 
-## 📌 JSON Structure  
+## JSON Structure  
 ```json
 {
     "IN": {
