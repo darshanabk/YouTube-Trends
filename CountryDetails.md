@@ -76,9 +76,9 @@
 ---
 
 ## Reference Links  
-- [ISO 3166-1 Country Codes (ISO Official)](https://www.iso.org/iso-3166-country-codes.html)  
-- [Geonames Country Info](http://www.geonames.org/countries/)  
+- [ISO 3166-1 Country Codes (ISO Official)](https://www.iso.org/iso-3166-country-codes.html)  Navigate to [Search Country Code by ISO](https://www.iso.org/obp/ui/#search)
+<!-- - [Geonames Country Info](http://www.geonames.org/countries/)  -->
 - [Wikipedia - List of Countries by Continent](https://en.wikipedia.org/wiki/List_of_countries_by_continent)  
-- [ISO 3166-1 Continent Codes](https://www.iso.org/obp/ui/#iso:code:3166:AF)  
+<!-- - [ISO 3166-1 Continent Codes](https://www.iso.org/obp/ui/#iso:code:3166:AF)  -->
 
 ---
