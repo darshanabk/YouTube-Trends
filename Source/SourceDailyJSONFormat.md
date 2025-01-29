@@ -27,6 +27,7 @@
     "videoDefaultAudioLanguage": "string",// String (Default audio language of the video, e.g., "en")
     "videoDuration": "ISO 8601",          // String (Video duration in ISO 8601 format, e.g., "PT2H46M15S")
     "videoDurationInSeconds": "integer",  // Integer (Duration of the video in seconds, e.g., 9975)
+    "videoContentType": "string",          // String (Content type of the video, e.g., "Video")
     "videoDimension": "string",           // String (Dimension of the video, e.g., "2d")
     "videoDefinition": "string",          // String (Quality of the video, e.g., "hd")
     "videoCaption": "boolean",            // Boolean (Whether the video has captions, e.g., true)
@@ -54,7 +55,7 @@ Below is a detailed tabular column for all the fields specified in data structur
 
 | **Field Name**                    | **Min Length** | **Max Length** | **Value Type**      | **Special Format/Notes**                                                                                     | **KPI** |
 |-----------------------------------|----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------|---------|
-| `currentDate`                     | 10             | 10             | String (ISO 8601)  | Date in ISO 8601 format, e.g., `2025-01-28`.                                                                | No      |
+| `currentDate`                     | 10             | 10             | String (ISO 8601)  | Date in ISO 8601 format, e.g., `2025-01-28`. **Note:** Date when file created                                                              | No      |
 | `channelId`                       | 24             | 24             | String              | Unique identifier for the channel, e.g., `UCdngmbVKX1Tgre699-XLlUA`.                                        | Yes     |
 | `channelName`                     | 1              | 100            | String              | Name of the YouTube channel, e.g., `TechWorld with Nana`.                                                   | Yes     |
 | `videoId`                         | 11             | 11             | String              | Unique identifier for the video, e.g., `3c-iBn73dDE`.                                                       | Yes     |
@@ -64,7 +65,7 @@ Below is a detailed tabular column for all the fields specified in data structur
 | `videoPublishDay`                 | 1              | 2              | Integer             | Day when the video was published, e.g., `21`.                                                               | No      |
 | `videoPublishTime`                | 8              | 8              | String (HH:MM:SS)   | Time when the video was published in 24-hour format, e.g., `19:26:53`.                                      | No      |
 | `videoPublishedOn`                | 20             | 20             | String (ISO 8601)  | Full ISO 8601 timestamp, e.g., `2020-10-21T19:26:53Z`.                                                      | No      |
-| `videoPublishedOnInSeconds`       | 10             | 10             | Integer             | Timestamp in seconds, e.g., `1603308413`.                                                                   | No      |
+| `videoPublishedOnInSeconds`       | 1              | N/A            | Integer             | Timestamp in seconds, e.g., `1603308413`. **Note:** The total number of seconds from **0001-01-01 00:00:00 UTC** to **1970-01-01 00:00:00 UTC** is **62,135,596,800 seconds**. Timestamps are typically calculated from **1970-01-01 00:00:00 UTC (Unix epoch)** onwards.| No |
 | `videoUniqueId`                   | 11             | 11             | String              | Alias for `videoId`.                                                                                        | Yes     |
 | `videoViewCount`                  | 0              | N/A            | Integer             | Total number of views, e.g., `5473802`.                                                                     | Yes     |
 | `videoLikeCount`                  | 0              | N/A            | Integer             | Total number of likes, e.g., `93038`.                                                                       | Yes     |
@@ -78,6 +79,7 @@ Below is a detailed tabular column for all the fields specified in data structur
 | `videoDefaultAudioLanguage`       | 2              | 3              | String              | Default audio language of the video, e.g., `en`.                                                            | No      |
 | `videoDuration`                   | 5              | 15             | String (ISO 8601)  | Video duration in ISO 8601 format, e.g., `PT2H46M15S`.                                                      | No      |
 | `videoDurationInSeconds`          | 1              | N/A            | Integer             | Duration of the video in seconds, e.g., `9975`.                                                             | No      |
+| `videoContentType`                | 5              | 6              | String              | Content type of the video, e.g., `Video`. **Note:** `Short` or `Video` or `Unknown`                         | No      |
 | `videoDimension`                  | 2              | 3              | String              | Dimension of the video, e.g., `2d`.                                                                         | No      |
 | `videoDefinition`                 | 2              | 2              | String              | Quality of the video, e.g., `hd`.                                                                           | No      |
 | `videoCaption`                    | 4              | 5              | Boolean             | Whether the video has captions, e.g., `true`.                                                               | No      |
@@ -92,7 +94,7 @@ Below is a detailed tabular column for all the fields specified in data structur
 | `channelPublishDay`               | 1              | 2              | Integer             | Day when the channel was created, e.g., `6`.                                                                | No      |
 | `channelPublishTime`              | 8              | 8              | String (HH:MM:SS)   | Time when the channel was created in 24-hour format, e.g., `08:50:17`.                                      | No      |
 | `channelPublishedOn`              | 20             | 20             | String (ISO 8601)  | Full ISO 8601 timestamp, e.g., `2019-10-06T08:50:17Z`.                                                      | No      |
-| `channelPublishedOnInSeconds`     | 10             | 10             | Integer             | Timestamp in seconds, e.g., `1570351817`.                                                                   | No      |
+| `channelPublishedOnInSeconds`     | 1              | N/A            | Integer             | Timestamp in seconds, e.g., `1570351817`. **Note:** The total number of seconds from **0001-01-01 00:00:00 UTC** to **1970-01-01 00:00:00 UTC** is **62,135,596,800 seconds**. Timestamps are typically calculated from **1970-01-01 00:00:00 UTC (Unix epoch)** onwards.| No |
 | `channelCountry`                  | 2              | 2              | String              | Country of the channel, e.g., `AT`.                                                                         | No      |
 | `channelViewCount`                | 0              | N/A            | Integer             | Total number of views for the channel, e.g., `64177976`.                                                    | Yes     |
 | `channelSubscriberCount`          | 0              | N/A            | Integer             | Total number of subscribers, e.g., `1200000`.                                                               | Yes     |
