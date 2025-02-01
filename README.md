@@ -1,4 +1,7 @@
 # YouTube Video Data Extraction and GitHub Automation
+<p align="left">
+  <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube.png" width="400" title="hover text">
+</p>
 
 This project is **an ongoing** initiative to develop a pipeline that retrieves the top video details based on specific keywords, sorted by the most viewed count, from YouTube using the YouTube Data API. The pipeline processes the data and uploads it to a GitHub repository, aiming to automate the fetching, analysis, and storage of data for actionable insights.
 
