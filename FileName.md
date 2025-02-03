@@ -66,3 +66,36 @@ This naming convention helps in identifying the source, timestamp, and the numbe
 
 This naming convention ensures consistency and clarity, making it easier to distinguish between raw and cleaned data files, track the time of cleaning, and identify the count of processed records.
 
+---
+# Requirement File Format
+
+## File Format:
+The raw data files follow a structured format to maintain consistency and organization, ensuring easy identification and future use.
+
+### Structure:
+RE_YYYY-MM-DD_HH:MM:SS_<data_description>.json
+
+### Components:
+1. **RE** - Represents an external requirement source for the project.
+2. **YYYY-MM-DD_HH:MM:SS** - The timestamp when the data was extracted and saved:
+   - **YYYY**: Four-digit year
+   - **MM**: Two-digit month
+   - **DD**: Two-digit day
+   - **HH**: Two-digit hour (24-hour format)
+   - **MM**: Two-digit minute
+   - **SS**: Two-digit second
+3. **<data_description>** - A short description of the data contained in the file (e.g., `country_details` for country information).
+4. **.json** - Denotes that the file contains data in JSON format.
+
+### Example:
+RE_2025-02-03_21:26:51_country_details.json
+
+- **RE**: Indicates that the file pertains to an external requirement source for the project.
+- **2025-02-03_21:26:51**: Timestamp of data extraction (3rd February 2025, 21:26:51).
+- **country_details**: Describes that the file contains country information.
+- **.json**: File format for the data in JSON.
+
+### Purpose:
+This naming convention helps identify the external requirement source, timestamp, and content of each file. It provides clarity in organizing and accessing the data for future analysis or processing.
+
+
