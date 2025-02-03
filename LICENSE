@@ -5,8 +5,9 @@ To view a copy of this license, visit https://creativecommons.org/licenses/by-nc
 
 ## Data Sources  
 
-1. Wikipedia: This project uses Wikipedia data under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA), visit https://creativecommons.org/licenses/by-sa/3.0/.  
+1. Wikipedia: This project uses Wikipedia data under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA). For more information, visit https://creativecommons.org/licenses/by-sa/3.0/.  
 2. YouTube Data API: Data sourced from YouTube Data API v3(https://developers.google.com/youtube/terms/api-services-terms-of-service) must comply with YouTube's API Terms of Service.
+3. REST Countries API: Data sourced from REST Countries API(https://restcountries.com/). Please refer to the API documentation for usage terms.
 
 This project is not affiliated with or endorsed by YouTube or Wikipedia.
 
