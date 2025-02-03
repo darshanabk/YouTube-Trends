@@ -47,3 +47,4 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
 
 This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
+![License](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-blue.svg)
