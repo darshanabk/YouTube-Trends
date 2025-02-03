@@ -42,3 +42,8 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
 ###  2. Additional Libraries:
    - `from googleapiclient.discovery import build`: For interacting with the YouTube API.
    - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle.
+
+## License
+
+This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+
