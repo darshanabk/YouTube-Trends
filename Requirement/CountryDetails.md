@@ -1,4 +1,4 @@
-### JSON Format for Country Detail Requirement - Single Record (Country Data Sample)
+## JSON Format for Country Detail Requirement - Single Record (Country Data Sample)
 
 ```json
 {
