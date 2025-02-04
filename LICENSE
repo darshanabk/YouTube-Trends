@@ -30,14 +30,14 @@ Usage Terms for Code:
 
 This project utilizes external data sources, each with its own licensing terms:  
 
-1. Wikipedia: Data is sourced under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA).  
-   - License Details: https://creativecommons.org/licenses/by-sa/3.0/  
+   1. Wikipedia: Data is sourced under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA).  
+      - License Details: https://creativecommons.org/licenses/by-sa/3.0/  
 
-2. YouTube Data API: Data is fetched using YouTube Data API v3.  
-   - Usage of this data must comply with YouTube's API Terms of Service: https://developers.google.com/youtube/terms/api-services-terms-of-service  
+   2. YouTube Data API: Data is fetched using YouTube Data API v3.  
+      - Usage of this data must comply with YouTube's API Terms of Service: https://developers.google.com/youtube/terms/api-services-terms-of-service  
 
-3. REST Countries API: Country-related data is sourced from the REST Countries API.  
-   - Terms & Usage: https://restcountries.com/  
+   3. REST Countries API: Country-related data is sourced from the REST Countries API.  
+      - Terms & Usage: https://restcountries.com/  
 
 ---
 
