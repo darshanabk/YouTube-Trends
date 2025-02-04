@@ -45,6 +45,22 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
 
 ## License
 
-This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+ This project uses a dual-license approach:  
 
-![License](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-blue.svg)
+**1. Non-Code Content License**
+
+This project’s documentation, descriptions, and visualizations are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).  
+  - You must provide appropriate credit.  
+  - The content may not be used for commercial purposes.  
+  - Redistribution is allowed only in its original form without modifications.  
+
+For more details, visit: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) 
+
+**2. Source Code License**
+
+The source code of this project is licensed under the Mozilla Public License 2.0 (MPL-2.0).  
+  - You may modify and distribute the code, but any modified files must also be licensed under MPL-2.0.  
+  - Only MPL-licensed files must remain open-source if used with proprietary software.  
+  - The code is provided as-is, without any guarantees or warranty.  
+
+For more details, visit: [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0/)
