@@ -11,7 +11,7 @@ Usage Terms for Non-Code Content:
 - Non-Commercial Use Only: This work may not be used for commercial purposes.  
 - No Modifications Allowed: Redistribution is allowed only in its original form. Modifications or derivative works are not permitted.  
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 2. Source Code License  
 Mozilla Public License 2.0 (MPL-2.0)  
@@ -24,7 +24,7 @@ Usage Terms for Code:
 - Protection of Proprietary Code: If combined with proprietary software, only MPL-licensed files must be open-source, not the entire project.  
 - No Liability: The code is provided as-is, with no guarantees of performance or security.  
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 3. Data Sources  
 
@@ -39,7 +39,7 @@ This project utilizes external data sources, each with its own licensing terms:
    3. REST Countries API: Country-related data is sourced from the REST Countries API.  
       - Terms & Usage: https://restcountries.com/  
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 4. Disclaimer  
 
