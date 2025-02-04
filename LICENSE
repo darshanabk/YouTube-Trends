@@ -1,13 +1,50 @@
-Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+LICENSE  
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.  
-To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/4.0/
+1. Non-Code Content License  
+Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)  
 
-## Data Sources  
+This work (excluding source code) is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.  
+To view a copy of this license, visit: https://creativecommons.org/licenses/by-nc-nd/4.0/  
 
-1. Wikipedia: This project uses Wikipedia data under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA). For more information, visit https://creativecommons.org/licenses/by-sa/3.0/.  
-2. YouTube Data API: Data sourced from YouTube Data API v3(https://developers.google.com/youtube/terms/api-services-terms-of-service) must comply with YouTube's API Terms of Service.
-3. REST Countries API: Data sourced from REST Countries API(https://restcountries.com/). Please refer to the API documentation for usage terms.
+Usage Terms for Non-Code Content:  
+- Attribution Required: Proper credit must be given when sharing this work.  
+- Non-Commercial Use Only: This work may not be used for commercial purposes.  
+- No Modifications Allowed: Redistribution is allowed only in its original form. Modifications or derivative works are not permitted.  
 
-This project is not affiliated with or endorsed by YouTube, Wikipedia, or REST Countries API.
+---
+
+2. Source Code License  
+Mozilla Public License 2.0 (MPL-2.0)  
+
+The source code in this project is licensed under the Mozilla Public License 2.0 (MPL-2.0).  
+To view a copy of this license, visit: https://www.mozilla.org/en-US/MPL/2.0/  
+
+Usage Terms for Code:  
+- Permitted Modifications: Users may modify and distribute the code, but must disclose source code changes under the same MPL-2.0 license.  
+- Protection of Proprietary Code: If combined with proprietary software, only MPL-licensed files must be open-source, not the entire project.  
+- No Liability: The code is provided as-is, with no guarantees of performance or security.  
+
+---
+
+3. Data Sources  
+
+This project utilizes external data sources, each with its own licensing terms:  
+
+1. Wikipedia: Data is sourced under the Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA).  
+   - License Details: https://creativecommons.org/licenses/by-sa/3.0/  
+
+2. YouTube Data API: Data is fetched using YouTube Data API v3.  
+   - Usage of this data must comply with YouTube's API Terms of Service: https://developers.google.com/youtube/terms/api-services-terms-of-service  
+
+3. REST Countries API: Country-related data is sourced from the REST Countries API.  
+   - Terms & Usage: https://restcountries.com/  
+
+---
+
+4. Disclaimer  
+
+- This project is not affiliated with or endorsed by YouTube, Wikipedia, or REST Countries API.  
+- The author is not responsible for how third parties use or interpret the extracted data.  
+- Users must comply with third-party API terms when utilizing this project's output.  
+
 
