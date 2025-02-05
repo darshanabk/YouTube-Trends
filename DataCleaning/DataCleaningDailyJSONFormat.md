@@ -49,26 +49,6 @@ The JSON consists of an array of objects, where each object represents a specifi
 | `channelViewCount` | Total number of views across the channel | Integer |
 | `channelSubscriberCount` | Total number of subscribers for the channel | Integer |
 | `channelVideoCount` | Total number of videos uploaded to the channel | Integer |
-| `videoPublishedWeekDay` | Day of the week when the video was published (e.g., 'Wednesday') | String |
-| `videoDurationClassification` | Classification of the video’s duration (e.g., 'Extended') | String |
-| `channelAgeInYears` | Age of the channel in years (calculated based on `channelPublishedOn`) | Float |
-| `channelNormalizedViewCount` | Normalized value of the channel view count | Float |
-| `channelNormalizedSubscriberCount` | Normalized value of the channel subscriber count | Float |
-| `channelNormalizedVideoCount` | Normalized value of the channel video count | Float |
-| `channelNormalizedChannelAge` | Normalized value of the channel's age in years | Float |
-| `channelGrowthScore` | A score representing the growth of the channel based on multiple factors | Float |
-| `videoAgeInDays` | Age of the video in days (calculated based on `videoPublishedOn`) | Float |
-| `videoViewsPerDay` | Average number of views per day for the video | Float |
-| `videoLikeToViewRatio` | Ratio of likes to views for the video | Float |
-| `videoCommentToViewRatio` | Ratio of comments to views for the video | Float |
-| `videoEngagementScore` | A score representing the engagement of the video | Float |
-| `channelGrowthScoreRank` | Rank of the channel based on the growth score | Float |
-| `videoEngagementScoreRank` | Rank of the video based on the engagement score | Float |
-| `country_code` | Country code for the channel’s country | String |
-| `country_name` | Full country name for the channel’s country | String |
-| `continent` | Continent where the channel’s country is located | String |
-| `continent_code` | Continent code (e.g., 'EU' for Europe) | String |
-| `it_hub_country` | Indicator if the country is considered a major IT hub (e.g., 'Yes' or 'No') | String |
 
 ### Data Types
 ----------
@@ -77,7 +57,6 @@ The following are the main data types used in this dataset:
 
 - **String**: Textual data (e.g., `channelId`, `channelName`, `videoTitle`).
 - **Integer**: Whole numbers (e.g., `videoViewCount`, `channelSubscriberCount`).
-- **Float**: Decimal numbers (e.g., `channelAgeInYears`, `channelGrowthScore`).
 - **Boolean**: True/False values (e.g., `videoCaption`, `videoLicensedContent`).
 - **DateTime (String)**: Timestamp data in ISO 8601 format (e.g., `videoPublishedOn`, `channelPublishedOn`).
 
@@ -121,27 +100,7 @@ Below is an example of the JSON structure for one record:
   "channelCountry": "AT",
   "channelViewCount": 64400244,
   "channelSubscriberCount": 1200000,
-  "channelVideoCount": 126,
-  "videoPublishedWeekDay": "Wednesday",
-  "videoDurationClassification": "Extended",
-  "channelAgeInYears": 5.34,
-  "channelNormalizedViewCount": 0.0776,
-  "channelNormalizedSubscriberCount": 0.1043,
-  "channelNormalizedVideoCount": 0.0071,
-  "channelNormalizedChannelAge": 0.2533,
-  "channelGrowthScore": 0.2824,
-  "videoAgeInDays": 1567.28,
-  "videoViewsPerDay": 3500.59,
-  "videoLikeToViewRatio": 0.017,
-  "videoCommentToViewRatio": 0.00083,
-  "videoEngagementScore": 1750.82,
-  "channelGrowthScoreRank": 355.0,
-  "videoEngagementScoreRank": 411.0,
-  "country_code": "AT",
-  "country_name": "Austria",
-  "continent": "Europe",
-  "continent_code": "EU",
-  "it_hub_country": "No"
+  "channelVideoCount": 126
 }
 ```
 
