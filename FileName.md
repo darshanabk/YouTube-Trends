@@ -30,6 +30,7 @@ S_2025-01-28_17:56:35_504_records.json
 This naming convention helps in identifying the source, timestamp, and the number of records in each file. It aids in organizing and accessing raw data for future processing and analysis.
 
 ---
+
 # DataCleaning File Format
 
 ### File Format:
@@ -67,6 +68,44 @@ This naming convention helps in identifying the source, timestamp, and the numbe
 This naming convention ensures consistency and clarity, making it easier to distinguish between raw and cleaned data files, track the time of cleaning, and identify the count of processed records.
 
 ---
+
+# Feature Engineering File Format
+
+### **File Format:**
+
+**Structure:**  
+`FE_YYYY-MM-DD_HH:MM:SS_<record_count>_records.json`
+
+### **Components:**
+
+- **FE**: Represents that this file is from the **Feature Engineering** process.  
+- **YYYY-MM-DD_HH:MM:SS**: The timestamp when the feature engineering was performed:  
+  - **YYYY**: Four-digit year.  
+  - **MM**: Two-digit month.  
+  - **DD**: Two-digit day.  
+  - **HH**: Two-digit hour (24-hour format).  
+  - **MM**: Two-digit minute.  
+  - **SS**: Two-digit second.  
+- **<record_count>**: The total count of video records after the feature engineering process.  
+- **_records.json**: Indicates the file format containing the feature-engineered video records in JSON format.  
+
+### **Example:**
+
+**File Name:**  
+`FE_2025-02-06_01:05:31_423_records.json`  
+
+**Explanation:**  
+- **FE**: Denotes the file is from the Feature Engineering stage.  
+- **2025-02-06_01:05:31**: Indicates the timestamp of feature engineering (6th February 2025, 01:05:31).  
+- **423**: The number of records after the feature engineering process.  
+- **_records.json**: File format for storing feature-engineered video records in JSON format.  
+
+### **Purpose:**
+
+This naming convention ensures consistency and clarity, making it easier to track processed feature-engineered files, distinguish them from raw and cleaned data, and identify the record count at the time of processing.
+
+---
+
 # Requirement File Format
 
 ## File Format:
