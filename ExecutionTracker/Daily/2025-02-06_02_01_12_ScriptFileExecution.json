@@ -1,0 +1,16 @@
+[
+    {
+        "ScriptFile":"sourcedaily.ipynb",
+        "StartTime":"2025-02-05 20:30:58",
+        "EndTime":"2025-02-05 20:31:08",
+        "TimeTaken":"0:00:09.588001",
+        "Date":"2025-02-06_02:01:08"
+    },
+    {
+        "ScriptFile":"dataCleaning.ipynb",
+        "StartTime":"2025-02-05 20:31:08",
+        "EndTime":"2025-02-05 20:31:12",
+        "TimeTaken":"0:00:04.118978",
+        "Date":"2025-02-06_02:01:12"
+    }
+]
