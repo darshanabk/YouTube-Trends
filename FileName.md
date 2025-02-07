@@ -1,140 +1,92 @@
-# Source File Format
+# **File Naming Convention**  
 
-## File Format:
-The raw data files in the repository follow a specific format to maintain consistency and organization for easy identification and future use.
+This document outlines the standardized file naming convention used in the repository to maintain consistency, improve file organization, and ensure seamless cross-platform compatibility.  
 
-### Structure:
-S_YYYY-MM-DD_HH:MM:SS_<record_count>_records.json
+## **1. Source File Format**  
 
-### Components:
-1. **S** - Represents the source of the data (i.e., YouTube API data).
-2. **YYYY-MM-DD_HH:MM:SS** - The timestamp when the data was extracted and saved:
-   - **YYYY**: Four-digit year
-   - **MM**: Two-digit month
-   - **DD**: Two-digit day
-   - **HH**: Two-digit hour (24-hour format)
-   - **MM**: Two-digit minute
-   - **SS**: Two-digit second
-3. **<record_count>** - The total count of video records retrieved during that data extraction.
-4. **_records.json** - Indicates that the file contains video records in JSON format.
+### **File Naming Structure:**  
+`S_YYYY-MM-DD_HH_MM_SS_<record_count>_records.json`  
 
-### Example:
-S_2025-01-28_17:56:35_504_records.json
+### **Components:**  
+- **S**: Denotes the source data extracted from the YouTube API.  
+- **YYYY-MM-DD_HH_MM_SS**: Timestamp of data extraction:  
+  - **YYYY**: Year (four digits).  
+  - **MM**: Month (two digits).  
+  - **DD**: Day (two digits).  
+  - **HH**: Hour (24-hour format).  
+  - **MM**: Minute (two digits).  
+  - **SS**: Second (two digits).  
+- **<record_count>**: Number of video records retrieved during extraction.  
+- **_records.json**: Specifies the file format as JSON.  
 
-- **S**: Denotes that the file is from the YouTube data source.
-- **2025-01-28_17:56:35**: Timestamp of data extraction (28th January 2025, 17:56:35).
-- **504**: Number of video records in this extraction.
-- **_records.json**: File format for raw video records.
+### **Example:**  
+`S_2025-01-28_17_56_35_504_records.json`  
 
-### Purpose:
-This naming convention helps in identifying the source, timestamp, and the number of records in each file. It aids in organizing and accessing raw data for future processing and analysis.
+### **Purpose:**  
+This convention enables efficient identification of the data source, extraction timestamp, and record count, facilitating streamlined data organization and retrieval.  
 
 ---
 
-# DataCleaning File Format
+## **2. Data Cleaning File Format**  
 
-### File Format:
+### **File Naming Structure:**  
+`DC_YYYY-MM-DD_HH_MM_SS_<record_count>_records.json`  
 
-**Structure:**  
-`DC_YYYY-MM-DD_HH:MM:SS_<record_count>_records.json`
+### **Components:**  
+- **DC**: Denotes that the file contains cleaned data.  
+- **YYYY-MM-DD_HH_MM_SS**: Timestamp indicating when the data cleaning process was performed.  
+- **<record_count>**: Number of records after the cleaning process.  
+- **_records.json**: Specifies that the file is in JSON format.  
 
-### Components:
+### **Example:**  
+`DC_2025-01-28_19_55_17_402_records.json`  
 
-- **DC**: Represents that this file is from the **Data Cleaning** process.  
-- **YYYY-MM-DD_HH:MM:SS**: The timestamp when the data cleaning was performed:  
-  - **YYYY**: Four-digit year.  
-  - **MM**: Two-digit month.  
-  - **DD**: Two-digit day.  
-  - **HH**: Two-digit hour (24-hour format).  
-  - **MM**: Two-digit minute.  
-  - **SS**: Two-digit second.  
-- **<record_count>**: The total count of video records after the cleaning process.  
-- **_records.json**: Indicates the file format containing the cleaned video records in JSON format.  
-
-
-### Example:
-
-**File Name:**  
-`DC_2025-01-28_19:55:17_402_records.json`  
-
-**Explanation:**  
-- **DC**: Denotes the file is from the Data Cleaning stage.  
-- **2025-01-28_19:55:17**: Indicates the timestamp of data cleaning (28th January 2025, 19:55:17).  
-- **402**: The number of records remaining after the cleaning process.  
-- **_records.json**: File format for cleaned video records in JSON format.  
-
-### Purpose:
-
-This naming convention ensures consistency and clarity, making it easier to distinguish between raw and cleaned data files, track the time of cleaning, and identify the count of processed records.
+### **Purpose:**  
+This standardized format ensures clarity in tracking cleaned data files, distinguishing them from raw data files while maintaining a timestamped record of processing.  
 
 ---
 
-# Feature Engineering File Format
+## **3. Feature Engineering File Format**  
 
-### **File Format:**
+### **File Naming Structure:**  
+`FE_YYYY-MM-DD_HH_MM_SS_<record_count>_records.json`  
 
-**Structure:**  
-`FE_YYYY-MM-DD_HH:MM:SS_<record_count>_records.json`
+### **Components:**  
+- **FE**: Represents data that has undergone the feature engineering process.  
+- **YYYY-MM-DD_HH_MM_SS**: Timestamp indicating when the feature engineering process was applied.  
+- **<record_count>**: Number of records after feature engineering.  
+- **_records.json**: Specifies the JSON file format.  
 
-### **Components:**
+### **Example:**  
+`FE_2025-02-06_01_05_31_423_records.json`  
 
-- **FE**: Represents that this file is from the **Feature Engineering** process.  
-- **YYYY-MM-DD_HH:MM:SS**: The timestamp when the feature engineering was performed:  
-  - **YYYY**: Four-digit year.  
-  - **MM**: Two-digit month.  
-  - **DD**: Two-digit day.  
-  - **HH**: Two-digit hour (24-hour format).  
-  - **MM**: Two-digit minute.  
-  - **SS**: Two-digit second.  
-- **<record_count>**: The total count of video records after the feature engineering process.  
-- **_records.json**: Indicates the file format containing the feature-engineered video records in JSON format.  
-
-### **Example:**
-
-**File Name:**  
-`FE_2025-02-06_01:05:31_423_records.json`  
-
-**Explanation:**  
-- **FE**: Denotes the file is from the Feature Engineering stage.  
-- **2025-02-06_01:05:31**: Indicates the timestamp of feature engineering (6th February 2025, 01:05:31).  
-- **423**: The number of records after the feature engineering process.  
-- **_records.json**: File format for storing feature-engineered video records in JSON format.  
-
-### **Purpose:**
-
-This naming convention ensures consistency and clarity, making it easier to track processed feature-engineered files, distinguish them from raw and cleaned data, and identify the record count at the time of processing.
+### **Purpose:**  
+This naming convention provides clear identification of feature-engineered datasets, ensuring efficient tracking of processed files.  
 
 ---
 
-# Requirement File Format
+## **4. Requirement File Format**  
 
-## File Format:
-The raw data files follow a structured format to maintain consistency and organization, ensuring easy identification and future use.
+### **File Naming Structure:**  
+`RE_YYYY-MM-DD_HH_MM_SS_<data_description>.json`  
 
-### Structure:
-RE_YYYY-MM-DD_HH:MM:SS_<data_description>.json
+### **Components:**  
+- **RE**: Denotes an external requirement-related data file.  
+- **YYYY-MM-DD_HH_MM_SS**: Timestamp indicating when the data was extracted or generated.  
+- **<data_description>**: Brief descriptor of the file content (e.g., `country_details`).  
+- **.json**: Specifies that the file is in JSON format.  
 
-### Components:
-1. **RE** - Represents an external requirement source for the project.
-2. **YYYY-MM-DD_HH:MM:SS** - The timestamp when the data was extracted and saved:
-   - **YYYY**: Four-digit year
-   - **MM**: Two-digit month
-   - **DD**: Two-digit day
-   - **HH**: Two-digit hour (24-hour format)
-   - **MM**: Two-digit minute
-   - **SS**: Two-digit second
-3. **<data_description>** - A short description of the data contained in the file (e.g., `country_details` for country information).
-4. **.json** - Denotes that the file contains data in JSON format.
+### **Example:**  
+`RE_2025-02-03_21_26_51_country_details.json`  
 
-### Example:
-RE_2025-02-03_21:26:51_country_details.json
+### **Purpose:**  
+This format ensures systematic organization of external requirement-related files, improving accessibility and clarity in identifying dataset contents.  
 
-- **RE**: Indicates that the file pertains to an external requirement source for the project.
-- **2025-02-03_21:26:51**: Timestamp of data extraction (3rd February 2025, 21:26:51).
-- **country_details**: Describes that the file contains country information.
-- **.json**: File format for the data in JSON.
+---
 
-### Purpose:
-This naming convention helps identify the external requirement source, timestamp, and content of each file. It provides clarity in organizing and accessing the data for future analysis or processing.
-
-
+## **Conclusion**  
+Adhering to this file naming convention ensures:  
+   - **Consistent** file structure across all datasets.  
+   - **Improved cross-platform compatibility**, especially on Windows (avoiding unsupported characters).  
+   - **Efficient identification** of data processing stages and timestamps.  
+   - **Seamless tracking** of data lineage throughout extraction, cleaning, and transformation processes.
