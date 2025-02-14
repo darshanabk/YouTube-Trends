@@ -1,2 +1,11 @@
 import streamlit as st
-print('StreamLit')
+st.title("DevOps YouTube Trends")
+st.header("Channel Insights")
+st.multiselect("Continent",["All","Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"])
+st.subheader("Top 10 channels")
+# st.info("This is list of channels based on their likes, subscribers and commnets who performing well")
+# st.warning("Please follow the terms and conditions of youtube and don't misuse the insight if any mistake found please reach out")
+# st.error("This is a wromg password")
+# st.success("Congrats you have successfully logged in")
+# st.write("name")
+# st.write(range(60))
