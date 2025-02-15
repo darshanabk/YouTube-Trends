@@ -1,7 +1,10 @@
 import streamlit as st
+import pandas as pd
+st.sidebar.image(".\Streamlit\DevOps.png")
 st.title("DevOps YouTube Trends")
 st.header("Channel Insights")
-st.multiselect("Continent",["All","Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"])
+st.sidebar.multiselect("Continent",["All","Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"])
+st.sidebar.multiselect("Countries",["All","India"])
 st.subheader("Top 10 channels")
 # st.info("This is list of channels based on their likes, subscribers and commnets who performing well")
 # st.warning("Please follow the terms and conditions of youtube and don't misuse the insight if any mistake found please reach out")
@@ -9,3 +12,5 @@ st.subheader("Top 10 channels")
 # st.success("Congrats you have successfully logged in")
 # st.write("name")
 # st.write(range(60))
+data = pd.read_json("FeatureEngineering\Daily\FE_2025-02-14_04_38_06_400_records.json")
+st.bar_chart(data['videoContentType'],x=data['videoContentType'])
