@@ -41,14 +41,7 @@ def FetchLatestFile():
     latest_file = pd.read_json(latest_file['download_url'])
     return latest_file
 
-def main():
-    file = FetchLatestFile()
-    # Unique return nd.array array has not remove like list it has delete or boolean indexing we have used boolean indexing
-    continents = file['continent'].unique()
-    # continents = continents[continents != 'Unknown']
-    # print(file['country_name'])
-    countries = file['country_name'].unique()
-    # countries = countries[countries != 'Unknown']
+def ContinentCountryMapping(file):
     continentCountryMapping = {}
     for index, row in file.iterrows():
         continent = row['continent']
@@ -62,10 +55,18 @@ def main():
             continentCountryMapping[continent].append(country_name)
         else:
             continue   
-    print(continentCountryMapping)
+    return continentCountryMapping
 
+def main():
+    file = FetchLatestFile()
+    # Unique return nd.array array has not remove like list it has delete or boolean indexing we have used boolean indexing
+    continents = file['continent'].unique()
+    # continents = continents[continents != 'Unknown']
+    # print(file['country_name'])
+    countries = file['country_name'].unique()
+    # countries = countries[countries != 'Unknown']
+    continentCountryMapping = ContinentCountryMapping(file)
     return True
-
 
 if __name__ == "__main__":
     import os
