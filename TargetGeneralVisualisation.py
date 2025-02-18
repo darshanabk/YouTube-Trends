@@ -64,21 +64,26 @@ def main():
     # continents = continents[continents != 'Unknown']
     countries = file['country_name'].unique()
     # countries = countries[countries != 'Unknown']
-    contentType = file['videoContentType'].unique()
+    # contentType = file['videoContentType'].unique()
 
     continentCountryMapping = ContinentCountryMapping(file)
 
     visualByFilter = {}
     for i in countries:
-        print(i)
         visualByFilter[i] = {   
                                 'top10channels': {}, 'top10videos': {},
                                 'VideoPublishedYearLast10Years': {}, 'VideoDurationClassification': {},
-                                'videoContentType' : {}, 'channelCountryBarGraph': {},
+                                'videoContentTypePie' : {}, 'channelCountryBarGraph': {},
                                 'channelContinentPie':{}, 'ITHubPie': {}
                             }
 
-    print(visualByFilter)
+    # print(visualByFilter)
+    top10videos = file[['channelName','videoId','videoEngagementScoreRank']].head(10)
+    file = file.drop_duplicates(subset='channelName')
+    file  = file.sort_values(by = ['channelViewCount', 'channelSubscriberCount','channelGrowthScoreRank'],ascending = [False,False,True])
+    top10channels = file[['channelName','channelGrowthScoreRank','videoTitle']].head(10)
+    # https://www.youtube.com/watch?v=<video_id>
+    # https://www.youtube.com/watch?v=3c-iBn73dDE
     return True
 
 if __name__ == "__main__":
