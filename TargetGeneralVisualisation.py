@@ -37,7 +37,6 @@ def FetchLatestFile():
             print("No files found in the directory.")
     else:
         print(f"Failed to fetch directory contents. Status code: {response.status_code}")
-
     latest_file = pd.read_json(latest_file['download_url'])
     return latest_file
 
@@ -57,15 +56,29 @@ def ContinentCountryMapping(file):
             continue   
     return continentCountryMapping
 
+
 def main():
     file = FetchLatestFile()
     # Unique return nd.array array has not remove like list it has delete or boolean indexing we have used boolean indexing
     continents = file['continent'].unique()
     # continents = continents[continents != 'Unknown']
-    # print(file['country_name'])
     countries = file['country_name'].unique()
     # countries = countries[countries != 'Unknown']
+    contentType = file['videoContentType'].unique()
+
     continentCountryMapping = ContinentCountryMapping(file)
+
+    visualByFilter = {}
+    for i in countries:
+        print(i)
+        visualByFilter[i] = {   
+                                'top10channels': {}, 'top10videos': {},
+                                'VideoPublishedYearLast10Years': {}, 'VideoDurationClassification': {},
+                                'videoContentType' : {}, 'channelCountryBarGraph': {},
+                                'channelContinentPie':{}, 'ITHubPie': {}
+                            }
+
+    print(visualByFilter)
     return True
 
 if __name__ == "__main__":
@@ -73,4 +86,5 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
     import requests
     import pandas as pd
+    import json
     main()
