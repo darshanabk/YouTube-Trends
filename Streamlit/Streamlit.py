@@ -5,10 +5,10 @@ def FetchLatestFile():
     load_dotenv()
 
     # Access sensitive data from environment variables
-    owner = os.getenv('GITHUB_OWNER')
-    repo = os.getenv('GITHUB_REPO')
-    directory = os.getenv('GITHUB_DIRECTORY_FEATURE')
-    token = os.getenv('GITHUB_TOKEN')
+    owner = os.getenv('REPO_OWNER')
+    repo = os.getenv('REPO_NAME')
+    directory = os.getenv('DIRECTORY_RELATIVE_PATH_FEATURE')
+    token = os.getenv('TOKEN')
     files, latest_file = "", ""
 
     # GitHub API URL to list files in the directory
