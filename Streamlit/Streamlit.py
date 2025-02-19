@@ -1,5 +1,15 @@
 
+import os
+from dotenv import load_dotenv
+import requests
+import pandas as pd
+import numpy as np
+import json
+import streamlit as st
+import altair as alt
+import plotly.express as px
 
+@st.cache_data
 def FetchLatestFile():
     # Load environment variables from .env file
     load_dotenv()
@@ -58,49 +68,53 @@ def ContinentCountryMapping(file):
             continue   
     return continentCountryMapping
 
-
-def main():
-    # st.sidebar.image(".\Streamlit\DevOps.png")
+def streamlitMain(file):
+    st.image("./Streamlit/DevOps.png")
     st.title("DevOps YouTube Trends")
     st.header("Channel Insights")
     st.subheader("Top 10 channels")
-    file = FetchLatestFile()
-    # Unique return nd.array array has not remove like list it has delete or boolean indexing we have used boolean indexing
+    st.dataframe(file)
+
+def streamlitSideBar(file):
+    st.sidebar.header("Filter")
     file = file.sort_values(by = 'continent', ascending = True)
     continents = file['continent'].unique()
-    # continents = continents[continents != 'Unknown']
+    continents= np.append(continents, 'All')
     file = file.sort_values(by = 'country_name', ascending = True)
     countries = file['country_name'].unique()
-    # countries = countries[countries != 'Unknown']
-    # contentType = file['videoContentType'].unique()
-    continents = st.sidebar.multiselect("Continent",continents)
-    Countries = st.sidebar.multiselect("Countries",countries)
-    continentCountryMapping = ContinentCountryMapping(file)
+    countries = np.append(countries, 'All')
+    continents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
+    countries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
+    category = st.sidebar.radio("Select Category", options  = file['videoContentType'].unique())
 
-    # visualByFilter = {}
-    # for i in countries:
-    #     visualByFilter[i] = {   
-    #                             'top10channels': {}, 'top10videos': {},
-    #                             'VideoPublishedYearLast10Years': {}, 'VideoDurationClassification': {},
-    #                             'videoContentTypePie' : {}, 'channelCountryBarGraph': {},
-    #                             'channelContinentPie':{}, 'ITHubPie': {}
-    #                         }
-
-    # print(visualByFilter)
-    top10videos = file[['channelName','videoId','videoEngagementScoreRank']].head(10)
+def top10channels(file):
     file = file.drop_duplicates(subset='channelName')
     file  = file.sort_values(by = ['channelViewCount', 'channelSubscriberCount','channelGrowthScoreRank'],ascending = [False,False,True])
-    top10channels = file[['channelName','channelGrowthScoreRank','videoTitle']].head(10)
+    top10channels = file[['channelName']].head(10)
+    top10channels.reset_index(drop = True, inplace = True)
+    top10channels['Rank'] = top10channels.index + 1
+    top10channels_sorted = top10channels.sort_values(by = 'Rank', ascending=True)
+    print(top10channels_sorted)
+    chart = alt.Chart(top10channels_sorted).mark_bar().encode(
+    x='Rank',  # x-axis is channel name
+    y='channelName',        # y-axis is the index (which starts from 1)
+    tooltip=['channelName', 'Rank']  # Tooltip to show channel name and index
+    ).properties(
+    title="Top 10 Channels")
+
+    st.altair_chart(chart, use_container_width=True)
     # https://www.youtube.com/watch?v=<video_id>
     # https://www.youtube.com/watch?v=3c-iBn73dDE
+
+def main():
+    file =FetchLatestFile()
+    streamlitMain(file)
+    streamlitSideBar(file)
+    continentCountryMapping = ContinentCountryMapping(file)
+    top10channels(file)
+    
     return True
 
+
 if __name__ == "__main__":
-    import os
-    from dotenv import load_dotenv
-    import requests
-    import pandas as pd
-    import json
-    import streamlit as st
-    import pandas as pd
     main()
