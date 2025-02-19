@@ -1,2 +1,2 @@
 python-dotenv
-ploty
+plotly
