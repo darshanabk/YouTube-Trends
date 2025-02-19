@@ -69,7 +69,7 @@ def ContinentCountryMapping(file):
     return continentCountryMapping
 
 def streamlitMain(file):
-    # st.image("./Streamlit/DevOps.png")
+    st.image("./Streamlit/DevOps.png")
     st.title("DevOps YouTube Trends")
     st.header("Channel Insights")
     st.subheader("Top 10 channels")
