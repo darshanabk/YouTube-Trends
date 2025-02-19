@@ -84,7 +84,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     st.markdown(
         f"""
         <div style="display: flex; align-items: center;">
-            <img src="data:image/png;base64,{base64_image}" width="40" style="border-radius: 50%;"margin-right: 10px;">
+            <img src="data:image/png;base64,{base64_image}" width="40" height = "40" style="border-radius: 50%;"margin-right: 10px;">
             <h1 style="margin: 0; font-size: 58px;">DevOps YouTube Trends</h1>
         </div>
         """,
