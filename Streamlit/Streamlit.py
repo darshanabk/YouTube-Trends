@@ -42,7 +42,7 @@ def FetchLatestFile():
             # Sort files by updated_at timestamp in descending order to get the latest file
             latest_file = sorted(files, key=lambda x: x['name'], reverse=True)[0]
 
-            print(f"Latest file: {latest_file['name']}")
+            # print(f"Latest file: {latest_file['name']}")
             # print(f"URL: {latest_file['html_url']}")
             # print(f'Download URL: {latest_file['download_url']}')
         else:
@@ -73,7 +73,19 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     st.title("DevOps YouTube Trends")
     st.header("Channel Insights")
     # st.subheader("Top 10 channels")
-    Filter_DataFrame  = file.query("continent == @FilterContinents & country_name == @FilterCountries & videoContentType == @FilterCategory")
+    if "All" in FilterContinents:
+        FilterContinents = file["continent"].unique().tolist()  # Get all values
+    if "All" in FilterCountries:
+        FilterCountries = file["country_name"].unique().tolist()  # Get all values
+    if FilterCategory == "All":
+        FilterCategory = file["videoContentType"].unique().tolist()  # Get all values
+    else:
+        FilterCategory = [FilterCategory]  # Convert to list for `.query()`
+
+    # Filter_DataFrame  = file.query("(continent == @FilterContinents | country_name == @FilterCountries) & videoContentType == @FilterCategory")
+    Filter_DataFrame = file.query(
+        "(continent in @FilterContinents | country_name in @FilterCountries) & videoContentType in @FilterCategory"
+    )
     st.dataframe(Filter_DataFrame)
 
 def streamlitSideBar(file):
@@ -84,9 +96,12 @@ def streamlitSideBar(file):
     file = file.sort_values(by = 'country_name', ascending = True)
     countries = file['country_name'].unique()
     countries = np.append(countries, 'All')
+    file = file.sort_values(by = 'videoContentType', ascending = True)
+    category = file['videoContentType'].unique()
+    category = np.append(category, 'All')
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
     FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
-    FilterCategory = st.sidebar.radio("Select Category", options  = file['videoContentType'].unique())
+    FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
     return FilterContinents, FilterCountries, FilterCategory 
 
 def top10channels(file):
