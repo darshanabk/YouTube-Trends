@@ -68,12 +68,13 @@ def ContinentCountryMapping(file):
             continue   
     return continentCountryMapping
 
-def streamlitMain(file):
+def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     st.image("./Streamlit/DevOps.png")
     st.title("DevOps YouTube Trends")
     st.header("Channel Insights")
-    st.subheader("Top 10 channels")
-    st.dataframe(file)
+    # st.subheader("Top 10 channels")
+    Filter_DataFrame  = file.query("continent == @FilterContinents & country_name == @FilterCountries & videoContentType == @FilterCategory")
+    st.dataframe(Filter_DataFrame)
 
 def streamlitSideBar(file):
     st.sidebar.header("Filter")
@@ -83,9 +84,10 @@ def streamlitSideBar(file):
     file = file.sort_values(by = 'country_name', ascending = True)
     countries = file['country_name'].unique()
     countries = np.append(countries, 'All')
-    continents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
-    countries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
-    category = st.sidebar.radio("Select Category", options  = file['videoContentType'].unique())
+    FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
+    FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
+    FilterCategory = st.sidebar.radio("Select Category", options  = file['videoContentType'].unique())
+    return FilterContinents, FilterCountries, FilterCategory 
 
 def top10channels(file):
     file = file.drop_duplicates(subset='channelName')
@@ -108,9 +110,10 @@ def top10channels(file):
 
 def main():
     file =FetchLatestFile()
-    streamlitMain(file)
-    streamlitSideBar(file)
+    FilterContinents, FilterCountries, FilterCategory  = streamlitSideBar(file)
+    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory)
     continentCountryMapping = ContinentCountryMapping(file)
+
     top10channels(file)
     
     return True
