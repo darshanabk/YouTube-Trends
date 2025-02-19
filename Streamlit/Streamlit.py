@@ -8,6 +8,7 @@ import json
 import streamlit as st
 import altair as alt
 import plotly.express as px
+import base64
 
 @st.cache_data
 def FetchLatestFile():
@@ -68,9 +69,27 @@ def ContinentCountryMapping(file):
             continue   
     return continentCountryMapping
 
+def get_base64_image(image_path):
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+        
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
-    st.image("./Streamlit/DevOps.png")
-    st.title("DevOps YouTube Trends")
+    # st.image("./Streamlit/DevOps.png")
+    # st.title("DevOps YouTube Trends")
+    # st.markdown("##")
+
+    image_path = "./Streamlit/DevOps.png"
+    base64_image = get_base64_image(image_path)
+    # Display title and image in one line using HTML + CSS
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center;">
+            <img src="data:image/png;base64,{base64_image}" width="40" style="border-radius: 50%;"margin-right: 10px;">
+            <h1 style="margin: 0; font-size: 58px;">DevOps YouTube Trends</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     st.header("Channel Insights")
     # st.subheader("Top 10 channels")
     if "All" in FilterContinents:
@@ -86,6 +105,11 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     Filter_DataFrame = file.query(
         "(continent in @FilterContinents | country_name in @FilterCountries) & videoContentType in @FilterCategory"
     )
+
+    if Filter_DataFrame.empty:
+        st.warning("No data available based on the current filter.")
+        st.stop()
+
     st.dataframe(Filter_DataFrame)
 
 def streamlitSideBar(file):
