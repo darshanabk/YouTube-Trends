@@ -1,6 +1,7 @@
+--upgrade pip
+os
 python-dotenv
 plotly
-os
 requests
 pandas
 numpy
