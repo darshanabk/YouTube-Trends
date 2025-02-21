@@ -121,26 +121,38 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
         else:
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
-
+            
 
 def top10channels(Filter_DataFrame):
-    Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelName')
-    Filter_DataFrame  = Filter_DataFrame.sort_values(by = ['channelViewCount', 'channelSubscriberCount','channelGrowthScoreRank'],ascending = [False,False,True])
-    top10channels = Filter_DataFrame[['channelName']].head(10)
-    top10channels.reset_index(drop = True, inplace = True)
-    top10channels['Rank'] = top10channels.index + 1
-    top10channels_sorted = top10channels.sort_values(by = 'Rank', ascending=True)
-    print(top10channels_sorted)
-    chart = alt.Chart(top10channels_sorted).mark_bar().encode(
-    x='Rank',  # x-axis is channel name
-    y='channelName',        # y-axis is the index (which starts from 1)
-    tooltip=['channelName', 'Rank']  # Tooltip to show channel name and index
-    ).properties(
-    title="Top 10 Channels")
+    Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({
+    'channelName': 'first',  # Keeping the first occurrence of channelName
+    'channelSubscriberCount': 'mean',
+    'channelViewCount': 'mean',
+    'channelGrowthScoreRank': 'mean'
+    })
+    Filter_DataFrame  = Filter_DataFrame.sort_values(
+        by = ['channelSubscriberCount','channelViewCount', 'channelGrowthScoreRank'],
+        ascending = [False,False,True]
+    )
+    Filter_DataFrame = Filter_DataFrame.head(10)
+    Filter_DataFrame.reset_index(inplace = True)
+    fig_top10channels = px.bar(Filter_DataFrame, 
+                               x = "channelSubscriberCount",
+                               y = "channelName",
+                               orientation = "h",
+                               title="Top 10 Channels by Subscribers",
+                               color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
+                               template="plotly_dark"
+                                )
+    
+    fig_top10channels.update_xaxes(title=None)  # Hide X-axis title
+    fig_top10channels.update_yaxes(title=None)  # Hide Y-axis title
 
-    st.altair_chart(chart, use_container_width=True)
-    # https://www.youtube.com/watch?v=<video_id>
-    # https://www.youtube.com/watch?v=3c-iBn73dDE   
+    fig_top10channels.update_layout(plot_bgcolor="rgba(0,0,0,0)", 
+                                    xaxis=dict(showgrid=False),  
+                                    yaxis=dict(categoryorder="total ascending")  
+                                    )
+    return fig_top10channels
 
 
         
@@ -183,7 +195,11 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
 
     textMetricsMain(file, Filter_DataFrame)
     st.divider()
-    top10channels(Filter_DataFrame)
+    fig_top10channels = top10channels(Filter_DataFrame)
+    
+    Left_Frame, Right_Frame = st.columns(2)
+    Left_Frame.plotly_chart(fig_top10channels,use_container_width=True)
+
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
