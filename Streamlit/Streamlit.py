@@ -121,14 +121,16 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
         else:
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
-            
+
 
 def top10channels(Filter_DataFrame):
+    Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
     Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({
     'channelName': 'first',  # Keeping the first occurrence of channelName
     'channelSubscriberCount': 'mean',
     'channelViewCount': 'mean',
-    'channelGrowthScoreRank': 'mean'
+    'channelGrowthScoreRank': 'mean',
+    'channelLink': 'first'
     })
     Filter_DataFrame  = Filter_DataFrame.sort_values(
         by = ['channelSubscriberCount','channelViewCount', 'channelGrowthScoreRank'],
@@ -142,18 +144,73 @@ def top10channels(Filter_DataFrame):
                                orientation = "h",
                                title="Top 10 Channels by Subscribers",
                                color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
-                               template="plotly_dark"
+                               template="plotly_dark",
+                               custom_data=['channelLink']
                                 )
     
     fig_top10channels.update_xaxes(title=None)  # Hide X-axis title
     fig_top10channels.update_yaxes(title=None)  # Hide Y-axis title
-
+    for i, row in Filter_DataFrame.iterrows():
+        fig_top10channels.add_annotation(
+            x=row["channelSubscriberCount"], 
+            y=row["channelName"],
+            text=f"<a href='{row['channelLink']}' target='_blank'>🔗</a>",
+            showarrow=False,
+            xshift=10  # Adjusts position slightly for better visibility
+        )
     fig_top10channels.update_layout(plot_bgcolor="rgba(0,0,0,0)", 
                                     xaxis=dict(showgrid=False),  
                                     yaxis=dict(categoryorder="total ascending")  
                                     )
     return fig_top10channels
 
+def top10videos(Filter_DataFrame):
+    Filter_DataFrame['videoLink'] = "https://www.youtube.com/watch?v=" + Filter_DataFrame['videoId']
+    Filter_DataFrame = Filter_DataFrame.groupby(by='videoId', as_index=False).agg({
+    'videoTitle': 'first', 
+    'channelName': 'first',
+    'videoLikeCount': 'mean',
+    'videoViewCount': 'mean',
+    'videoEngagementScoreRank': 'mean',
+    'videoLink': 'first'
+    })
+    Filter_DataFrame  = Filter_DataFrame.sort_values(
+        by = ['videoLikeCount','videoViewCount', 'videoEngagementScoreRank'],
+        ascending = [False,False,True]
+    )
+    Filter_DataFrame = Filter_DataFrame.head(10)
+    Filter_DataFrame.reset_index(inplace = True)
+    Filter_DataFrame["channelVideo"] = Filter_DataFrame["channelName"] + " - V" + (Filter_DataFrame.index + 1).astype(str)
+    fig_top10videos = px.bar(Filter_DataFrame, 
+                               x = "videoLikeCount",
+                               y = "channelVideo",
+                               orientation = "h",
+                               title="Top 10 videos by Likes",
+                               color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
+                               template="plotly_dark",
+                               custom_data=['videoLink']
+                                )
+    
+    fig_top10videos.update_xaxes(title=None)  # Hide X-axis title
+    fig_top10videos.update_yaxes(title=None)  # Hide Y-axis title
+    for i, row in Filter_DataFrame.iterrows():
+        fig_top10videos.add_annotation(
+            x=row["videoLikeCount"], 
+            y=row["channelVideo"],
+            text=f"<a href='{row['videoLink']}' target='_blank'>🔗</a>",
+            showarrow=False,
+            xshift=10,  # Adjusts position slightly for better visibility
+            hovertext=row["videoTitle"]
+        )
+    # fig_top10videos.update_traces(
+    #                                 hovertemplate="<b>%{y}</b><br>Likes: %{x}<br>Title:<br>%{customdata[0]}",
+    #                                 customdata=Filter_DataFrame[['videoTitle']]
+    #                             )
+    fig_top10videos.update_layout(plot_bgcolor="rgba(0,0,0,0)", 
+                                    xaxis=dict(showgrid=False),  
+                                    yaxis=dict(categoryorder="total ascending")  
+                                    )
+    return fig_top10videos, Filter_DataFrame
 
         
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
@@ -196,10 +253,10 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     textMetricsMain(file, Filter_DataFrame)
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
-    
+    fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
     Left_Frame, Right_Frame = st.columns(2)
     Left_Frame.plotly_chart(fig_top10channels,use_container_width=True)
-
+    Right_Frame.plotly_chart(fig_top10videos,use_container_width=True)
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
