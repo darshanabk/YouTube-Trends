@@ -1,2 +1,10 @@
 python-dotenv
 plotly
+os
+requests
+pandas
+numpy
+json
+streamlit
+altair
+base64
