@@ -123,7 +123,24 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
 
 
-    
+def top10channels(Filter_DataFrame):
+    Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelName')
+    Filter_DataFrame  = Filter_DataFrame.sort_values(by = ['channelViewCount', 'channelSubscriberCount','channelGrowthScoreRank'],ascending = [False,False,True])
+    top10channels = Filter_DataFrame[['channelName']].head(10)
+    top10channels.reset_index(drop = True, inplace = True)
+    top10channels['Rank'] = top10channels.index + 1
+    top10channels_sorted = top10channels.sort_values(by = 'Rank', ascending=True)
+    print(top10channels_sorted)
+    chart = alt.Chart(top10channels_sorted).mark_bar().encode(
+    x='Rank',  # x-axis is channel name
+    y='channelName',        # y-axis is the index (which starts from 1)
+    tooltip=['channelName', 'Rank']  # Tooltip to show channel name and index
+    ).properties(
+    title="Top 10 Channels")
+
+    st.altair_chart(chart, use_container_width=True)
+    # https://www.youtube.com/watch?v=<video_id>
+    # https://www.youtube.com/watch?v=3c-iBn73dDE   
 
 
         
@@ -165,8 +182,8 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
         st.stop()
 
     textMetricsMain(file, Filter_DataFrame)
-
-    st.dataframe(Filter_DataFrame)
+    top10channels(Filter_DataFrame)
+    # st.dataframe(Filter_DataFrame)
     
 
 
@@ -188,32 +205,11 @@ def streamlitSideBar(file):
     
     return FilterContinents, FilterCountries, FilterCategory 
 
-def top10channels(file):
-    file = file.drop_duplicates(subset='channelName')
-    file  = file.sort_values(by = ['channelViewCount', 'channelSubscriberCount','channelGrowthScoreRank'],ascending = [False,False,True])
-    top10channels = file[['channelName']].head(10)
-    top10channels.reset_index(drop = True, inplace = True)
-    top10channels['Rank'] = top10channels.index + 1
-    top10channels_sorted = top10channels.sort_values(by = 'Rank', ascending=True)
-    print(top10channels_sorted)
-    chart = alt.Chart(top10channels_sorted).mark_bar().encode(
-    x='Rank',  # x-axis is channel name
-    y='channelName',        # y-axis is the index (which starts from 1)
-    tooltip=['channelName', 'Rank']  # Tooltip to show channel name and index
-    ).properties(
-    title="Top 10 Channels")
-
-    st.altair_chart(chart, use_container_width=True)
-    # https://www.youtube.com/watch?v=<video_id>
-    # https://www.youtube.com/watch?v=3c-iBn73dDE
-
 def main():
     file =FetchLatestFile()
     FilterContinents, FilterCountries, FilterCategory  = streamlitSideBar(file)
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory)
     continentCountryMapping = ContinentCountryMapping(file)
-
-    top10channels(file)
     
     return True
 
