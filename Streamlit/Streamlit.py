@@ -73,6 +73,60 @@ def get_base64_image(image_path):
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
         
+
+def textMetricsMain(file, Filter_DataFrame):
+    averageVideoLikeFliteredData = Filter_DataFrame['videoLikeCount'].mean()
+    averageVideoLikeTotalData = file['videoLikeCount'].mean()# 100%
+    percentageVideoLike = ((averageVideoLikeFliteredData/averageVideoLikeTotalData)-1) * 100 if averageVideoLikeTotalData else 0
+    percentageVideoLike = round(percentageVideoLike, 0)
+
+    file = file.drop_duplicates(subset='channelId')
+    Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelId')
+
+    averageChannelViewliteredData = Filter_DataFrame['channelViewCount'].mean()
+    averageChannelViewTotalData = file['channelViewCount'].mean() # 100%
+    percentageChannelView = ((averageChannelViewliteredData/averageChannelViewTotalData)-1) * 100 if averageChannelViewTotalData else 0
+    percentageChannelView =  round(percentageChannelView, 0)
+
+    averageChannelSubscriberFliteredData = Filter_DataFrame['channelSubscriberCount'].mean()
+    averageChannelSubscriberTotalData = file['channelSubscriberCount'].mean() # 100%
+    percentageChannelSubscriber = ((averageChannelSubscriberFliteredData/averageChannelSubscriberTotalData)-1) * 100 if averageChannelSubscriberTotalData else 0
+    percentageChannelSubscriber = round(percentageChannelSubscriber, 0)
+
+    First_Frame, Second_Frame, Third_Frame = st.columns(3)
+
+    with First_Frame:
+        st.markdown(f'<h4>Average Video Likes: {averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        if percentageVideoLike < 0:
+            st.markdown(f'<h4><span style="color:red;">▼ {percentageVideoLike:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
+        elif percentageVideoLike > 0:
+            st.markdown(f'<h4><span style="color:green;">▲ {percentageVideoLike:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+
+    with Second_Frame:
+        st.markdown(f'<h4>Average Channel Views: {averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
+        if percentageChannelView < 0:
+            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelView:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
+        elif percentageChannelView > 0:
+            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelView:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+
+    with Third_Frame:
+        st.markdown(f'<h4>Average Channel Subscribers: {averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        if percentageChannelSubscriber < 0:
+            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelSubscriber:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
+        elif percentageChannelSubscriber > 0:
+            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+
+
+    
+
+
+        
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
@@ -110,7 +164,12 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
         st.warning("No data available based on the current filter.")
         st.stop()
 
+    textMetricsMain(file, Filter_DataFrame)
+
     st.dataframe(Filter_DataFrame)
+    
+
+
 
 def streamlitSideBar(file):
     st.sidebar.header("Filter")
@@ -126,6 +185,7 @@ def streamlitSideBar(file):
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
     FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
+    
     return FilterContinents, FilterCountries, FilterCategory 
 
 def top10channels(file):
