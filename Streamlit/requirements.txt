@@ -1,11 +1,7 @@
---upgrade pip
-os
 python-dotenv
 plotly
 requests
 pandas
 numpy
-json
 streamlit
 altair
-base64
