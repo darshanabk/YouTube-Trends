@@ -182,12 +182,10 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
         st.stop()
 
     textMetricsMain(file, Filter_DataFrame)
+    st.divider()
     top10channels(Filter_DataFrame)
     # st.dataframe(Filter_DataFrame)
     
-
-
-
 def streamlitSideBar(file):
     st.sidebar.header("Filter")
     file = file.sort_values(by = 'continent', ascending = True)
