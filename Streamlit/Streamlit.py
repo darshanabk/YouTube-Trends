@@ -94,9 +94,8 @@ def textMetricsMain(file, Filter_DataFrame):
     percentageChannelSubscriber = round(percentageChannelSubscriber, 0)
 
     First_Frame, Second_Frame, Third_Frame = st.columns(3)
-
     with First_Frame:
-        st.markdown(f'<h4>Average Video Likes: {averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        st.markdown(f'<h4>Average Video Likes: ❤{averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
         if percentageVideoLike < 0:
             st.markdown(f'<h4><span style="color:red;">▼ {percentageVideoLike:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
         elif percentageVideoLike > 0:
@@ -105,7 +104,7 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
 
     with Second_Frame:
-        st.markdown(f'<h4>Average Channel Views: {averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
+        st.markdown(f'<h4>Average Channel Views: 👀{averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
         if percentageChannelView < 0:
             st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelView:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
         elif percentageChannelView > 0:
@@ -114,7 +113,7 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
 
     with Third_Frame:
-        st.markdown(f'<h4>Average Channel Subscribers: {averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        st.markdown(f'<h4>Average Channel Subscribers:👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
         if percentageChannelSubscriber < 0:
             st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelSubscriber:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
         elif percentageChannelSubscriber > 0:
@@ -230,7 +229,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
         """,
         unsafe_allow_html=True
     )
-    st.header("Channel Insights")
+    # st.header("Channel Insights")
     # st.subheader("Top 10 channels")
     if "All" in FilterContinents:
         FilterContinents = file["continent"].unique().tolist()  # Get all values
@@ -257,6 +256,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     Left_Frame, Right_Frame = st.columns(2)
     Left_Frame.plotly_chart(fig_top10channels,use_container_width=True)
     Right_Frame.plotly_chart(fig_top10videos,use_container_width=True)
+    st.divider()
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
