@@ -113,11 +113,11 @@ def textMetricsMain(file, Filter_DataFrame):
             st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
 
     person_icon = f"""
-    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
         <!-- Head (Small Circle) -->
-        <circle cx="12" cy="7" r="3" stroke="#000000" stroke-width="0.5" fill="#FFFFFF" />
+        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="0.5" fill="#000000" />
         <!-- Body (Big Half Circle) -->
-        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF"  stroke-width="1" fill="#000000" />
+        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
     </svg>
     """
 
