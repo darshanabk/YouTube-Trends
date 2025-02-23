@@ -10,6 +10,7 @@ import altair as alt
 import plotly.express as px
 import base64
 
+
 @st.cache_data
 def FetchLatestFile():
     # Load environment variables from .env file
@@ -222,7 +223,7 @@ def top10videos(Filter_DataFrame):
     return fig_top10videos, Filter_DataFrame
 
         
-def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears):
+def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
@@ -249,12 +250,14 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
         FilterCountries = file["country_name"].unique().tolist()  # Get all values
     if "All" in FilterYears:
         FilterYears = file["videoPublishYear"].unique().tolist()
+    if "All" in FilterChannelNames:
+        FilterChannelNames = file["channelName"].unique().tolist()
     if FilterCategory == "All":
         FilterCategory = file["videoContentType"].unique().tolist()  # Get all values
     else:
         FilterCategory = [FilterCategory]  # Convert to list for `.query()`
 
-    Filter_DataFrame  = file.query("(continent == @FilterContinents | country_name == @FilterCountries) & videoContentType == @FilterCategory & videoPublishYear in @FilterYears")
+    Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears")
     # Filter_DataFrame = file.query("(continent in @FilterContinents & videoPublishYear in @FilterYears)| (country_name in @FilterCountries & videoPublishYear in @FilterYears) & videoContentType in @FilterCategory")
 
     if Filter_DataFrame.empty:
@@ -286,26 +289,34 @@ def streamlitSideBar(file):
     file = file.sort_values(by = 'videoContentType', ascending = True)
     category = file['videoContentType'].unique()
     category = np.append(category, 'All')
-    
+    file = file.sort_values(by = 'channelName', ascending = True)
+    channelNames = file['channelName'].unique()
+    channelNames = np.append(channelNames, 'All')
 
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
     st.sidebar.write("OR")
     FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
+    st.sidebar.write("OR")
+    FilterChannelNames = st.sidebar.multiselect("Select Channels", options = channelNames, default = 'All' )
     st.sidebar.write("AND")
     FilterYears = st.sidebar.multiselect("Select Years", options = Years, default = 'All')
     st.sidebar.write("AND")
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
     
-    return FilterContinents, FilterCountries, FilterCategory, FilterYears 
+    return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames 
 
 def main():
     file =FetchLatestFile()
-    FilterContinents, FilterCountries, FilterCategory, FilterYears  = streamlitSideBar(file)
-    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears)
+    FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames  = streamlitSideBar(file)
+    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames)
     continentCountryMapping = ContinentCountryMapping(file)
     
     return True
 
 
 if __name__ == "__main__":
+    # 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
+    # 🎯 Is in IT Hub Country?(Pei Chart),⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
+    # 🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,🏆 Channel Growth Rank,🏆 Global Rank in Engagement
+
     main()
