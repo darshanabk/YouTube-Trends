@@ -222,7 +222,7 @@ def top10videos(Filter_DataFrame):
     return fig_top10videos, Filter_DataFrame
 
         
-def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
+def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
@@ -241,19 +241,21 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory):
     )
     # st.header("Channel Insights")
     # st.subheader("Top 10 channels")
+    file["videoPublishYear"] = file["videoPublishYear"].astype(str)
+
     if "All" in FilterContinents:
         FilterContinents = file["continent"].unique().tolist()  # Get all values
     if "All" in FilterCountries:
         FilterCountries = file["country_name"].unique().tolist()  # Get all values
+    if "All" in FilterYears:
+        FilterYears = file["videoPublishYear"].unique().tolist()
     if FilterCategory == "All":
         FilterCategory = file["videoContentType"].unique().tolist()  # Get all values
     else:
         FilterCategory = [FilterCategory]  # Convert to list for `.query()`
 
-    # Filter_DataFrame  = file.query("(continent == @FilterContinents | country_name == @FilterCountries) & videoContentType == @FilterCategory")
-    Filter_DataFrame = file.query(
-        "(continent in @FilterContinents | country_name in @FilterCountries) & videoContentType in @FilterCategory"
-    )
+    Filter_DataFrame  = file.query("(continent == @FilterContinents | country_name == @FilterCountries) & videoContentType == @FilterCategory & videoPublishYear in @FilterYears")
+    # Filter_DataFrame = file.query("(continent in @FilterContinents & videoPublishYear in @FilterYears)| (country_name in @FilterCountries & videoPublishYear in @FilterYears) & videoContentType in @FilterCategory")
 
     if Filter_DataFrame.empty:
         st.warning("No data available based on the current filter.")
@@ -277,19 +279,29 @@ def streamlitSideBar(file):
     file = file.sort_values(by = 'country_name', ascending = True)
     countries = file['country_name'].unique()
     countries = np.append(countries, 'All')
+    file = file.sort_values(by ="videoPublishYear",ascending = True)
+    Years = file['videoPublishYear'].unique()
+    Years = np.append(Years, 'All')
+    Years = Years.astype(str)
     file = file.sort_values(by = 'videoContentType', ascending = True)
     category = file['videoContentType'].unique()
     category = np.append(category, 'All')
+    
+
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
+    st.sidebar.write("OR")
     FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
+    st.sidebar.write("AND")
+    FilterYears = st.sidebar.multiselect("Select Years", options = Years, default = 'All')
+    st.sidebar.write("AND")
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
     
-    return FilterContinents, FilterCountries, FilterCategory 
+    return FilterContinents, FilterCountries, FilterCategory, FilterYears 
 
 def main():
     file =FetchLatestFile()
-    FilterContinents, FilterCountries, FilterCategory  = streamlitSideBar(file)
-    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory)
+    FilterContinents, FilterCountries, FilterCategory, FilterYears  = streamlitSideBar(file)
+    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears)
     continentCountryMapping = ContinentCountryMapping(file)
     
     return True
