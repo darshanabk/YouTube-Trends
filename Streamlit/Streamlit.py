@@ -95,6 +95,14 @@ def textMetricsMain(file, Filter_DataFrame):
     percentageChannelSubscriber = ((averageChannelSubscriberFliteredData/averageChannelSubscriberTotalData)-1) * 100 if averageChannelSubscriberTotalData else 0
     percentageChannelSubscriber = round(percentageChannelSubscriber, 0)
    
+    person_icon = f"""
+    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+        <!-- Head (Small Circle) -->
+        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+        <!-- Body (Big Half Circle) -->
+        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+    </svg>
+    """
     First_column, Second_column, Third_column = st.columns(3)
     with First_column:
         st.markdown(f'<div style="font-size: 18px;">Overall Average Video Likes</div>', unsafe_allow_html=True)
@@ -113,14 +121,7 @@ def textMetricsMain(file, Filter_DataFrame):
     with Second_column:
         st.markdown(f'<h4>👀 <span style="color:#4682B4;">{averageChannelViewTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
-    person_icon = f"""
-    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-        <!-- Head (Small Circle) -->
-        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-        <!-- Body (Big Half Circle) -->
-        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-    </svg>
-    """
+   
     with Third_column:
         st.markdown(f'<h4>{person_icon}<span style="color:#4682B4;">{averageChannelSubscriberTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
@@ -184,14 +185,6 @@ def textMetricsMain(file, Filter_DataFrame):
             color = "color:red;"
         st.markdown(f'<h4>👀 <span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
 
-    person_icon = f"""
-    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-        <!-- Head (Small Circle) -->
-        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-        <!-- Body (Big Half Circle) -->
-        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-    </svg>
-    """
     with Third_column:
         difference = int(averageChannelSubscriberFliteredData - averageChannelSubscriberTotalData)
         if difference == 0:
@@ -325,6 +318,7 @@ def top10videos(Filter_DataFrame):
     return fig_top10videos, Filter_DataFrame
 
 
+# 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
 
 def ScoreGaugeChartMain(file, Filter_DataFrame):
     average_engagement_score = file['videoEngagementScore'].mean()
@@ -392,7 +386,7 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
          unsafe_allow_html=True)
         st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_engagement_score}</div>',unsafe_allow_html=True)
         # st.metric(label = "", value = average_engagement_score)
-        st.plotly_chart(fig_engagement_score)
+        st.plotly_chart(fig_engagement_score,use_container_width=True)
 
     
     with Second_Frame:
@@ -400,23 +394,24 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
          unsafe_allow_html=True)
         st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_growth_score}</div>',unsafe_allow_html=True)
         # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
-        st.plotly_chart(fig_growth_score)
+        st.plotly_chart(fig_growth_score,use_container_width=True)
 
     return True
 
+# ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`),🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
+# 🎯 Is in IT Hub Country?(Pie Chart), videoDurationClassification (Pie), videoPublishedWeekDay(Pie) , videoDefinition, videoDimension
 
+def FrequencyRatioITHubMain(file, Filter_DataFrame):
+    averageChannelVideoCount = file.groupby(by='channel', as_index=False).agg({
+    'videoTitle': 'first', 
+    'channelName': 'first',
+    'videoLikeCount': 'mean',
+    'videoViewCount': 'mean',
+    'videoEngagementScoreRank': 'mean',
+    })
+    return True
 
-# 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
-# 🎯 Is in IT Hub Country?(Pei Chart),⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
-# 🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
-
-
-
-
-
-
-
-def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames):
+def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames,FilterLicensedContent):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
@@ -436,7 +431,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     # st.header("Channel Insights")
     # st.subheader("Top 10 channels")
     file["videoPublishYear"] = file["videoPublishYear"].astype(str)
-
+    file["videoLicensedContent"] = file["videoLicensedContent"].astype(str)
     if "All" in FilterContinents:
         FilterContinents = file["continent"].unique().tolist()  # Get all values
     if "All" in FilterCountries:
@@ -449,8 +444,12 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
         FilterCategory = file["videoContentType"].unique().tolist()  # Get all values
     else:
         FilterCategory = [FilterCategory]  # Convert to list for `.query()`
+    if FilterLicensedContent == "All":
+        FilterLicensedContent = file["videoLicensedContent"].unique().tolist()
+    else:
+        FilterLicensedContent = [FilterLicensedContent]
 
-    Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears")
+    Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears & videoLicensedContent in @FilterLicensedContent")
     # Filter_DataFrame = file.query("(continent in @FilterContinents & videoPublishYear in @FilterYears)| (country_name in @FilterCountries & videoPublishYear in @FilterYears) & videoContentType in @FilterCategory")
 
     if Filter_DataFrame.empty:
@@ -488,6 +487,11 @@ def streamlitSideBar(file):
     file = file.sort_values(by = 'channelName', ascending = True)
     channelNames = file['channelName'].unique()
     channelNames = np.append(channelNames, 'All')
+    file = file.sort_values(by = 'videoLicensedContent', ascending = True)
+    licensedContent = file['videoLicensedContent'].unique()
+    licensedContent = np.append(licensedContent, 'All')
+    licensedContent = licensedContent.astype(str)
+
 
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
     st.sidebar.write("OR")
@@ -498,22 +502,21 @@ def streamlitSideBar(file):
     FilterYears = st.sidebar.multiselect("Select Years", options = Years, default = 'All')
     st.sidebar.write("AND")
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
+    st.sidebar.write("AND")
+    FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
     
-    return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames 
+    return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
 
 def main():
     file =FetchLatestFile()
-    FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames  = streamlitSideBar(file)
-    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames)
+    FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
+    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
     continentCountryMapping = ContinentCountryMapping(file)
     
     return True
 
 
 if __name__ == "__main__":
-    # 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
-    # 🎯 Is in IT Hub Country?(Pei Chart),⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
-    # 🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,🏆 Channel Growth Rank,🏆 Global Rank in Engagement
     st.markdown( 
 """
     <style>
