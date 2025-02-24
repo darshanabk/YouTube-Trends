@@ -6,7 +6,7 @@ This project aims to automate the extraction, analysis, and visualization of You
 ---
 
 ## Deliverables
-- **Project Scope Document**: This document outlining the project's objectives, tools, and deliverables.
+- **Project Scope Document**: This document outlines the project's objectives, tools, and deliverables.
 - **Milestone Timeline**: A detailed timeline with tracked progress.
 - **Automated Scripts**: 
   - Data extraction using the YouTube Data API.
@@ -30,7 +30,7 @@ This project aims to automate the extraction, analysis, and visualization of You
 | **Category**         | **Tool/Technology**               |
 |----------------------|-----------------------------------|
 | **Programming Language** | Python                          |
-| **Data Visualization**   | Streamlit, Matplotlib, Seaborn, Power BI (optional) |
+| **Data Visualization**   | Streamlit, Matplotlib, Seaborn, Power BI |
 | **Data Storage**         | GitHub (JSON files)             |
 | **API Integration**      | YouTube Data API                |
 | **Version Control**      | Git, GitHub                     |
