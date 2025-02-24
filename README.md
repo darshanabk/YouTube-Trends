@@ -3,17 +3,24 @@
   <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube_icon.png" width="1000" height = "500" title="hover text">
 </p>
 
-This project is **an ongoing** initiative to develop a pipeline that retrieves the top video details based on specific keywords, sorted by the most viewed count, from YouTube using the YouTube Data API. The pipeline processes the data and uploads it to a GitHub repository, aiming to automate the fetching, analysis, and storage of data for actionable insights.
+## **Overview**
+This project is an ongoing initiative aimed at developing an automated pipeline to extract and process video data from YouTube based on specific keywords. Leveraging the YouTube Data API, the pipeline retrieves the most-viewed videos matching the criteria and systematically stores the data in a GitHub repository. The goal is to automate data retrieval, analysis, and storage, enabling actionable insights.
 
-## Source - Layer -1 Raw data
-- **Code Implementation** :
+## Project Scope
+- **Detailed Project Scope**:
+  - [View Scope](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/ProjectScope.md)
+
+## **Source**
+#### Code Implementation
+- **Data Extraction Script**:
   - [View Script](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/sourcedaily.ipynb)
-  - This script contains the logic for data extraction and processing.
-- **Extracted Data**      :
-  - [Raw Data Collection](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Source/Daily)
-  - This directory stores the JSON files with extracted raw data.
+  - This script implements the logic for extracting and processing YouTube video data.
+#### Extracted Data
+- **Raw Data Repository**:
+  - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Source/Daily)
+  - This directory contains JSON files storing raw extracted data, updated daily.
 
-### 1. Features:
+<!-- ### 1. Features:
    - **YouTube Data Extraction**:
       - Fetch top videos based on keywords using the YouTube Data API.
       - Extract details like video title, channel name, view count, likes, comments, and tags.
@@ -41,7 +48,44 @@ This project is **an ongoing** initiative to develop a pipeline that retrieves t
       - **GitHub**: Store and manage extracted data.
 ###  2. Additional Libraries:
    - `from googleapiclient.discovery import build`: For interacting with the YouTube API.
-   - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle.
+   - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle. -->
+
+## **Data Cleaning**
+#### Code Implementation
+- **Data Cleaning Script**:
+  - [View Script](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/dataCleaning.ipynb)
+  - This script performs data preprocessing and ensures data consistency.
+
+#### Processed Data
+- **Cleaned Data Repository**:
+  - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/DataCleaning/Daily)
+  - This directory stores cleaned JSON files, updated daily.
+
+## **Requirements**
+#### Code Implementation
+- **Requirement Extraction Script**:
+  - [View Script](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/country-codes-iso-3166-1-alpha-2-continent-code.ipynb)
+  - This script extracts and processes required metadata.
+
+#### Extracted Data
+- **Requirement Data Repository**:
+  - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Requirement/Daily)
+  - This directory stores structured requirement data in JSON format.
+
+## **Feature Engineering**
+#### Code Implementation
+- **Feature Engineering Script**:
+  - [View Script](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/country-codes-iso-3166-1-alpha-2-continent-code.ipynb)
+  - This script processes cleaned data for feature extraction.
+
+#### Engineered Data
+- **Processed Feature Repository**:
+  - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Requirement/Daily)
+  - This directory contains feature-engineered data stored in JSON format.
+
+This project ensures efficient and automated extraction, processing, and storage of YouTube video data, making it a valuable resource for content trend analysis.
+
+
 
 ## License
 
