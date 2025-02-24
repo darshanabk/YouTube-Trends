@@ -8,6 +8,7 @@ import json
 import streamlit as st
 import altair as alt
 import plotly.express as px
+import plotly.graph_objects as go
 import base64
 
 
@@ -76,42 +77,41 @@ def get_base64_image(image_path):
         
 
 def textMetricsMain(file, Filter_DataFrame):
-    averageVideoLikeFliteredData = Filter_DataFrame['videoLikeCount'].mean()
-    averageVideoLikeTotalData = file['videoLikeCount'].mean()# 100%
+    averageVideoLikeFliteredData = (Filter_DataFrame['videoLikeCount'].mean()).round(0)
+    averageVideoLikeTotalData = (file['videoLikeCount'].mean()).round(0)# 100%
     percentageVideoLike = ((averageVideoLikeFliteredData/averageVideoLikeTotalData)-1) * 100 if averageVideoLikeTotalData else 0
     percentageVideoLike = round(percentageVideoLike, 0)
 
     file = file.drop_duplicates(subset='channelId')
     Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelId')
 
-    averageChannelViewliteredData = Filter_DataFrame['channelViewCount'].mean()
-    averageChannelViewTotalData = file['channelViewCount'].mean() # 100%
+    averageChannelViewliteredData = (Filter_DataFrame['channelViewCount'].mean()).round(0)
+    averageChannelViewTotalData = (file['channelViewCount'].mean()).round(0) # 100%
     percentageChannelView = ((averageChannelViewliteredData/averageChannelViewTotalData)-1) * 100 if averageChannelViewTotalData else 0
     percentageChannelView =  round(percentageChannelView, 0)
 
-    averageChannelSubscriberFliteredData = Filter_DataFrame['channelSubscriberCount'].mean()
-    averageChannelSubscriberTotalData = file['channelSubscriberCount'].mean() # 100%
+    averageChannelSubscriberFliteredData = (Filter_DataFrame['channelSubscriberCount'].mean()).round(0)
+    averageChannelSubscriberTotalData = (file['channelSubscriberCount'].mean().round(0)) # 100%
     percentageChannelSubscriber = ((averageChannelSubscriberFliteredData/averageChannelSubscriberTotalData)-1) * 100 if averageChannelSubscriberTotalData else 0
     percentageChannelSubscriber = round(percentageChannelSubscriber, 0)
+   
+    First_column, Second_column, Third_column = st.columns(3)
+    with First_column:
+        st.markdown(f'<div style="font-size: 18px;">Overall Average Video Likes</div>', unsafe_allow_html=True)
+        
+    with Second_column:
+        st.markdown(f'<div style="font-size: 18px;">Overall Average Channel Views</div>', unsafe_allow_html=True)
 
-    First_Frame, Second_Frame, Third_Frame = st.columns(3)
-    with First_Frame:
-        st.markdown(f'<h4>Average Video Likes: ❤{averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
-        if percentageVideoLike < 0:
-            st.markdown(f'<h4><span style="color:red;">▼ {percentageVideoLike:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
-        elif percentageVideoLike > 0:
-            st.markdown(f'<h4><span style="color:green;">▲ {percentageVideoLike:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+    with Third_column:
+        # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        st.markdown(f'<div style="font-size: 18px;">Overall Average Channel Subscribers</div>', unsafe_allow_html=True)
+    
+    First_column, Second_column, Third_column = st.columns(3)
+    with First_column:
+        st.markdown(f'<h4>❤ <span style="color:#4682B4;">{averageVideoLikeTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
-    with Second_Frame:
-        st.markdown(f'<h4>Average Channel Views: 👀{averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
-        if percentageChannelView < 0:
-            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelView:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
-        elif percentageChannelView > 0:
-            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelView:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+    with Second_column:
+        st.markdown(f'<h4>👀 <span style="color:#4682B4;">{averageChannelViewTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
     person_icon = f"""
     <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
@@ -121,17 +121,119 @@ def textMetricsMain(file, Filter_DataFrame):
         <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
     </svg>
     """
+    with Third_column:
+        st.markdown(f'<h4>{person_icon}<span style="color:#4682B4;">{averageChannelSubscriberTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
-    with Third_Frame:
-        # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-        st.markdown(f'<h4>Average Channel Subscribers:{person_icon} {averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-        if percentageChannelSubscriber < 0:
-            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelSubscriber:.0f}% lower than the overall average.</span></h4>', unsafe_allow_html=True)
-        elif percentageChannelSubscriber > 0:
-            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% higher than the overall average.</span></h4>', unsafe_allow_html=True)
+    First_column, Second_column, Third_column = st.columns(3)
+    with First_column:
+        if percentageVideoLike < 0:
+            st.markdown(f'<h4><span style="color:red;">▼ {percentageVideoLike:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
+        elif percentageVideoLike > 0:
+            st.markdown(f'<h4><span style="color:green;">▲ {percentageVideoLike:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
         else:
-            st.markdown(f'<h4><span style="color:#4682B4;">⬤ Average percentage: 100%.</span></h4>', unsafe_allow_html=True)
+            st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average video likes</h4>', unsafe_allow_html=True)
 
+    with Second_column:
+        if percentageChannelView < 0:
+            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelView:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
+        elif percentageChannelView > 0:
+            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelView:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average channel views</h4>', unsafe_allow_html=True)
+    
+    with Third_column:
+            if percentageChannelSubscriber < 0:
+                st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelSubscriber:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
+            elif percentageChannelSubscriber > 0:
+                st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
+            else:
+                st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average channel subscribers</h4>', unsafe_allow_html=True)
+
+
+    First_column, Second_column, Third_column = st.columns(3)
+    with First_column:
+        st.markdown(f'<div style="font-size: 18px;">Like Difference</div>', unsafe_allow_html=True)
+        
+    with Second_column:
+        st.markdown(f'<div style="font-size: 18px;">View Difference</div>', unsafe_allow_html=True)
+
+    with Third_column:
+        # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+        st.markdown(f'<div style="font-size: 18px;">Subscriber Difference</div>', unsafe_allow_html=True)
+        
+    First_column, Second_column, Third_column = st.columns(3)
+    with First_column:
+        difference =  int(averageVideoLikeFliteredData - averageVideoLikeTotalData)
+        if difference == 0:
+            color = "color:#4682B4;"
+        elif difference > 0:
+            color = "color:green;"
+            difference = "+"+str(difference)
+        elif difference <0:
+            color = "color:red;"
+        st.markdown(f'<h4>❤ <span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
+
+    with Second_column:
+        difference = int(averageChannelViewliteredData - averageChannelViewTotalData)
+        if difference == 0:
+            color = "color:#4682B4;"
+        elif difference > 0:
+            color = "color:green;"
+            difference = "+"+str(difference)
+        elif difference <0:
+            color = "color:red;"
+        st.markdown(f'<h4>👀 <span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
+
+    person_icon = f"""
+    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+        <!-- Head (Small Circle) -->
+        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+        <!-- Body (Big Half Circle) -->
+        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+    </svg>
+    """
+    with Third_column:
+        difference = int(averageChannelSubscriberFliteredData - averageChannelSubscriberTotalData)
+        if difference == 0:
+            color = "color:#4682B4;"
+        elif difference > 0:
+            color = "color:green;"
+            difference = "+"+str(difference)
+        elif difference <0:
+            color = "color:red;"
+        st.markdown(f'<h4>{person_icon}<span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
+
+    # First_column, Second_column, Third_column = st.columns(3)
+    # with First_column:
+    #     st.markdown(f'<div style="font-size: 18px;">Average Video Likes</div>', unsafe_allow_html=True)
+        
+    # with Second_column:
+    #     st.markdown(f'<div style="font-size: 18px;">Average Channel Views</div>', unsafe_allow_html=True)
+
+    # with Third_column:
+    #     # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+    #     st.markdown(f'<div style="font-size: 18px;">Average Channel Subscribers</div>', unsafe_allow_html=True)
+        
+    # First_column, Second_column, Third_column = st.columns(3)
+    # with First_column:
+    #     st.markdown(f'<h4>❤ {averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
+
+    # with Second_column:
+    #     st.markdown(f'<h4>👀 {averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
+
+    # person_icon = f"""
+    # <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+    #     <!-- Head (Small Circle) -->
+    #     <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+    #     <!-- Body (Big Half Circle) -->
+    #     <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+    # </svg>
+    # """
+    # with Third_column:
+    #     st.markdown(f'<h4>{person_icon}{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
+    
+    
+    
 
 def top10channels(Filter_DataFrame):
     Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
@@ -222,7 +324,98 @@ def top10videos(Filter_DataFrame):
                                     )
     return fig_top10videos, Filter_DataFrame
 
+
+
+def ScoreGaugeChartMain(file, Filter_DataFrame):
+    average_engagement_score = file['videoEngagementScore'].mean()
+    average_engagement_score = average_engagement_score.round(0)
+    min_engagement_score = file['videoEngagementScore'].min()
+    max_engagement_score = file['videoEngagementScore'].max()
+    filtered_average_engagement_score = Filter_DataFrame['videoEngagementScore'].mean()
+    filtered_average_engagement_score = filtered_average_engagement_score.round(0)
+    if filtered_average_engagement_score < average_engagement_score:
+        range_engagement_score = [min_engagement_score, average_engagement_score+1]
+        color_engagement_score = "red"
+    else:
+        range_engagement_score = [average_engagement_score, max_engagement_score+1]
+        color_engagement_score = "green"
+
+    average_growth_score = file['channelGrowthScore'].mean()
+    average_growth_score = average_growth_score.round(0)
+    min_growth_score = file['channelGrowthScore'].min()
+    max_growth_score = file['channelGrowthScore'].max()
+    filtered_average_growth_score = Filter_DataFrame['channelGrowthScore'].mean()
+    filtered_average_growth_score = filtered_average_growth_score.round(0)
+    if filtered_average_growth_score < average_growth_score:
+        range_growth_score = [min_growth_score, average_growth_score+1]
+        color_growth_score = "red"
+    else:
+        range_growth_score = [average_growth_score, max_growth_score+1]
+        color_growth_score = "green"
+
+
+    fig_engagement_score = go.Figure(go.Indicator(
+        mode = 'gauge+number+delta',
+        delta = {"reference": average_engagement_score, "relative": False, "valueformat": ".0f"},
+        value = filtered_average_engagement_score,
+        number={"valueformat": ".0f"}, 
+        title = {'text': "Average Engagement Score", "font": {"size": 18}},
+        gauge={
+        "axis": {"range": range_engagement_score},
+        "bar": {"color": "black"},
+        "steps": [
+            {"range": range_engagement_score, "color":color_engagement_score}]
         
+    }
+    ))
+
+    fig_growth_score = go.Figure(go.Indicator(
+        mode = 'gauge+number+delta',
+        delta = {"reference": average_growth_score,"relative": False, "valueformat": ".0f"},
+        value = filtered_average_growth_score,
+        number={"valueformat": ".0f"}, 
+        title = {'text': "Average Growth Score", "font": {"size": 18}},
+        gauge={
+        "axis": {"range": range_growth_score},
+        "bar": {"color": "black"},
+        "steps": [
+            {"range": range_growth_score, "color": color_growth_score}
+        ]
+        
+    }
+    ))
+
+    First_Frame, Second_Frame = st.columns(2)
+
+    with First_Frame:
+        st.markdown('<div style="font-size: 18px;">Overall Average Video Engagement  Score</div>',
+         unsafe_allow_html=True)
+        st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_engagement_score}</div>',unsafe_allow_html=True)
+        # st.metric(label = "", value = average_engagement_score)
+        st.plotly_chart(fig_engagement_score)
+
+    
+    with Second_Frame:
+        st.markdown('<div style="font-size: 18px;">Overall Average Channel Growth Score</div>',
+         unsafe_allow_html=True)
+        st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_growth_score}</div>',unsafe_allow_html=True)
+        # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
+        st.plotly_chart(fig_growth_score)
+
+    return True
+
+
+
+# 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
+# 🎯 Is in IT Hub Country?(Pei Chart),⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
+# 🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
+
+
+
+
+
+
+
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
@@ -234,8 +427,8 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     st.markdown(
         f"""
         <div style="display: flex; align-items: center;">
-            <img src="data:image/png;base64,{base64_image}" width="40" height = "40" style="border-radius: 50%;"margin-right: 10px;">
-            <h1 style="margin: 0; font-size: 58px;">DevOps YouTube Trends</h1>
+            <div class="animated-box"><img src="data:image/png;base64,{base64_image}" width="40" height = "40" style="border-radius: 50%;"margin-right: 10px;"></div>
+            <h1 style="margin: 0; font-size: 58px;" class = "custom-text">DevOps YouTube Trends</h1>
         </div>
         """,
         unsafe_allow_html=True
@@ -266,12 +459,15 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
 
     textMetricsMain(file, Filter_DataFrame)
     st.divider()
+    ScoreGaugeChartMain(file, Filter_DataFrame)
+    st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
     Left_Frame, Right_Frame = st.columns(2)
     Left_Frame.plotly_chart(fig_top10channels,use_container_width=True)
     Right_Frame.plotly_chart(fig_top10videos,use_container_width=True)
     st.divider()
+   
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
@@ -318,5 +514,49 @@ if __name__ == "__main__":
     # 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
     # 🎯 Is in IT Hub Country?(Pei Chart),⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
     # 🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,🏆 Channel Growth Rank,🏆 Global Rank in Engagement
+    st.markdown( 
+"""
+    <style>
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .animated-box {
+            width: 45px;
+            height: 50px;
+            background-color:white;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px 0px 20px 0px;
+           box-shadow: 4px 4px 15px #ff4b4b;
+            animation: popUp 0.5s ease-out;
+            margin: 10px;
+        }
+        :root {
+            --shadow-color: rgba(70, 130, 180, 0.6);  /* Light blue shadow for light mode */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --shadow-color: rgba(135, 206, 250, 0.8);  /* Sky blue shadow for dark mode */
+            }
+        }
+
+        .custom-text {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            color: inherit;  /* Inherit text color from theme */
+            text-shadow: 1px 1px 3px var(--shadow-color); /* Adaptive shadow */
+        }
+    </style>
+    """,
+        unsafe_allow_html=True
+    )
 
     main()
