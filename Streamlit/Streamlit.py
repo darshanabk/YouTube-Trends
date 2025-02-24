@@ -12,6 +12,8 @@ import plotly.graph_objects as go
 import base64
 
 
+
+
 @st.cache_data
 def FetchLatestFile():
     # Load environment variables from .env file
@@ -513,10 +515,12 @@ def main():
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
     continentCountryMapping = ContinentCountryMapping(file)
     
+
     return True
 
 
 if __name__ == "__main__":
+    st.set_page_config(layout="wide")
     st.markdown( 
 """
     <style>
