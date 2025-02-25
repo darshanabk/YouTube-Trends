@@ -214,7 +214,7 @@ def top10channels(Filter_DataFrame):
                                     yaxis=dict(categoryorder="total ascending"),
                                     autosize=True,
                                     width=None,  # Allows automatic width adjustment
-                                    height=500   
+                                    height = None
                                     )
     return fig_top10channels
 
@@ -265,7 +265,7 @@ def top10videos(Filter_DataFrame):
                                     yaxis=dict(categoryorder="total ascending"),
                                     autosize=True,
                                     width=None,  # Allows automatic width adjustment
-                                    height=500  
+                                    height = None
                                     )
     return fig_top10videos, Filter_DataFrame
 
@@ -299,9 +299,10 @@ def averageScoreGaugeChart(file,Filter_DataFrame,column,title):
         }
         ))
         fig_score.update_layout(
+            margin=dict(l=0, r=0, t=0, b=0),
             autosize=True,
             width=None,  # Allows automatic width adjustment
-            height=500
+            height=None
         )
         return averageScore, fig_score
 
@@ -334,33 +335,68 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
 
 def FrequencyRatioITHubMain(file, Filter_DataFrame):
     def averageFrequency(dataframe):
-        channelVideoCountAgeInYears = dataframe.groupby(by='channelId', as_index=False).agg({ 
+        dataframe = dataframe.groupby(by='channelId', as_index=False).agg({ 
         'channelName': 'first',
         'channelAgeInYears': 'mean',
         'channelVideoCount': 'mean',
         })
-        averageChannelVideoCount = channelVideoCountAgeInYears['channelVideoCount'].mean()
-        averageChannelAgeInYears = channelVideoCountAgeInYears['channelAgeInYears'].mean()
-        averageUploadFreq = (averageChannelVideoCount / averageChannelAgeInYears) if averageChannelAgeInYears > 0 else 0
+        averageChannelVideoCount = dataframe['channelVideoCount'].mean()
+        averageChannelAgeInYears = dataframe['channelAgeInYears'].mean()
+        averageUploadFreq = (averageChannelVideoCount / averageChannelAgeInYears) if averageChannelAgeInYears else 0
         return  averageUploadFreq
     
     averageUploadFreq = averageFrequency(Filter_DataFrame)
     averageOverallUploadFreq =averageFrequency(file)
 
+    def averageRatio(file,Filter_DataFrame,column):
+        averageFileRatio = file[column].mean()
+        averageFilterRatio = Filter_DataFrame[column].mean()
+        percentageDifference = ((averageFilterRatio / averageFileRatio)-1)*100 if averageFileRatio else 0
+        return  averageFileRatio,averageFilterRatio ,percentageDifference
 
     first_column, second_column = st.columns([1, 2])
     with first_column:
-        delta_value = averageUploadFreq - averageOverallUploadFreq
-        percentage_change = (delta_value / averageOverallUploadFreq) * 100 if averageOverallUploadFreq != 0 else 0
-        delta_text = f"{delta_value:.0f} ({percentage_change:.0f}%)"
-        st.markdown('<h5>Average Upload Frequency</h5>',unsafe_allow_html=True)
-        # Display metric
-        st.metric(
-            label="Videos Per Year",
-            value=f"⏳{averageUploadFreq:.0f}",
-            delta=delta_text,
-            delta_color = "normal"
-        )
+        with st.container():
+            # ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
+            delta_value = averageUploadFreq - averageOverallUploadFreq
+            percentage_change = (delta_value / averageOverallUploadFreq) * 100 if averageOverallUploadFreq else 0
+            delta_text = f"{delta_value:.0f} (Percentage Change: {percentage_change:.0f}%)"
+            st.markdown('<h5>Average Upload Frequency</h5>',unsafe_allow_html=True)
+            # Display metric
+            st.metric(
+                label=f"{averageUploadFreq:.0f} videos posted per year",
+                value=f"⏳{averageUploadFreq:.0f}",
+                delta=delta_text,
+                delta_color = "normal"
+            )
+            st.write("")
+        with st.container():
+            #🎯 Like-to-View Ratio
+            averageFileRatio,averageFilterRatio, percentage_change  = averageRatio(file,Filter_DataFrame,"videoLikeToViewRatio")
+            delta_value = averageFilterRatio - averageFileRatio
+            delta_text = f"{delta_value:.4f} (Percentage Change: {percentage_change:.0f}%)"
+            st.markdown('<h5>Average Like to View Ratio</h5>',unsafe_allow_html=True)
+            # Display metric
+            st.metric(
+                label=f"Out of every 100 views, {averageFilterRatio:.4f}% received a like",
+                value=f"🎯{averageFilterRatio:.4f}",
+                delta=delta_text,
+                delta_color = "normal"
+            )
+            st.write("")
+        with st.container():
+            # 💬 Comment-to-View Ratio
+            averageFileRatio,averageFilterRatio, percentage_change  = averageRatio(file,Filter_DataFrame,"videoCommentToViewRatio")
+            delta_value = averageFilterRatio - averageFileRatio
+            delta_text = f"{delta_value:.4f} (Percentage Change: {percentage_change:.0f}%)"
+            st.markdown('<h5>Average Comment to View Ratio</h5>',unsafe_allow_html=True)
+            # Display metric
+            st.metric(
+                label=f"Out of every 100 views, {averageFilterRatio:.4f}% received a comment",
+                value=f"💬{averageFilterRatio:.4f}",
+                delta=delta_text,
+                delta_color = "normal"
+            )
 
     with second_column:
         ScoreGaugeChartMain(file, Filter_DataFrame)
@@ -379,7 +415,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
         f"""
         <div style="display: flex; align-items: center;">
             <div class="animated-box"><img src="data:image/png;base64,{base64_image}" width="35" height = "35" style="border-radius: 50%;"margin-right: 10px;"></div>
-            <h1 style="margin: 0; font-size: 40px;" >DevOps YouTube Trends</h1>
+            <h1 style="margin: 0; font-size: 40px"> &nbsp; DevOps YouTube Trends</h1>
         </div>
         """,
         unsafe_allow_html=True
