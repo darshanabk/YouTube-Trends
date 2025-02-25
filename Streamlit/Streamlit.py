@@ -190,13 +190,13 @@ def top10channels(Filter_DataFrame):
     Filter_DataFrame = Filter_DataFrame.head(10)
     Filter_DataFrame.reset_index(inplace = True)
     fig_top10channels = px.bar(Filter_DataFrame, 
-                               x = "channelSubscriberCount",
-                               y = "channelName",
-                               orientation = "h",
+                            x = "channelSubscriberCount",
+                            y = "channelName",
+                            orientation = "h",
                             #    title="Top 10 Channels by Subscribers",
-                               color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
-                               template="plotly_dark",
-                               custom_data=['channelLink']
+                            color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
+                            template="plotly_dark",
+                            custom_data=['channelLink']
                                 )
     
     fig_top10channels.update_xaxes(title=None)  # Hide X-axis title
@@ -236,13 +236,13 @@ def top10videos(Filter_DataFrame):
     Filter_DataFrame.reset_index(inplace = True)
     Filter_DataFrame["channelVideo"] = Filter_DataFrame["channelName"] + " - V" + (Filter_DataFrame.index + 1).astype(str)
     fig_top10videos = px.bar(Filter_DataFrame, 
-                               x = "videoLikeCount",
-                               y = "channelVideo",
-                               orientation = "h",
+                            x = "videoLikeCount",
+                            y = "channelVideo",
+                            orientation = "h",
                             #    title="Top 10 videos by Likes",
-                               color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
-                               template="plotly_dark",
-                               custom_data=['videoLink']
+                            color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
+                            template="plotly_dark",
+                            custom_data=['videoLink']
                                 )
     
     fig_top10videos.update_xaxes(title=None)  # Hide X-axis title
@@ -315,7 +315,7 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
 
     with First_Frame:
         st.markdown('<h5>Overall Average Video Engagement  Score</h5>',
-         unsafe_allow_html=True)
+        unsafe_allow_html=True)
         st.markdown(f'<div style = "font-size: 36px;">🎯{average_engagement_score:.0f}</div>',unsafe_allow_html=True)
         # st.metric(label = "", value = average_engagement_score)
         First_Frame.plotly_chart(fig_engagement_score,use_container_width=True)
@@ -323,7 +323,7 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
     
     with Second_Frame:
         st.markdown('<h5>Overall Average Channel Growth Score</h5>',
-         unsafe_allow_html=True)
+        unsafe_allow_html=True)
         st.markdown(f'<div style = "font-size: 36px;">🎯{average_growth_score:.0f}</div>',unsafe_allow_html=True)
         # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
         Second_Frame.plotly_chart(fig_growth_score,use_container_width=True)
@@ -463,7 +463,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     Right_Frame.plotly_chart(fig_top10videos,use_container_width=True)
     st.divider()
     
-   
+
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
