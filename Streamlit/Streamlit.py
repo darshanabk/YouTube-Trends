@@ -1,4 +1,3 @@
-
 import os
 from dotenv import load_dotenv
 import requests
@@ -10,8 +9,6 @@ import altair as alt
 import plotly.express as px
 import plotly.graph_objects as go
 import base64
-
-
 
 
 @st.cache_data
@@ -77,158 +74,104 @@ def get_base64_image(image_path):
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
         
-
-def textMetricsMain(file, Filter_DataFrame):
-    averageVideoLikeFliteredData = (Filter_DataFrame['videoLikeCount'].mean()).round(0)
-    averageVideoLikeTotalData = (file['videoLikeCount'].mean()).round(0)# 100%
+    
+def TextMetricMain(file, Filter_DataFrame):
+    averageVideoLikeFliteredData = Filter_DataFrame['videoLikeCount'].mean()
+    averageVideoLikeTotalData = file['videoLikeCount'].mean()# 100%
     percentageVideoLike = ((averageVideoLikeFliteredData/averageVideoLikeTotalData)-1) * 100 if averageVideoLikeTotalData else 0
-    percentageVideoLike = round(percentageVideoLike, 0)
+
+    averageVideoViewFliteredData = Filter_DataFrame['videoViewCount'].mean()
+    averageVideoViewTotalData = file['videoViewCount'].mean()# 100%
+    percentageVideoView = ((averageVideoViewFliteredData/averageVideoViewTotalData)-1) * 100 if averageVideoViewTotalData else 0
 
     file = file.drop_duplicates(subset='channelId')
     Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelId')
 
-    averageChannelViewliteredData = (Filter_DataFrame['channelViewCount'].mean()).round(0)
-    averageChannelViewTotalData = (file['channelViewCount'].mean()).round(0) # 100%
+    averageChannelViewliteredData = Filter_DataFrame['channelViewCount'].mean()
+    averageChannelViewTotalData = file['channelViewCount'].mean() # 100%
     percentageChannelView = ((averageChannelViewliteredData/averageChannelViewTotalData)-1) * 100 if averageChannelViewTotalData else 0
-    percentageChannelView =  round(percentageChannelView, 0)
 
-    averageChannelSubscriberFliteredData = (Filter_DataFrame['channelSubscriberCount'].mean()).round(0)
-    averageChannelSubscriberTotalData = (file['channelSubscriberCount'].mean().round(0)) # 100%
+    averageChannelSubscriberFliteredData = Filter_DataFrame['channelSubscriberCount'].mean()
+    averageChannelSubscriberTotalData = file['channelSubscriberCount'].mean() # 100%
     percentageChannelSubscriber = ((averageChannelSubscriberFliteredData/averageChannelSubscriberTotalData)-1) * 100 if averageChannelSubscriberTotalData else 0
-    percentageChannelSubscriber = round(percentageChannelSubscriber, 0)
-   
-    person_icon = f"""
-    <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-        <!-- Head (Small Circle) -->
-        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-        <!-- Body (Big Half Circle) -->
-        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-    </svg>
-    """
-    First_column, Second_column, Third_column = st.columns(3)
+
+    First_column, Second_column, Third_column = st.columns([1,2,1])
+    Sub_column1, Sub_column2 = Second_column.columns(2)
+
     with First_column:
-        st.markdown(f'<div style="font-size: 18px;">Overall Average Video Likes</div>', unsafe_allow_html=True)
-        
-    with Second_column:
-        st.markdown(f'<div style="font-size: 18px;">Overall Average Channel Views</div>', unsafe_allow_html=True)
+        delta_value = averageVideoLikeFliteredData - averageVideoLikeTotalData
+        # delta_text = f"{delta_value:.0f} ({percentageVideoLike:.0f}%)"
+        delta_text = f"{delta_value:.0f}"
+        st.markdown("<h5>❤  Average Likes</h5>", unsafe_allow_html=True)
+        # Display metric
+        st.metric(
+            label="Video",
+            value=f"{averageVideoLikeFliteredData:.0f}",
+            delta=delta_text,
+            delta_color = "normal"
+        )
+
+    with Sub_column1:
+        delta_value = averageVideoViewFliteredData - averageVideoViewTotalData
+        # delta_text = f"{delta_value:.0f} ({percentageChannelView:.0f}%)"
+        delta_text = f"{delta_value:.0f}"
+        st.markdown("<h5>👀 Average Views</h5>", unsafe_allow_html=True)
+        # Display metric
+        st.metric(
+            label="Video",
+            value=f"{averageVideoViewFliteredData:.0f}",
+            delta=delta_text,
+            delta_color = "normal"
+        )
+
+    with Sub_column2:
+        delta_value = averageChannelViewliteredData - averageChannelViewTotalData
+        # delta_text = f"{delta_value:.0f} ({percentageChannelView:.0f}%)"
+        delta_text = f"{delta_value:.0f}"
+        st.markdown("<h5>👀 Average Views</h5>", unsafe_allow_html=True)
+        # Display metric
+        st.metric(
+            label="Channel",
+            value=f"{averageChannelViewliteredData:.0f}",
+            delta=delta_text,
+            delta_color = "normal"
+        )
 
     with Third_column:
-        # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-        st.markdown(f'<div style="font-size: 18px;">Overall Average Channel Subscribers</div>', unsafe_allow_html=True)
+        delta_value = averageChannelSubscriberFliteredData - averageChannelSubscriberTotalData
+        # delta_text = f"{delta_value:.0f} ({percentageChannelSubscriber:.0f}%)"
+        delta_text = f"{delta_value:.0f}"
+        # st.markdown(f"<h5p>{person_icon}Average Channel Subscribers</h5>", unsafe_allow_html=True)
+        st.write(f"<h5>{person_icon} Average Subscribers</h5>", unsafe_allow_html=True)
+        # Display metric
+        st.metric(
+            label="Channel",
+            value=f"{averageChannelSubscriberFliteredData:.0f}",
+            delta=delta_text,
+            delta_color = "normal"
+        )
+
     
-    First_column, Second_column, Third_column = st.columns(3)
-    with First_column:
-        st.markdown(f'<h4>❤ <span style="color:#4682B4;">{averageVideoLikeTotalData:.0f}</span></h4>', unsafe_allow_html=True)
 
-    with Second_column:
-        st.markdown(f'<h4>👀 <span style="color:#4682B4;">{averageChannelViewTotalData:.0f}</span></h4>', unsafe_allow_html=True)
-
-   
-    with Third_column:
-        st.markdown(f'<h4>{person_icon}<span style="color:#4682B4;">{averageChannelSubscriberTotalData:.0f}</span></h4>', unsafe_allow_html=True)
-
-    First_column, Second_column, Third_column = st.columns(3)
-    with First_column:
-        if percentageVideoLike < 0:
-            st.markdown(f'<h4><span style="color:red;">▼ {percentageVideoLike:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
-        elif percentageVideoLike > 0:
-            st.markdown(f'<h4><span style="color:green;">▲ {percentageVideoLike:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
+    def percentageDifference(percentage):
+        if percentage < 0:
+            st.markdown(f'<p><span style="color:red;">▼ {percentage:.0f}% </span>lower than the overall average</p>', unsafe_allow_html=True)
+        elif percentage > 0:
+            st.markdown(f'<p><span style="color:green;">▲ {percentage:.0f}% </span>higher than the overall average</p>', unsafe_allow_html=True)
         else:
-            st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average video likes</h4>', unsafe_allow_html=True)
+            st.markdown(f'<p><span style="color:#4682B4;">⬤ 100% </span>overall average</p>', unsafe_allow_html=True)
 
-    with Second_column:
-        if percentageChannelView < 0:
-            st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelView:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
-        elif percentageChannelView > 0:
-            st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelView:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average channel views</h4>', unsafe_allow_html=True)
-    
-    with Third_column:
-            if percentageChannelSubscriber < 0:
-                st.markdown(f'<h4><span style="color:red;">▼ {percentageChannelSubscriber:.0f}% </span>lower than the overall average</h4>', unsafe_allow_html=True)
-            elif percentageChannelSubscriber > 0:
-                st.markdown(f'<h4><span style="color:green;">▲ {percentageChannelSubscriber:.0f}% </span>higher than the overall average</h4>', unsafe_allow_html=True)
-            else:
-                st.markdown(f'<h4><span style="color:#4682B4;">⬤ 100% </span>average channel subscribers</h4>', unsafe_allow_html=True)
-
-
-    First_column, Second_column, Third_column = st.columns(3)
     with First_column:
-        st.markdown(f'<div style="font-size: 18px;">Like Difference</div>', unsafe_allow_html=True)
-        
-    with Second_column:
-        st.markdown(f'<div style="font-size: 18px;">View Difference</div>', unsafe_allow_html=True)
+        percentageDifference(percentageVideoLike)
+
+    with Sub_column1:
+        percentageDifference(percentageVideoView)
+
+    with Sub_column2:
+        percentageDifference(percentageChannelView)
 
     with Third_column:
-        # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-        st.markdown(f'<div style="font-size: 18px;">Subscriber Difference</div>', unsafe_allow_html=True)
-        
-    First_column, Second_column, Third_column = st.columns(3)
-    with First_column:
-        difference =  int(averageVideoLikeFliteredData - averageVideoLikeTotalData)
-        if difference == 0:
-            color = "color:#4682B4;"
-        elif difference > 0:
-            color = "color:green;"
-            difference = "+"+str(difference)
-        elif difference <0:
-            color = "color:red;"
-        st.markdown(f'<h4>❤ <span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
-
-    with Second_column:
-        difference = int(averageChannelViewliteredData - averageChannelViewTotalData)
-        if difference == 0:
-            color = "color:#4682B4;"
-        elif difference > 0:
-            color = "color:green;"
-            difference = "+"+str(difference)
-        elif difference <0:
-            color = "color:red;"
-        st.markdown(f'<h4>👀 <span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
-
-    with Third_column:
-        difference = int(averageChannelSubscriberFliteredData - averageChannelSubscriberTotalData)
-        if difference == 0:
-            color = "color:#4682B4;"
-        elif difference > 0:
-            color = "color:green;"
-            difference = "+"+str(difference)
-        elif difference <0:
-            color = "color:red;"
-        st.markdown(f'<h4>{person_icon}<span style={color}>{difference}</span></h4>', unsafe_allow_html=True)
-
-    # First_column, Second_column, Third_column = st.columns(3)
-    # with First_column:
-    #     st.markdown(f'<div style="font-size: 18px;">Average Video Likes</div>', unsafe_allow_html=True)
-        
-    # with Second_column:
-    #     st.markdown(f'<div style="font-size: 18px;">Average Channel Views</div>', unsafe_allow_html=True)
-
-    # with Third_column:
-    #     # st.markdown(f'<h4>Average Channel Subscribers: 👤{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-    #     st.markdown(f'<div style="font-size: 18px;">Average Channel Subscribers</div>', unsafe_allow_html=True)
-        
-    # First_column, Second_column, Third_column = st.columns(3)
-    # with First_column:
-    #     st.markdown(f'<h4>❤ {averageVideoLikeFliteredData:.0f}</h4>', unsafe_allow_html=True)
-
-    # with Second_column:
-    #     st.markdown(f'<h4>👀 {averageChannelViewliteredData:.0f}</h4>', unsafe_allow_html=True)
-
-    # person_icon = f"""
-    # <svg width="40" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-    #     <!-- Head (Small Circle) -->
-    #     <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-    #     <!-- Body (Big Half Circle) -->
-    #     <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-    # </svg>
-    # """
-    # with Third_column:
-    #     st.markdown(f'<h4>{person_icon}{averageChannelSubscriberFliteredData:.0f}</h4>', unsafe_allow_html=True)
-    
-    
-    
+        percentageDifference(percentageChannelSubscriber)
 
 def top10channels(Filter_DataFrame):
     Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
@@ -249,7 +192,7 @@ def top10channels(Filter_DataFrame):
                                x = "channelSubscriberCount",
                                y = "channelName",
                                orientation = "h",
-                               title="Top 10 Channels by Subscribers",
+                            #    title="Top 10 Channels by Subscribers",
                                color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
                                template="plotly_dark",
                                custom_data=['channelLink']
@@ -292,7 +235,7 @@ def top10videos(Filter_DataFrame):
                                x = "videoLikeCount",
                                y = "channelVideo",
                                orientation = "h",
-                               title="Top 10 videos by Likes",
+                            #    title="Top 10 videos by Likes",
                                color_discrete_sequence=["#4682B4"]*len(Filter_DataFrame),
                                template="plotly_dark",
                                custom_data=['videoLink']
@@ -321,82 +264,56 @@ def top10videos(Filter_DataFrame):
 
 
 # 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
+def averageScoreGaugeChart(file,Filter_DataFrame,column,title):
+        averageScore = file[column].mean()
+        averageScore = averageScore.round(0)
+        min_score = file[column].min()
+        max_score = file[column].max()
+        filtered_averageScore = Filter_DataFrame[column].mean()
+        filtered_averageScore = filtered_averageScore.round(0)
+        if filtered_averageScore < averageScore:
+            range_score = [min_score, averageScore+1]
+            color_score = "red"
+        else:
+            range_score = [averageScore, max_score+1]
+            color_score = "green"
+        fig_score = go.Figure(go.Indicator(
+        mode = 'gauge+number+delta',
+        delta = {"reference": averageScore, "relative": False, "valueformat": ".0f"},
+        value = filtered_averageScore,
+        number={"valueformat": ".0f"}, 
+        title = {'text': title, "font": {"size": 18}},
+        gauge={
+        "axis": {"range": range_score},
+        "bar": {"color": "black"},
+        "steps": [
+            {"range": range_score, "color":color_score}]
+        
+        }
+        ))
+        return averageScore, fig_score
 
 def ScoreGaugeChartMain(file, Filter_DataFrame):
-    average_engagement_score = file['videoEngagementScore'].mean()
-    average_engagement_score = average_engagement_score.round(0)
-    min_engagement_score = file['videoEngagementScore'].min()
-    max_engagement_score = file['videoEngagementScore'].max()
-    filtered_average_engagement_score = Filter_DataFrame['videoEngagementScore'].mean()
-    filtered_average_engagement_score = filtered_average_engagement_score.round(0)
-    if filtered_average_engagement_score < average_engagement_score:
-        range_engagement_score = [min_engagement_score, average_engagement_score+1]
-        color_engagement_score = "red"
-    else:
-        range_engagement_score = [average_engagement_score, max_engagement_score+1]
-        color_engagement_score = "green"
 
-    average_growth_score = file['channelGrowthScore'].mean()
-    average_growth_score = average_growth_score.round(0)
-    min_growth_score = file['channelGrowthScore'].min()
-    max_growth_score = file['channelGrowthScore'].max()
-    filtered_average_growth_score = Filter_DataFrame['channelGrowthScore'].mean()
-    filtered_average_growth_score = filtered_average_growth_score.round(0)
-    if filtered_average_growth_score < average_growth_score:
-        range_growth_score = [min_growth_score, average_growth_score+1]
-        color_growth_score = "red"
-    else:
-        range_growth_score = [average_growth_score, max_growth_score+1]
-        color_growth_score = "green"
-
-
-    fig_engagement_score = go.Figure(go.Indicator(
-        mode = 'gauge+number+delta',
-        delta = {"reference": average_engagement_score, "relative": False, "valueformat": ".0f"},
-        value = filtered_average_engagement_score,
-        number={"valueformat": ".0f"}, 
-        title = {'text': "Average Engagement Score", "font": {"size": 18}},
-        gauge={
-        "axis": {"range": range_engagement_score},
-        "bar": {"color": "black"},
-        "steps": [
-            {"range": range_engagement_score, "color":color_engagement_score}]
-        
-    }
-    ))
-
-    fig_growth_score = go.Figure(go.Indicator(
-        mode = 'gauge+number+delta',
-        delta = {"reference": average_growth_score,"relative": False, "valueformat": ".0f"},
-        value = filtered_average_growth_score,
-        number={"valueformat": ".0f"}, 
-        title = {'text': "Average Growth Score", "font": {"size": 18}},
-        gauge={
-        "axis": {"range": range_growth_score},
-        "bar": {"color": "black"},
-        "steps": [
-            {"range": range_growth_score, "color": color_growth_score}
-        ]
-        
-    }
-    ))
+    average_engagement_score, fig_engagement_score = averageScoreGaugeChart(file,Filter_DataFrame,'videoEngagementScore', "Average Engagement Score")
+    average_growth_score, fig_growth_score = averageScoreGaugeChart(file,Filter_DataFrame,'channelGrowthScore',"Average Growth Score")
 
     First_Frame, Second_Frame = st.columns(2)
 
     with First_Frame:
-        st.markdown('<div style="font-size: 18px;">Overall Average Video Engagement  Score</div>',
+        st.markdown('<h5>Overall Average Video Engagement  Score</h5>',
          unsafe_allow_html=True)
-        st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_engagement_score}</div>',unsafe_allow_html=True)
+        st.markdown(f'<div style = "font-size: 36px;">🎯{average_engagement_score:.0f}</div>',unsafe_allow_html=True)
         # st.metric(label = "", value = average_engagement_score)
-        st.plotly_chart(fig_engagement_score,use_container_width=True)
+        First_Frame.plotly_chart(fig_engagement_score,use_container_width=True)
 
     
     with Second_Frame:
-        st.markdown('<div style="font-size: 18px;">Overall Average Channel Growth Score</div>',
+        st.markdown('<h5>Overall Average Channel Growth Score</h5>',
          unsafe_allow_html=True)
-        st.markdown(f'<div style = "font-weight: bold;font-size: 24px;">{average_growth_score}</div>',unsafe_allow_html=True)
+        st.markdown(f'<div style = "font-size: 36px;">🎯{average_growth_score:.0f}</div>',unsafe_allow_html=True)
         # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
-        st.plotly_chart(fig_growth_score,use_container_width=True)
+        Second_Frame.plotly_chart(fig_growth_score,use_container_width=True)
 
     return True
 
@@ -404,13 +321,38 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
 # 🎯 Is in IT Hub Country?(Pie Chart), videoDurationClassification (Pie), videoPublishedWeekDay(Pie) , videoDefinition, videoDimension
 
 def FrequencyRatioITHubMain(file, Filter_DataFrame):
-    averageChannelVideoCount = file.groupby(by='channel', as_index=False).agg({
-    'videoTitle': 'first', 
-    'channelName': 'first',
-    'videoLikeCount': 'mean',
-    'videoViewCount': 'mean',
-    'videoEngagementScoreRank': 'mean',
-    })
+    def averageFrequency(dataframe):
+        channelVideoCountAgeInYears = dataframe.groupby(by='channelId', as_index=False).agg({ 
+        'channelName': 'first',
+        'channelAgeInYears': 'mean',
+        'channelVideoCount': 'mean',
+        })
+        averageChannelVideoCount = channelVideoCountAgeInYears['channelVideoCount'].mean()
+        averageChannelAgeInYears = channelVideoCountAgeInYears['channelAgeInYears'].mean()
+        averageUploadFreq = (averageChannelVideoCount / averageChannelAgeInYears) if averageChannelAgeInYears > 0 else 0
+        return  averageUploadFreq
+    
+    averageUploadFreq = averageFrequency(Filter_DataFrame)
+    averageOverallUploadFreq =averageFrequency(file)
+
+
+    first_column, second_column = st.columns([1, 2])
+    with first_column:
+        delta_value = averageUploadFreq - averageOverallUploadFreq
+        percentage_change = (delta_value / averageOverallUploadFreq) * 100 if averageOverallUploadFreq != 0 else 0
+        delta_text = f"{delta_value:.0f} ({percentage_change:.0f}%)"
+        st.markdown('<h5>Average Upload Frequency</h5>',unsafe_allow_html=True)
+        # Display metric
+        st.metric(
+            label="Videos Per Year",
+            value=f"⏳{averageUploadFreq:.0f}",
+            delta=delta_text,
+            delta_color = "normal"
+        )
+
+    with second_column:
+        ScoreGaugeChartMain(file, Filter_DataFrame)
+
     return True
 
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames,FilterLicensedContent):
@@ -418,20 +360,19 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
 
-    image_path = "./Streamlit/DevOps.png"
+    image_path = "./Streamlit/DevOps2.png"
     base64_image = get_base64_image(image_path)
     # Display title and image in one line using HTML + CSS
     st.markdown(
         f"""
         <div style="display: flex; align-items: center;">
-            <div class="animated-box"><img src="data:image/png;base64,{base64_image}" width="40" height = "40" style="border-radius: 50%;"margin-right: 10px;"></div>
-            <h1 style="margin: 0; font-size: 58px;" class = "custom-text">DevOps YouTube Trends</h1>
+            <div class="animated-box"><img src="data:image/png;base64,{base64_image}" width="35" height = "35" style="border-radius: 50%;"margin-right: 10px;"></div>
+            <h1 style="margin: 0; font-size: 40px;" >DevOps YouTube Trends</h1>
         </div>
         """,
         unsafe_allow_html=True
     )
-    # st.header("Channel Insights")
-    # st.subheader("Top 10 channels")
+
     file["videoPublishYear"] = file["videoPublishYear"].astype(str)
     file["videoLicensedContent"] = file["videoLicensedContent"].astype(str)
     if "All" in FilterContinents:
@@ -457,17 +398,23 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     if Filter_DataFrame.empty:
         st.warning("No data available based on the current filter.")
         st.stop()
-
-    textMetricsMain(file, Filter_DataFrame)
     st.divider()
-    ScoreGaugeChartMain(file, Filter_DataFrame)
+    TextMetricMain(file, Filter_DataFrame)
+    st.divider()
+    FrequencyRatioITHubMain(file, Filter_DataFrame)
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
     Left_Frame, Right_Frame = st.columns(2)
+    with Left_Frame:
+        st.markdown(f"<h5>Top 10 Channels by{person_icon}Subscribers</h5>", unsafe_allow_html=True)
+    with Right_Frame:
+        st.markdown("<h5>Top 10 videos by ❤ Likes</h5>", unsafe_allow_html=True)
+
     Left_Frame.plotly_chart(fig_top10channels,use_container_width=True)
     Right_Frame.plotly_chart(fig_top10videos,use_container_width=True)
     st.divider()
+    
    
     # st.dataframe(Filter_DataFrame)
     
@@ -530,8 +477,8 @@ if __name__ == "__main__":
             100% { transform: scale(1); }
         }
         .animated-box {
-            width: 45px;
-            height: 50px;
+            width: 40px;
+            height: 45px;
             background-color:white;
             color: white;
             font-size: 24px;
@@ -561,9 +508,19 @@ if __name__ == "__main__":
             color: inherit;  /* Inherit text color from theme */
             text-shadow: 1px 1px 3px var(--shadow-color); /* Adaptive shadow */
         }
+
     </style>
     """,
         unsafe_allow_html=True
     )
+    
+    person_icon = f"""
+    <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+        <!-- Head (Small Circle) -->
+        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+        <!-- Body (Big Half Circle) -->
+        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+    </svg>
+    """
 
     main()
