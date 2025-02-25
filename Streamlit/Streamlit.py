@@ -95,15 +95,6 @@ def TextMetricMain(file, Filter_DataFrame):
     averageChannelSubscriberFliteredData = Filter_DataFrame['channelSubscriberCount'].mean()
     averageChannelSubscriberTotalData = file['channelSubscriberCount'].mean() # 100%
     percentageChannelSubscriber = ((averageChannelSubscriberFliteredData/averageChannelSubscriberTotalData)-1) * 100 if averageChannelSubscriberTotalData else 0
-
-    person_icon = f"""
-                <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-                    <!-- Head (Small Circle) -->
-                    <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-                    <!-- Body (Big Half Circle) -->
-                    <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-                </svg>
-                """
     
     First_column, Second_column, Third_column = st.columns([1,2,1])
     Sub_column1, Sub_column2 = Second_column.columns(2)
@@ -462,14 +453,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
-    person_icon = f"""
-                <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-                    <!-- Head (Small Circle) -->
-                    <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-                    <!-- Body (Big Half Circle) -->
-                    <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-                </svg>
-                """
+
     Left_Frame, Right_Frame = st.columns([1,1])
     with Left_Frame:
         st.markdown(f"<h5>Top 10 Channels by{person_icon}Subscribers</h5>", unsafe_allow_html=True)
@@ -534,7 +518,16 @@ def get_width():
         height=0
     )
 
-def run():
+def main():
+    
+    file =FetchLatestFile()
+    FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
+    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
+    continentCountryMapping = ContinentCountryMapping(file)
+    return True
+
+
+if __name__ == "__main__":
     st.set_page_config(layout="wide")
     get_width()
     st.markdown( 
@@ -582,13 +575,13 @@ def run():
         """,
             unsafe_allow_html=True
         )
+    person_icon = f"""
+                <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+                    <!-- Head (Small Circle) -->
+                    <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+                    <!-- Body (Big Half Circle) -->
+                    <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+                </svg>
+                """
     
-    file =FetchLatestFile()
-    FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
-    streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
-    continentCountryMapping = ContinentCountryMapping(file)
-    return True
-
-
-if __name__ == "__main__":
-    run()
+    main()
