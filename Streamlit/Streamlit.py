@@ -534,7 +534,7 @@ def get_width():
         height=0
     )
 
-def main():
+def run():
     st.set_page_config(layout="wide")
     get_width()
     st.markdown( 
