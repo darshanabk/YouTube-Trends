@@ -9,6 +9,7 @@ import altair as alt
 import plotly.express as px
 import plotly.graph_objects as go
 import base64
+import streamlit.components.v1 as components
 
 
 @st.cache_data
@@ -210,7 +211,10 @@ def top10channels(Filter_DataFrame):
         )
     fig_top10channels.update_layout(plot_bgcolor="rgba(0,0,0,0)", 
                                     xaxis=dict(showgrid=False),  
-                                    yaxis=dict(categoryorder="total ascending")  
+                                    yaxis=dict(categoryorder="total ascending"),
+                                    autosize=True,
+                                    width=None,  # Allows automatic width adjustment
+                                    height=500   
                                     )
     return fig_top10channels
 
@@ -258,7 +262,10 @@ def top10videos(Filter_DataFrame):
     #                             )
     fig_top10videos.update_layout(plot_bgcolor="rgba(0,0,0,0)", 
                                     xaxis=dict(showgrid=False),  
-                                    yaxis=dict(categoryorder="total ascending")  
+                                    yaxis=dict(categoryorder="total ascending"),
+                                    autosize=True,
+                                    width=None,  # Allows automatic width adjustment
+                                    height=500  
                                     )
     return fig_top10videos, Filter_DataFrame
 
@@ -291,6 +298,11 @@ def averageScoreGaugeChart(file,Filter_DataFrame,column,title):
         
         }
         ))
+        fig_score.update_layout(
+            autosize=True,
+            width=None,  # Allows automatic width adjustment
+            height=500
+        )
         return averageScore, fig_score
 
 def ScoreGaugeChartMain(file, Filter_DataFrame):
@@ -298,7 +310,7 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
     average_engagement_score, fig_engagement_score = averageScoreGaugeChart(file,Filter_DataFrame,'videoEngagementScore', "Average Engagement Score")
     average_growth_score, fig_growth_score = averageScoreGaugeChart(file,Filter_DataFrame,'channelGrowthScore',"Average Growth Score")
 
-    First_Frame, Second_Frame = st.columns(2)
+    First_Frame, Second_Frame = st.columns([1,1])
 
     with First_Frame:
         st.markdown('<h5>Overall Average Video Engagement  Score</h5>',
@@ -405,7 +417,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
-    Left_Frame, Right_Frame = st.columns(2)
+    Left_Frame, Right_Frame = st.columns([1,1])
     with Left_Frame:
         st.markdown(f"<h5>Top 10 Channels by{person_icon}Subscribers</h5>", unsafe_allow_html=True)
     with Right_Frame:
@@ -455,72 +467,84 @@ def streamlitSideBar(file):
     FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
     
     return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
+def get_width():
+    components.html(
+        """
+        <script>
+            var body = window.parent.document.querySelector(".main");
+            var screenWidth = window.innerWidth;
+            var streamlitWidth = body.clientWidth;
+            var availableWidth = Math.min(screenWidth, streamlitWidth);
+            window.parent.document.body.setAttribute("data-width", availableWidth);
+        </script>
+        """,
+        height=0
+    )
 
 def main():
     file =FetchLatestFile()
     FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
     continentCountryMapping = ContinentCountryMapping(file)
-    
-
     return True
 
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
+    get_width()
     st.markdown( 
-"""
-    <style>
-        @keyframes popUp {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-        .animated-box {
-            width: 40px;
-            height: 45px;
-            background-color:white;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px 0px 20px 0px;
-           box-shadow: 4px 4px 15px #ff4b4b;
-            animation: popUp 0.5s ease-out;
-            margin: 10px;
-        }
-        :root {
-            --shadow-color: rgba(70, 130, 180, 0.6);  /* Light blue shadow for light mode */
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --shadow-color: rgba(135, 206, 250, 0.8);  /* Sky blue shadow for dark mode */
+        """
+        <style>
+            @keyframes popUp {
+                0% { transform: scale(0.5); opacity: 0; }
+                50% { transform: scale(1.1); opacity: 1; }
+                100% { transform: scale(1); }
             }
-        }
+            .animated-box {
+                width: 40px;
+                height: 45px;
+                background-color:white;
+                color: white;
+                font-size: 24px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 20px 0px 20px 0px;
+            box-shadow: 4px 4px 15px #ff4b4b;
+                animation: popUp 0.5s ease-out;
+                margin: 10px;
+            }
+            :root {
+                --shadow-color: rgba(70, 130, 180, 0.6);  /* Light blue shadow for light mode */
+            }
 
-        .custom-text {
-            font-size: 48px;
-            font-weight: bold;
-            text-align: center;
-            color: inherit;  /* Inherit text color from theme */
-            text-shadow: 1px 1px 3px var(--shadow-color); /* Adaptive shadow */
-        }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --shadow-color: rgba(135, 206, 250, 0.8);  /* Sky blue shadow for dark mode */
+                }
+            }
 
-    </style>
-    """,
-        unsafe_allow_html=True
-    )
+            .custom-text {
+                font-size: 48px;
+                font-weight: bold;
+                text-align: center;
+                color: inherit;  /* Inherit text color from theme */
+                text-shadow: 1px 1px 3px var(--shadow-color); /* Adaptive shadow */
+            }
+
+        </style>
+        """,
+            unsafe_allow_html=True
+        )
     
     person_icon = f"""
-    <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-        <!-- Head (Small Circle) -->
-        <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
-        <!-- Body (Big Half Circle) -->
-        <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
-    </svg>
-    """
+                <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+                    <!-- Head (Small Circle) -->
+                    <circle cx="12" cy="9" r="3" stroke="#FFFFFF" stroke-width="1" fill="#000000" />
+                    <!-- Body (Big Half Circle) -->
+                    <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
+                </svg>
+                """
 
     main()
