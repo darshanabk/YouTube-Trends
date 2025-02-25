@@ -331,9 +331,8 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
     return True
 
 # ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`),🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
-# 🎯 Is in IT Hub Country?(Pie Chart), videoDurationClassification (Pie), videoPublishedWeekDay(Pie) , videoDefinition, videoDimension
 
-def FrequencyRatioITHubMain(file, Filter_DataFrame):
+def FrequencyRatioMain(file, Filter_DataFrame):
     def averageFrequency(dataframe):
         dataframe = dataframe.groupby(by='channelId', as_index=False).agg({ 
         'channelName': 'first',
@@ -402,7 +401,10 @@ def FrequencyRatioITHubMain(file, Filter_DataFrame):
         ScoreGaugeChartMain(file, Filter_DataFrame)
 
     return True
-
+# 🎯 Is in IT Hub Country?(yes/No), videoPublishedWeekDay(Categorical column) ,videoDurationClassification (Categorical column), videoDefinition(categorical Column), videoDimension(categorical column)
+# Video
+def ITHUbClassification():
+    return True
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames,FilterLicensedContent):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
@@ -449,7 +451,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     st.divider()
     TextMetricMain(file, Filter_DataFrame)
     st.divider()
-    FrequencyRatioITHubMain(file, Filter_DataFrame)
+    FrequencyRatioMain(file, Filter_DataFrame)
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
