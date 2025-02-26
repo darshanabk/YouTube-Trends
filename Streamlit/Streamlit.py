@@ -463,8 +463,16 @@ def GeoScore(Filter_DataFrame):
             'videoEngagementScore': 'mean'
         })
         df_continent = df_continent.sort_values(by=selected_metric,ascending = False)
-        fig_continent = px.bar(df_continent, x='continent', y=selected_metric,
-                               title=f"{selected_metric_label} by Continent")
+        # fig_continent = px.bar(df_continent, x='continent', y=selected_metric,
+        #                        title=f"{selected_metric_label} by Continent")
+        fig_continent = px.pie(
+                                df_continent, 
+                                names="continent",  # Categories for the pie chart
+                                values=selected_metric,  # Values to determine the size of slices
+                                title=f"{selected_metric_label} by Continent",
+                                color="continent",  # Color by continent
+                                hole=0.3  # Optional: Set this for a donut chart effect
+                            )
         st.plotly_chart(fig_continent)
 
     with col2:
