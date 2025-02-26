@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 import requests
 import pandas as pd
 import numpy as np
-import json
 import streamlit as st
 import altair as alt
+import plotly.colors as pc
 import plotly.express as px
 import plotly.graph_objects as go
 import base64
@@ -74,7 +74,6 @@ def ContinentCountryMapping(file):
 def get_base64_image(image_path):
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
-        
     
 def TextMetricMain(file, Filter_DataFrame):
     averageVideoLikeFliteredData = Filter_DataFrame['videoLikeCount'].mean()
@@ -289,7 +288,7 @@ def averageScoreGaugeChart(file,Filter_DataFrame,column,title):
         delta = {"reference": averageScore, "relative": False, "valueformat": ".0f"},
         value = filtered_averageScore,
         number={"valueformat": ".0f"}, 
-        title = {'text': title, "font": {"size": 18}},
+        title = {'text': title, "font": {"size": 18, "weight": "bold"}},
         gauge={
         "axis": {"range": range_score},
         "bar": {"color": "black"},
@@ -328,6 +327,7 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
         # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
         Second_Frame.plotly_chart(fig_growth_score,use_container_width=True)
 
+
     return True
 
 # ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`),🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
@@ -355,12 +355,13 @@ def FrequencyRatioMain(file, Filter_DataFrame):
 
     first_column, second_column = st.columns([1, 2])
     with first_column:
+        st.markdown("<h5>Video Performance Overview</h5>", unsafe_allow_html=True)
         with st.container():
             # ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`)
             delta_value = averageUploadFreq - averageOverallUploadFreq
             percentage_change = (delta_value / averageOverallUploadFreq) * 100 if averageOverallUploadFreq else 0
             delta_text = f"{delta_value:.0f} (Percentage Change: {percentage_change:.0f}%)"
-            st.markdown('<h5>Average Upload Frequency</h5>',unsafe_allow_html=True)
+            st.markdown('<h6>Average Upload Frequency</h6>',unsafe_allow_html=True)
             # Display metric
             st.metric(
                 label=f"{averageUploadFreq:.0f} videos posted per year",
@@ -374,7 +375,7 @@ def FrequencyRatioMain(file, Filter_DataFrame):
             averageFileRatio,averageFilterRatio, percentage_change  = averageRatio(file,Filter_DataFrame,"videoLikeToViewRatio")
             delta_value = averageFilterRatio - averageFileRatio
             delta_text = f"{delta_value:.4f} (Percentage Change: {percentage_change:.0f}%)"
-            st.markdown('<h5>Average Like to View Ratio</h5>',unsafe_allow_html=True)
+            st.markdown('<h6>Average Like to View Ratio</h6>',unsafe_allow_html=True)
             # Display metric
             st.metric(
                 label=f"Out of every 100 views, {averageFilterRatio:.4f}% received a like",
@@ -388,7 +389,7 @@ def FrequencyRatioMain(file, Filter_DataFrame):
             averageFileRatio,averageFilterRatio, percentage_change  = averageRatio(file,Filter_DataFrame,"videoCommentToViewRatio")
             delta_value = averageFilterRatio - averageFileRatio
             delta_text = f"{delta_value:.4f} (Percentage Change: {percentage_change:.0f}%)"
-            st.markdown('<h5>Average Comment to View Ratio</h5>',unsafe_allow_html=True)
+            st.markdown('<h6>Average Comment to View Ratio</h6>',unsafe_allow_html=True)
             # Display metric
             st.metric(
                 label=f"Out of every 100 views, {averageFilterRatio:.4f}% received a comment",
@@ -401,10 +402,83 @@ def FrequencyRatioMain(file, Filter_DataFrame):
         ScoreGaugeChartMain(file, Filter_DataFrame)
 
     return True
-# 🎯 Is in IT Hub Country?(yes/No), videoPublishedWeekDay(Categorical column) ,videoDurationClassification (Categorical column), videoDefinition(categorical Column), videoDimension(categorical column)
-# Video
-def ITHUbClassification():
+# 🎯 Is in IT Hub Country?(yes/No),videoDurationClassification (Categorical column)
+# channelGrowthScore and videoEngagementScore continent distribution, channelGrowthScore and videoEngagementScore country distribution
+def ITHubVideoClassification(Filter_DataFrame):
+    col1, col2 = st.columns([1,1]) 
+    with col1:
+        df_it_hub = Filter_DataFrame.groupby(['it_hub_country', 'country_name'], as_index=False).size()
+        df_it_hub = df_it_hub.sort_values(by="size", ascending=False)
+        blue_shades = ["#00008B", "#0000CD", "#4169E1", "#4682B4", "#1E90FF"]  # Dark Blue → Medium Blue
+        orange_shades = ["#8B4513", "#D2691E", "#FF8C00", "#FFA500", "#FFD700"]  # Dark Orange → Gold
+        green_shades = ["#006400", "#228B22", "#2E8B57", "#32CD32", "#00FF00"]  # Dark Green → Light Green
+
+        yes_countries = df_it_hub[df_it_hub['it_hub_country'] == "Yes"]['country_name'].unique()
+        no_countries = df_it_hub[df_it_hub['it_hub_country'] == "No"]['country_name'].unique()
+        unknown_countries = df_it_hub[~df_it_hub['it_hub_country'].isin(["Yes", "No"])]["country_name"].unique()
+
+        color_map = {}
+        for i, country in enumerate(yes_countries):
+            color_map[country] = orange_shades[i % len(orange_shades)]  
+
+        for i, country in enumerate(no_countries):
+            color_map[country] = blue_shades[i % len(blue_shades)]  
+
+        for i, country in enumerate(unknown_countries):
+            color_map[country] = green_shades[i % len(green_shades)]  
+
+        fig_IT = px.bar(df_it_hub, 
+                        x='it_hub_country', 
+                        y='size', 
+                        color='country_name', 
+                        title="IT Hub Country Distribution",
+                        labels={'it_hub_country': 'IT Hub', 'size': 'Count'},
+                        barmode='stack', 
+                        color_discrete_map=color_map,
+                        category_orders={"it_hub_country": ["Yes", "No", "Unknown"]})  
+
+        st.plotly_chart(fig_IT)
+
+    with col2:
+        fig_duration = px.pie(Filter_DataFrame, names='videoDurationClassification', 
+                              title="Video Duration Classification",
+                              color='videoDurationClassification')
+        st.plotly_chart(fig_duration)
+    
+
     return True
+
+def GeoScore(Filter_DataFrame):
+     
+    selected_metric_label = st.selectbox("Select a metric:", ["Channel Growth", "Video Engagement"])
+    metric_mapping = {
+                            "Channel Growth": "channelGrowthScore",
+                            "Video Engagement": "videoEngagementScore"
+                        }
+    selected_metric =  metric_mapping.get(selected_metric_label)
+    col1, col2 = st.columns(2)  
+    with col1:
+        df_continent = Filter_DataFrame.groupby('continent', as_index=False).agg({
+            'channelGrowthScore': 'mean',
+            'videoEngagementScore': 'mean'
+        })
+        df_continent = df_continent.sort_values(by=selected_metric,ascending = False)
+        fig_continent = px.bar(df_continent, x='continent', y=selected_metric,
+                               title=f"{selected_metric_label} by Continent")
+        st.plotly_chart(fig_continent)
+
+    with col2:
+        df_country = Filter_DataFrame.groupby('country_name', as_index=False).agg({
+            'channelGrowthScore': 'mean',
+            'videoEngagementScore': 'mean'
+        }).nlargest(10, selected_metric)  # Display Top 10 Countries
+        df_country = df_country.sort_values(by=selected_metric,ascending = False)
+        fig_country = px.bar(df_country, x='country_name', y=selected_metric,
+                             title=f"{selected_metric_label} by Country (Top 10)")
+        st.plotly_chart(fig_country)
+
+    return True
+
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames,FilterLicensedContent):
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
@@ -452,6 +526,10 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     TextMetricMain(file, Filter_DataFrame)
     st.divider()
     FrequencyRatioMain(file, Filter_DataFrame)
+    st.divider()
+    ITHubVideoClassification(Filter_DataFrame)
+    st.divider()
+    GeoScore(Filter_DataFrame)
     st.divider()
     fig_top10channels = top10channels(Filter_DataFrame)
     fig_top10videos, videoFilterDataFrame= top10videos(Filter_DataFrame)
@@ -572,7 +650,7 @@ if __name__ == "__main__":
                 color: inherit;  /* Inherit text color from theme */
                 text-shadow: 1px 1px 3px var(--shadow-color); /* Adaptive shadow */
             }
-
+            
         </style>
         """,
             unsafe_allow_html=True
