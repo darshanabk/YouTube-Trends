@@ -18,7 +18,7 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
 #### Extracted Data
 - **Raw Data Repository**:
   - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Source/Daily)
-  - This directory contains JSON files storing raw extracted data, updated daily.
+  - This directory contains JSON files storing raw extracted data, which are updated daily.
 
 <!-- ### 1. Features:
    - **YouTube Data Extraction**:
@@ -82,6 +82,30 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
 - **Processed Feature Repository**:
   - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Requirement/Daily)
   - This directory contains feature-engineered data stored in JSON format.
+ 
+## **Streamlit**
+#### Code Implementation
+- **Streamlit App Script**:
+  - [View Script](https://github.com/darshanabk/DevOps-YouTube-Trends/blob/main/Streamlit/Streamlit.py)
+  - This script visualizes processed data using interactive charts and dashboards.
+
+#### Deployment
+- **Live App**:
+  - [View App](https://devops-youtube-trends.streamlit.app/)
+  - The app fetches the latest processed data from GitHub and presents dynamic visualizations.
+
+## **Workflow**
+  - **Source**: Kaggle -> Google Cloud Console (Project YouTube Analysis - YouTube Data API v3 - Credentials) -> Data Extraction -> GitHub Automation
+      
+  - **Data Cleaning**: Kaggle -> Fetch Source File from GitHub -> Data Cleaning -> GitHub Automation
+  
+  - **Requirement**: Kaggle -> Fetch ISO Code from Rest API -> Process -> GitHub Automation
+  
+  - **Feature Engineering**: Kaggle Fetch Data Cleaning and Requirement Files -> Process -> GitHub Automation
+  
+  - **Streamlit**: Streamlit -> Fetch Processed File from GitHub -> Process and Visualize on Streamlit -> Deployed App
+
+Every process fetches the most recent file to ensure up-to-date data. The process runs daily for real-time data.
 
 This project ensures efficient and automated extraction, processing, and storage of YouTube video data, making it a valuable resource for content trend analysis.
 
