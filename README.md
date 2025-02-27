@@ -1,10 +1,12 @@
-# YouTube Video Data Extraction and GitHub Automation
+# YouTube Video Data Extraction and GitHub Automation 
+# [Click to View App](https://devops-youtube-trends.streamlit.app/)
 <p align="left">
   <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube_icon.png" width="1000" height = "500" title="hover text">
 </p>
 
 ## **Overview**
 This project is an ongoing initiative aimed at developing an automated pipeline to extract and process video data from YouTube based on specific keywords. Leveraging the YouTube Data API, the pipeline retrieves the most-viewed videos matching the criteria and systematically stores the data in a GitHub repository. The goal is to automate data retrieval, analysis, and storage, enabling actionable insights.
+
 
 ## Project Scope
 - **Detailed Project Scope**:
