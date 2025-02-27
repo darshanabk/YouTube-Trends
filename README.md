@@ -1,5 +1,4 @@
-# YouTube Video Data Extraction and GitHub Automation 
-# [Click to View App](https://devops-youtube-trends.streamlit.app/)
+# YouTube Video Data Extraction and GitHub Automation | [Explore App](https://devops-youtube-trends.streamlit.app/)
 <p align="left">
   <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube_icon.png" width="1000" height = "500" title="hover text">
 </p>
