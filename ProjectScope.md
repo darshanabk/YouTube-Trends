@@ -30,7 +30,7 @@ This project aims to automate the extraction, analysis, and visualization of You
 | **Category**         | **Tool/Technology**               |
 |----------------------|-----------------------------------|
 | **Programming Language** | Python                          |
-| **Data Visualization**   | Streamlit, Matplotlib, Seaborn, Power BI |
+| **Data Visualization**   | Streamlit, Matplotlib, Seaborn, Plotly, Power BI |
 | **Data Storage**         | GitHub (JSON files)             |
 | **API Integration**      | YouTube Data API                |
 | **Version Control**      | Git, GitHub                     |
