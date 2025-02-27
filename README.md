@@ -13,7 +13,7 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
   - [View Scope](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/ProjectScope.md)
  
 ## **Workflow**
-  - **Source**: Kaggle -> Google Cloud Console (Project YouTube Analysis - YouTube Data API v3 - Credentials) -> Data Extraction -> GitHub Automation
+  - **Source**: Kaggle -> Google Cloud Console (YouTube Data API v3) -> Data Extraction -> GitHub Automation
       
   - **Data Cleaning**: Kaggle -> Fetch Source File from GitHub -> Data Cleaning -> GitHub Automation
   
