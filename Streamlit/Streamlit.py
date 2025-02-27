@@ -617,7 +617,7 @@ def main():
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
-    get_width()
+    # get_width()
     st.markdown( 
         """
         <style>
