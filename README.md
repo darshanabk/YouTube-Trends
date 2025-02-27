@@ -105,7 +105,7 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
   
   - **Feature Engineering**: Kaggle Fetch Data Cleaning and Requirement Files -> Process -> GitHub Automation
   
-  - **Streamlit**: Streamlit -> Fetch Processed File from GitHub -> Process and Visualize on Streamlit -> Deployed App
+  - **Streamlit**: Streamlit Cloud -> Fetch Processed File from GitHub -> Process and Visualize on Streamlit -> Deployed App
 
 Every process fetches the most recent file to ensure up-to-date data. The process runs daily for real-time data.
 
