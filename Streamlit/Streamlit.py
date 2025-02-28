@@ -341,7 +341,7 @@ def ITHubVideoClassification(Filter_DataFrame):
                         y='size', 
                         color='country_name', 
                         title="IT Hub Country Distribution",
-                        labels={'it_hub_country': 'IT Hub', 'size': 'Count'},
+                        labels={'it_hub_country': 'IT Hub', 'size': 'Channel Count'},
                         barmode='stack', 
                         color_discrete_map=color_map,
                         category_orders={"it_hub_country": ["Yes", "No", "Unknown"]})  
