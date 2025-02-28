@@ -807,16 +807,6 @@ def main():
 
 
 if __name__ == "__main__":
-    """
-    This block serves as the entry point of the Streamlit application.
-    It sets the page layout, applies custom styling, and runs the main function.
-
-    Features:
-    - Wide layout for better dashboard visuals.
-    - Custom CSS animations and adaptive text shadows.
-    - SVG icon for a person graphic.
-    """
-
     st.set_page_config(layout="wide")
     st.markdown( 
         """
