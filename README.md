@@ -111,6 +111,10 @@ Every process fetches the most recent file to ensure up-to-date data. The proces
 
 This project ensures efficient and automated extraction, processing, and storage of YouTube video data, making it a valuable resource for content trend analysis.
 
+## 💖 Support This Project
+If you find this project helpful, please consider supporting me.
+
+[![Sponsor Me](https://img.shields.io/badge/Sponsor%20Me-GitHub-red?style=for-the-badge&logo=github)](https://github.com/sponsors/darshanabk)
 
 
 ## License
