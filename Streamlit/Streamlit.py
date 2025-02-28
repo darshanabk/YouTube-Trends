@@ -311,7 +311,13 @@ def FrequencyRatioMain(file, Filter_DataFrame):
 def ITHubVideoClassification(Filter_DataFrame):
     col1, col2 = st.columns([1,1]) 
     with col1:
-        df_it_hub = Filter_DataFrame.groupby(['it_hub_country', 'country_name'], as_index=False).size()
+        
+        df_it_hub = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({ 
+        'channelName': 'first',
+        'it_hub_country': 'first',
+        'country_name': 'first',
+        })
+        df_it_hub = df_it_hub.groupby(['it_hub_country', 'country_name'], as_index=False).size()
         df_it_hub = df_it_hub.sort_values(by="size", ascending=False)
         blue_shades = ["#00008B", "#0000CD", "#4169E1", "#4682B4", "#1E90FF"]  # Dark Blue → Medium Blue
         orange_shades = ["#8B4513", "#D2691E", "#FF8C00", "#FFA500", "#FFD700"]  # Dark Orange → Gold
