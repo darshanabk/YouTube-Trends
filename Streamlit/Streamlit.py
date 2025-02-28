@@ -4,15 +4,19 @@ import requests
 import pandas as pd
 import numpy as np
 import streamlit as st
-import plotly.colors as pc
 import plotly.express as px
 import plotly.graph_objects as go
 import base64
-import streamlit.components.v1 as components
 
 
 @st.cache_data
 def FetchLatestFile():
+    """
+    Fetches the latest JSON file from a specified GitHub repository directory.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the data from the latest JSON file.
+    """
     # Load environment variables from .env file
     load_dotenv()
 
@@ -55,6 +59,15 @@ def FetchLatestFile():
     return latest_file
 
 def ContinentCountryMapping(file):
+    """
+    Creates a mapping of continents to their respective unique country names.
+
+    Args:
+        file (pd.DataFrame): DataFrame containing 'continent' and 'country_name' columns.
+
+    Returns:
+        dict: Dictionary where keys are continents and values are lists of unique country names.
+    """
     continentCountryMapping = {}
     for index, row in file.iterrows():
         continent = row['continent']
@@ -71,10 +84,30 @@ def ContinentCountryMapping(file):
     return continentCountryMapping
 
 def get_base64_image(image_path):
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
+    """
+    Converts an image file to its Base64 encoded string.
+
+    Args:
+        image_path (str): Path to the image file.
+
+    Returns:
+        str: Base64 encoded string of the image.
+    """
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
     
 def TextMetricMain(file, Filter_DataFrame):
+    """
+    Displays average video likes, views, channel views, and subscribers along with percentage differences 
+    in Streamlit using metric components.
+
+    Args:
+        file (pd.DataFrame): The main dataset containing video and channel information.
+        Filter_DataFrame (pd.DataFrame): The filtered dataset for analysis.
+
+    Returns:
+        None: Displays the metrics and percentage differences in the Streamlit app.
+    """
     averageVideoLikeFliteredData = Filter_DataFrame['videoLikeCount'].mean()
     averageVideoLikeTotalData = file['videoLikeCount'].mean()# 100%
     percentageVideoLike = ((averageVideoLikeFliteredData/averageVideoLikeTotalData)-1) * 100 if averageVideoLikeTotalData else 0
@@ -86,9 +119,9 @@ def TextMetricMain(file, Filter_DataFrame):
     file = file.drop_duplicates(subset='channelId')
     Filter_DataFrame = Filter_DataFrame.drop_duplicates(subset='channelId')
 
-    averageChannelViewliteredData = Filter_DataFrame['channelViewCount'].mean()
+    averageChannelViewFliteredData = Filter_DataFrame['channelViewCount'].mean()
     averageChannelViewTotalData = file['channelViewCount'].mean() # 100%
-    percentageChannelView = ((averageChannelViewliteredData/averageChannelViewTotalData)-1) * 100 if averageChannelViewTotalData else 0
+    percentageChannelView = ((averageChannelViewFliteredData/averageChannelViewTotalData)-1) * 100 if averageChannelViewTotalData else 0
 
     averageChannelSubscriberFliteredData = Filter_DataFrame['channelSubscriberCount'].mean()
     averageChannelSubscriberTotalData = file['channelSubscriberCount'].mean() # 100%
@@ -124,14 +157,14 @@ def TextMetricMain(file, Filter_DataFrame):
         )
 
     with Sub_column2:
-        delta_value = averageChannelViewliteredData - averageChannelViewTotalData
+        delta_value = averageChannelViewFliteredData - averageChannelViewTotalData
         # delta_text = f"{delta_value:.0f} ({percentageChannelView:.0f}%)"
         delta_text = f"{delta_value:.0f}"
         st.markdown("<h5>👀 Average Views</h5>", unsafe_allow_html=True)
         # Display metric
         st.metric(
             label="Channel",
-            value=f"{averageChannelViewliteredData:.0f}",
+            value=f"{averageChannelViewFliteredData:.0f}",
             delta=delta_text,
             delta_color = "normal"
         )
@@ -153,6 +186,15 @@ def TextMetricMain(file, Filter_DataFrame):
     
 
     def percentageDifference(percentage):
+        """
+        Displays percentage difference with appropriate color and symbol in Streamlit.
+
+        Args:
+            percentage (float): Percentage difference to display.
+
+        Returns:
+            None: Displays the percentage difference in the Streamlit app.
+        """
         if percentage < 0:
             st.markdown(f'<p><span style="color:red;">▼ {percentage:.0f}% </span>lower than the overall average</p>', unsafe_allow_html=True)
         elif percentage > 0:
@@ -174,42 +216,64 @@ def TextMetricMain(file, Filter_DataFrame):
 
 # 🚀 Engagement Score(Average as middle value speedometer), 📈 Growth Score(Average as middle value speedometer), 🎬 Total Videos Uploaded(count), 
 def averageScoreGaugeChart(file,Filter_DataFrame,column,title):
-        averageScore = file[column].mean()
-        averageScore = averageScore.round(0)
-        min_score = file[column].min()
-        max_score = file[column].max()
-        filtered_averageScore = Filter_DataFrame[column].mean()
-        filtered_averageScore = filtered_averageScore.round(0)
-        if filtered_averageScore < averageScore:
-            range_score = [min_score, averageScore+1]
-            color_score = "red"
-        else:
-            range_score = [averageScore, max_score+1]
-            color_score = "green"
-        fig_score = go.Figure(go.Indicator(
-        mode = 'gauge+number+delta',
-        delta = {"reference": averageScore, "relative": False, "valueformat": ".0f"},
-        value = filtered_averageScore,
-        number={"valueformat": ".0f"}, 
-        title = {'text': title, "font": {"size": 18, "weight": "bold"}},
-        gauge={
-        "axis": {"range": range_score},
-        "bar": {"color": "black"},
-        "steps": [
-            {"range": range_score, "color":color_score}]
-        
-        }
-        ))
-        fig_score.update_layout(
-            margin=dict(l=0, r=0, t=0, b=0),
-            autosize=True,
-            width=None,  # Allows automatic width adjustment
-            height=None
-        )
-        return averageScore, fig_score
+    """
+    Creates a gauge chart visualization to compare the average score of a filtered dataset 
+    against the overall average score of the entire dataset.
+
+    Args:
+        file (pd.DataFrame): Original DataFrame containing the entire dataset.
+        Filter_DataFrame (pd.DataFrame): Filtered DataFrame based on user-selected filters.
+        column (str): Column name for which the average score is calculated.
+        title (str): Title of the gauge chart.
+
+    Returns:
+        tuple: (Overall average score, Plotly gauge chart figure)
+    """
+    averageScore = file[column].mean()
+    averageScore = averageScore.round(0)
+    min_score = file[column].min()
+    max_score = file[column].max()
+    filtered_averageScore = Filter_DataFrame[column].mean()
+    filtered_averageScore = filtered_averageScore.round(0)
+    if filtered_averageScore < averageScore:
+        range_score = [min_score, averageScore+1]
+        color_score = "red"
+    else:
+        range_score = [averageScore, max_score+1]
+        color_score = "green"
+    fig_score = go.Figure(go.Indicator(
+    mode = 'gauge+number+delta',
+    delta = {"reference": averageScore, "relative": False, "valueformat": ".0f"},
+    value = filtered_averageScore,
+    number={"valueformat": ".0f"}, 
+    title = {'text': title, "font": {"size": 18, "weight": "bold"}},
+    gauge={
+    "axis": {"range": range_score},
+    "bar": {"color": "black"},
+    "steps": [
+        {"range": range_score, "color":color_score}]
+    
+    }
+    ))
+    fig_score.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        autosize=True,
+        width=None,  # Allows automatic width adjustment
+        height=None
+    )
+    return averageScore, fig_score
 
 def ScoreGaugeChartMain(file, Filter_DataFrame):
+    """
+    Generates and displays gauge charts for Average Engagement Score and Average Growth Score using Plotly in Streamlit.
 
+    Args:
+        file (pd.DataFrame): Original DataFrame containing YouTube video and channel data.
+        Filter_DataFrame (pd.DataFrame): Filtered DataFrame based on user-selected filters.
+
+    Returns:
+        bool: Returns True after displaying the charts.
+    """
     average_engagement_score, fig_engagement_score = averageScoreGaugeChart(file,Filter_DataFrame,'videoEngagementScore', "Average Engagement Score")
     average_growth_score, fig_growth_score = averageScoreGaugeChart(file,Filter_DataFrame,'channelGrowthScore',"Average Growth Score")
 
@@ -230,13 +294,35 @@ def ScoreGaugeChartMain(file, Filter_DataFrame):
         # st.metric(label = "Overall Average Video Engagement  Score", value = average_growth_score)
         Second_Frame.plotly_chart(fig_growth_score,use_container_width=True)
 
-
     return True
 
 # ⏳Average Upload Frequency (`channelVideoCount / channelAgeInYears`),🎯 Like-to-View Ratio, 💬 Comment-to-View Ratio,
 
 def FrequencyRatioMain(file, Filter_DataFrame):
+    """
+    Displays the video performance overview including:
+    - Average Upload Frequency
+    - Average Like-to-View Ratio
+    - Average Comment-to-View Ratio
+    - Score Gauge Charts for Engagement and Growth
+
+    Args:
+        file (pd.DataFrame): Original DataFrame containing the full dataset.
+        Filter_DataFrame (pd.DataFrame): Filtered DataFrame based on user-selected filters.
+
+    Returns:
+        bool: Returns True after rendering all components.
+    """
     def averageFrequency(dataframe):
+        """
+        Calculates the average upload frequency of videos per year for YouTube channels.
+
+        Args:
+            dataframe (pd.DataFrame): DataFrame containing YouTube channel data.
+
+        Returns:
+            float: Average upload frequency (videos per year) across all channels.
+        """
         dataframe = dataframe.groupby(by='channelId', as_index=False).agg({ 
         'channelName': 'first',
         'channelAgeInYears': 'mean',
@@ -251,6 +337,21 @@ def FrequencyRatioMain(file, Filter_DataFrame):
     averageOverallUploadFreq =averageFrequency(file)
 
     def averageRatio(file,Filter_DataFrame,column):
+        """
+        Calculates the average ratio of a specified column for the entire dataset and the filtered dataset,
+        along with the percentage difference between them.
+
+        Args:
+            file (pd.DataFrame): Original DataFrame containing the full dataset.
+            Filter_DataFrame (pd.DataFrame): Filtered DataFrame based on user-selected filters.
+            column (str): Column name for which the average ratio needs to be calculated.
+
+        Returns:
+            tuple: (averageFileRatio, averageFilterRatio, percentageDifference)
+                    - averageFileRatio: Average value of the column in the entire dataset.
+                    - averageFilterRatio: Average value of the column in the filtered dataset.
+                    - percentageDifference: Percentage difference between the filtered and full dataset averages.
+        """
         averageFileRatio = file[column].mean()
         averageFilterRatio = Filter_DataFrame[column].mean()
         percentageDifference = ((averageFilterRatio / averageFileRatio)-1)*100 if averageFileRatio else 0
@@ -308,6 +409,17 @@ def FrequencyRatioMain(file, Filter_DataFrame):
 # 🎯 Is in IT Hub Country?(yes/No),videoDurationClassification (Categorical column)
 # channelGrowthScore and videoEngagementScore continent distribution, channelGrowthScore and videoEngagementScore country distribution
 def ITHubVideoClassification(Filter_DataFrame):
+    """
+    Generates two visualizations:
+    1. Bar chart showing IT Hub Country Distribution with stacked bars based on channel count.
+    2. Pie chart showing Video Duration Classification.
+
+    Args:
+        Filter_DataFrame (pd.DataFrame): Filtered DataFrame based on user-selected filters.
+
+    Returns:
+        bool: Returns True upon successful execution.
+    """
     col1, col2 = st.columns([1,1]) 
     with col1:
         
@@ -354,9 +466,18 @@ def ITHubVideoClassification(Filter_DataFrame):
                               color='videoDurationClassification')
         st.plotly_chart(fig_duration)
     
-
     return True
+
 def get_selected_metric_label():
+    """
+    Displays a selectbox widget in Streamlit to allow the user to select a metric and returns
+    the selected metric label and corresponding metric column name.
+
+    Returns:
+        tuple: (selected_metric_label, selected_metric)
+               - selected_metric_label: The label chosen by the user from the selectbox.
+               - selected_metric: The corresponding column name mapped to the selected label.
+    """
     selected_metric_label= st.selectbox("Select a metric:", ["Channel Growth", "Video Engagement"])
     metric_mapping = {
                             "Channel Growth": "channelGrowthScore",
@@ -366,7 +487,17 @@ def get_selected_metric_label():
     return selected_metric_label, selected_metric
 
 def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
+    """
+    Visualizes geographic-based scores for the selected metric by continent and country.
 
+    Args:
+        Filter_DataFrame (pd.DataFrame): The filtered dataframe containing geographic and metric data.
+        selected_metric_label (str): The user-selected metric label for display titles.
+        selected_metric (str): The corresponding column name of the selected metric.
+
+    Returns:
+        bool: True if the function executes successfully.
+    """
     col1, col2 = st.columns(2)  
     with col1:
         df_continent = Filter_DataFrame.groupby('continent', as_index=False).agg({
@@ -399,7 +530,16 @@ def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
     return True
 
 def top10channels(Filter_DataFrame, selected_metric):
+    """
+    Generates a horizontal bar chart of the top 10 YouTube channels based on the selected metric.
 
+    Args:
+        Filter_DataFrame (pd.DataFrame): The filtered dataframe containing channel data.
+        selected_metric (str): The column name representing the metric for ranking channels.
+
+    Returns:
+        plotly.graph_objects.Figure: Plotly bar chart visualization.
+    """
     Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
     Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({
     'channelName': 'first',  # Keeping the first occurrence of channelName
@@ -445,7 +585,16 @@ def top10channels(Filter_DataFrame, selected_metric):
     return fig_top10channels
 
 def top10videos(Filter_DataFrame,selected_metric):
+    """
+    Generates a horizontal bar chart for the top 10 YouTube videos based on the selected metric.
 
+    Args:
+        Filter_DataFrame (pd.DataFrame): The filtered dataframe containing video data.
+        selected_metric (str): The column name representing the metric for ranking videos.
+
+    Returns:
+        tuple: (Plotly bar chart figure, Processed dataframe containing the top 10 videos)
+    """
     Filter_DataFrame['videoLink'] = "https://www.youtube.com/watch?v=" + Filter_DataFrame['videoId']
     Filter_DataFrame = Filter_DataFrame.groupby(by='videoId', as_index=False).agg({
     'videoTitle': 'first', 
@@ -501,6 +650,21 @@ def top10videos(Filter_DataFrame,selected_metric):
     return fig_top10videos, Filter_DataFrame
 
 def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYears,FilterChannelNames,FilterLicensedContent):
+    """
+    Main function to generate Streamlit dashboard for YouTube Trends Analysis.
+
+    Args:
+        file (pd.DataFrame): Original dataframe containing YouTube channel and video data.
+        FilterContinents (list): List of selected continents to filter.
+        FilterCountries (list): List of selected countries to filter.
+        FilterCategory (str): Selected video content type.
+        FilterYears (list): List of selected video publish years.
+        FilterChannelNames (list): List of selected channel names.
+        FilterLicensedContent (str): Selected licensed content filter.
+
+    Returns:
+        None
+    """
     # st.image("./Streamlit/DevOps.png")
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
@@ -576,6 +740,15 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     # st.dataframe(Filter_DataFrame)
     
 def streamlitSideBar(file):
+    """
+    Creates a Streamlit sidebar filter with multiple selection options.
+
+    Args:
+        file (pd.DataFrame): Dataframe containing the dataset for filtering.
+
+    Returns:
+        tuple: Selected filter options including Continents, Countries, Category, Years, Channel Names, and Licensed Content.
+    """
     st.sidebar.header("Filter")
     file = file.sort_values(by = 'continent', ascending = True)
     continents = file['continent'].unique()
@@ -612,32 +785,39 @@ def streamlitSideBar(file):
     FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
     
     return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
-def get_width():
-    components.html(
-        """
-        <script>
-            var body = window.parent.document.querySelector(".main");
-            var screenWidth = window.innerWidth;
-            var streamlitWidth = body.clientWidth;
-            var availableWidth = Math.min(screenWidth, streamlitWidth);
-            window.parent.document.body.setAttribute("data-width", availableWidth);
-        </script>
-        """,
-        height=0
-    )
+
 
 def main():
-    
+    """
+    Main function to orchestrate the YouTube video data extraction and dashboard visualization.
+
+    Steps:
+    1. Fetches the latest file from the GitHub repository.
+    2. Initializes Streamlit sidebar filters for user interaction.
+    3. Displays the main content area of the Streamlit dashboard.
+
+    Returns:
+        bool: Returns True upon successful execution.
+    """
     file =FetchLatestFile()
     FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
-    continentCountryMapping = ContinentCountryMapping(file)
+    # continentCountryMapping = ContinentCountryMapping(file)
     return True
 
 
 if __name__ == "__main__":
+    """
+    This block serves as the entry point of the Streamlit application.
+    It sets the page layout, applies custom styling, and runs the main function.
+
+    Features:
+    - Wide layout for better dashboard visuals.
+    - Custom CSS animations and adaptive text shadows.
+    - SVG icon for a person graphic.
+    """
+
     st.set_page_config(layout="wide")
-    # get_width()
     st.markdown( 
         """
         <style>
