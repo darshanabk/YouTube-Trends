@@ -111,12 +111,6 @@ Every process fetches the most recent file to ensure up-to-date data. The proces
 
 This project ensures efficient and automated extraction, processing, and storage of YouTube video data, making it a valuable resource for content trend analysis.
 
-## 💖 Support This Project
-If you find this project helpful, please consider supporting me.
-
-[![Sponsor Me](https://img.shields.io/badge/Sponsor%20Me-GitHub-red?style=for-the-badge&logo=github)](https://github.com/sponsors/darshanabk)
-
-
 ## License
 
  This project uses a dual-license approach:  
@@ -138,3 +132,16 @@ The source code of this project is licensed under the Mozilla Public License 2.0
   - The code is provided as-is, without any guarantees or warranty.  
 
 For more details, visit: [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0/)
+
+## 💖 Support This Project  
+If you find this project helpful, please consider supporting me. Even a small contribution will encourage me to improve and maintain this project consistently.  
+
+[![Sponsor Me](https://img.shields.io/badge/Sponsor%20Me-GitHub-red?style=for-the-badge&logo=github)](https://github.com/sponsors/darshanabk)  
+
+### 🤝 How to Support  
+If you'd like to show your support, you can:  
+- ⭐ Star this repository  
+- 💪 Sponsor via GitHub  
+- 🔗 Share this project with others  
+
+Your encouragement will inspire me to continue building and enhancing this project!  
