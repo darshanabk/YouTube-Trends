@@ -8,20 +8,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.12"  # Your Python version
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12' # or your preferred version
 
-    - name: Install Dependencies
-      run: |
-        pip install -r Streamlit/requirements.txt  # Full path to your requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
-    - name: Run Streamlit App
-      run: |
-        nohup streamlit run Streamlit/Streamlit.py &  # Full path to your Streamlit app
+      - name: Restart Streamlit app
+        run: |
+          pkill -f Streamlit.py || true  # Kill any previous instance (if running)
+          nohup streamlit run Streamlit/Streamlit.py &  # Restart the app in the background
+
