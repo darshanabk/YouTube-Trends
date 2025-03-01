@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r Streamlit/requirements.txt
 
       - name: Restart Streamlit app
         run: |
