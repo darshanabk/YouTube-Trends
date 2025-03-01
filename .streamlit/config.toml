@@ -1,9 +1,16 @@
-[theme]
-base = "dark" # Can be "light" or "dark"
-primaryColor = "#4682B4" # Steel Blue accent
-backgroundColor = "#FFFFFF" # White background
-secondaryBackgroundColor = "#F0F2F6" # Light grey sidebar
-textColor = "#000000" # Black text
+# [theme]
+# base = "light" # Can be "light" or "dark"
+# primaryColor = "#4682B4" # Steel Blue accent
+# backgroundColor = "#FFFFFF" # White background
+# secondaryBackgroundColor = "#F0F2F6" # Light grey sidebar
+# textColor = "#000000" # Black text
+
+base = "dark"  # Set default theme to dark
+primaryColor = "#4682B4"  # Steel Blue accent
+backgroundColor = "#0E1117"  # Dark background
+secondaryBackgroundColor = "#262730"  # Dark grey sidebar
+textColor = "#FFFFFF"  # White text
+
 
 [client]
 toolbarMode = "auto" # Allows users to switch between themes
