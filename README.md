@@ -133,10 +133,9 @@ The source code of this project is licensed under the Mozilla Public License 2.0
 
 For more details, visit: [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
-## 💖 Support This Project  
-If you find this project helpful, please consider supporting me. Even a small contribution will encourage me to improve and maintain this project consistently.  
 
-[![Sponsor Me](https://img.shields.io/badge/Sponsor%20Me-GitHub-red?style=for-the-badge&logo=github)](https://github.com/sponsors/darshanabk)  
+
+  
 
 ### 🤝 How to Support  
 If you'd like to show your support, you can:  
