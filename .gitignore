@@ -3,6 +3,7 @@
 KPI.doc
 TargetGeneralVisualisation.py
 run1.py
+Streamlit.py
 country-codes-iso-3166-1-alpha-2-continent-code.ipynb
 dataCleaning.ipynb
 exploratorydataanalysis.ipynb
