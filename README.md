@@ -26,7 +26,7 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
   - **Streamlit**: Streamlit Cloud -> Fetch Processed File from GitHub -> Process and Visualize on Streamlit -> Deployed App
 
 Every process fetches the most recent file to ensure up-to-date data. The process runs daily for real-time data.
-
+<!-- 
 ## **Source**
 #### Code Implementation
 - **Data Extraction Script**:
@@ -37,7 +37,7 @@ Every process fetches the most recent file to ensure up-to-date data. The proces
   - [View Data](https://github.com/darshanabk/YouTubeFoodChannelAnalysis/tree/main/Source/Daily)
   - This directory contains JSON files storing raw extracted data, which are updated daily.
 
-<!-- ### 1. Features:
+### 1. Features:
    - **YouTube Data Extraction**:
       - Fetch top videos based on keywords using the YouTube Data API.
       - Extract details like video title, channel name, view count, likes, comments, and tags.
@@ -65,7 +65,7 @@ Every process fetches the most recent file to ensure up-to-date data. The proces
       - **GitHub**: Store and manage extracted data.
 ###  2. Additional Libraries:
    - `from googleapiclient.discovery import build`: For interacting with the YouTube API.
-   - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle. -->
+   - `from kaggle_secrets import UserSecretsClient`: For securely managing API keys in Kaggle. 
 
 ## **Data Cleaning**
 #### Code Implementation
@@ -109,7 +109,7 @@ Every process fetches the most recent file to ensure up-to-date data. The proces
 #### Deployment
 - **Live App**:
   - [View App](https://devops-youtube-trends.streamlit.app/)
-  - The app fetches the latest processed data from GitHub and presents dynamic visualizations.
+  - The app fetches the latest processed data from GitHub and presents dynamic visualizations. -->
 
 This project ensures efficient and automated extraction, processing, and storage of YouTube video data, making it a valuable resource for content trend analysis.
 
