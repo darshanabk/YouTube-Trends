@@ -1,4 +1,5 @@
-# YouTube Video Data Extraction and GitHub Automation 
+# YouTube Video Data Extraction and GitHub Automation | ![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)
+
 <p align="left">
   <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube_icon.png" width="1000" height = "500" title="hover text">
 </p>
