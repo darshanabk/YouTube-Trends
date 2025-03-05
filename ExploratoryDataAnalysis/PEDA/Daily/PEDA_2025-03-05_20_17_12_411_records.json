@@ -1,0 +1,2011 @@
+{
+    "Pre_EDA": [
+        {
+            "columns": "channelId",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelName",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 206
+        },
+        {
+            "columns": "videoId",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 411
+        },
+        {
+            "columns": "videoTitle",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 409
+        },
+        {
+            "columns": "videoPublishYear",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 11
+        },
+        {
+            "columns": "videoPublishMonth",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 12
+        },
+        {
+            "columns": "videoPublishDay",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 31
+        },
+        {
+            "columns": "videoPublishTime",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 402
+        },
+        {
+            "columns": "videoPublishedOn",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 411
+        },
+        {
+            "columns": "videoPublishedOnInSeconds",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 411
+        },
+        {
+            "columns": "videoViewCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 394
+        },
+        {
+            "columns": "videoLikeCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 225
+        },
+        {
+            "columns": "videoCommentCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 85
+        },
+        {
+            "columns": "videoCategoryId",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 8
+        },
+        {
+            "columns": "videoDefaultAudioLanguage",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 6
+        },
+        {
+            "columns": "videoDuration",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 356
+        },
+        {
+            "columns": "videoDurationInSeconds",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 356
+        },
+        {
+            "columns": "videoContentType",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 2
+        },
+        {
+            "columns": "videoDimension",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 1
+        },
+        {
+            "columns": "videoDefinition",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 2
+        },
+        {
+            "columns": "videoCaption",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 1
+        },
+        {
+            "columns": "videoLicensedContent",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "bool",
+            "cardinality": 2
+        },
+        {
+            "columns": "videoProjection",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 1
+        },
+        {
+            "columns": "channelCustomUrl",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelPublishYear",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 20
+        },
+        {
+            "columns": "channelPublishMonth",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 12
+        },
+        {
+            "columns": "channelPublishDay",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 31
+        },
+        {
+            "columns": "channelPublishTime",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelPublishedOn",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelPublishedOnInSeconds",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelCountry",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 28
+        },
+        {
+            "columns": "channelViewCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelSubscriberCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 193
+        },
+        {
+            "columns": "channelVideoCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 188
+        },
+        {
+            "columns": "videoPublishedWeekDay",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 7
+        },
+        {
+            "columns": "videoDurationClassification",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 7
+        },
+        {
+            "columns": "channelAgeInYears",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelNormalizedViewCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelNormalizedSubscriberCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 193
+        },
+        {
+            "columns": "channelNormalizedVideoCount",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 188
+        },
+        {
+            "columns": "channelNormalizedChannelAge",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 206
+        },
+        {
+            "columns": "channelGrowthScore",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 206
+        },
+        {
+            "columns": "videoAgeInDays",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 411
+        },
+        {
+            "columns": "videoViewsPerDay",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 411
+        },
+        {
+            "columns": "videoLikeToViewRatio",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 394
+        },
+        {
+            "columns": "videoCommentToViewRatio",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 276
+        },
+        {
+            "columns": "videoEngagementScore",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "float64",
+            "cardinality": 411
+        },
+        {
+            "columns": "channelGrowthScoreRank",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 206
+        },
+        {
+            "columns": "videoEngagementScoreRank",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "int64",
+            "cardinality": 411
+        },
+        {
+            "columns": "country_code",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 28
+        },
+        {
+            "columns": "country_name",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 28
+        },
+        {
+            "columns": "continent",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 7
+        },
+        {
+            "columns": "continent_code",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 7
+        },
+        {
+            "columns": "it_hub_country",
+            "missing_values": 0,
+            "duplicates": 0,
+            "data_types": "object",
+            "cardinality": 3
+        }
+    ],
+    "inconsistent_records_group1": [
+        {
+            "channelId": "UCYeiozh-4QwuC1sjgCmB92w",
+            "channelName": "DevOps Toolbox",
+            "channelCustomUrl": "@devopstoolbox",
+            "channelGrowthScoreRank": 51
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCkw4JCwteGrDHIsyIIKo4tQ",
+            "channelName": "edureka!",
+            "channelCustomUrl": "@edurekain",
+            "channelGrowthScoreRank": 3
+        },
+        {
+            "channelId": "UCYeiozh-4QwuC1sjgCmB92w",
+            "channelName": "DevOps Toolbox",
+            "channelCustomUrl": "@devopstoolbox",
+            "channelGrowthScoreRank": 51
+        },
+        {
+            "channelId": "UC8butISFwT-Wl7EV0hUK0BQ",
+            "channelName": "freeCodeCamp.org",
+            "channelCustomUrl": "@freecodecamp",
+            "channelGrowthScoreRank": 2
+        },
+        {
+            "channelId": "UCMndKhkWZp9EOWPrRI4V6bA",
+            "channelName": "Software Engineering With Scott Moore",
+            "channelCustomUrl": "@scottmooreconsultingllc",
+            "channelGrowthScoreRank": 77
+        },
+        {
+            "channelId": "UCHIbErciyS3Hs0kjAz-at5Q",
+            "channelName": "Technical Suneja",
+            "channelCustomUrl": "@technicalsuneja",
+            "channelGrowthScoreRank": 21
+        },
+        {
+            "channelId": "UCMndKhkWZp9EOWPrRI4V6bA",
+            "channelName": "Software Engineering With Scott Moore",
+            "channelCustomUrl": "@scottmooreconsultingllc",
+            "channelGrowthScoreRank": 77
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UC8butISFwT-Wl7EV0hUK0BQ",
+            "channelName": "freeCodeCamp.org",
+            "channelCustomUrl": "@freecodecamp",
+            "channelGrowthScoreRank": 2
+        },
+        {
+            "channelId": "UCHIbErciyS3Hs0kjAz-at5Q",
+            "channelName": "Technical Suneja",
+            "channelCustomUrl": "@technicalsuneja",
+            "channelGrowthScoreRank": 21
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCH912uDFX3sIaPXMrJa9X_w",
+            "channelName": "Questpond",
+            "channelCustomUrl": "@questpondvideos",
+            "channelGrowthScoreRank": 67
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCHIbErciyS3Hs0kjAz-at5Q",
+            "channelName": "Technical Suneja",
+            "channelCustomUrl": "@technicalsuneja",
+            "channelGrowthScoreRank": 21
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCkw4JCwteGrDHIsyIIKo4tQ",
+            "channelName": "edureka!",
+            "channelCustomUrl": "@edurekain",
+            "channelGrowthScoreRank": 3
+        },
+        {
+            "channelId": "UC2Us1KkV7BMm5Rp6tV6tTxg",
+            "channelName": "WebGentle",
+            "channelCustomUrl": "@webgentle",
+            "channelGrowthScoreRank": 40
+        },
+        {
+            "channelId": "UCMndKhkWZp9EOWPrRI4V6bA",
+            "channelName": "Software Engineering With Scott Moore",
+            "channelCustomUrl": "@scottmooreconsultingllc",
+            "channelGrowthScoreRank": 77
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCHIbErciyS3Hs0kjAz-at5Q",
+            "channelName": "Technical Suneja",
+            "channelCustomUrl": "@technicalsuneja",
+            "channelGrowthScoreRank": 21
+        },
+        {
+            "channelId": "UCT-nPlVzJI-ccQXlxjSvJmw",
+            "channelName": "AWS Developers",
+            "channelCustomUrl": "@awsdevelopers",
+            "channelGrowthScoreRank": 22
+        },
+        {
+            "channelId": "UCyMr5AFbKecmI_T7y-EK7PQ",
+            "channelName": "Naeem Shahzad ",
+            "channelCustomUrl": "@withnaeem",
+            "channelGrowthScoreRank": 73
+        },
+        {
+            "channelId": "UCdngmbVKX1Tgre699-XLlUA",
+            "channelName": "TechWorld with Nana",
+            "channelCustomUrl": "@techworldwithnana",
+            "channelGrowthScoreRank": 13
+        },
+        {
+            "channelId": "UCkw4JCwteGrDHIsyIIKo4tQ",
+            "channelName": "edureka!",
+            "channelCustomUrl": "@edurekain",
+            "channelGrowthScoreRank": 3
+        },
+        {
+            "channelId": "UCNwP7KEElaJ7cdDTLP-KbBg",
+            "channelName": "Azizul maqsud",
+            "channelCustomUrl": "@learn_it_with_azizul",
+            "channelGrowthScoreRank": 130
+        },
+        {
+            "channelId": "UC2Us1KkV7BMm5Rp6tV6tTxg",
+            "channelName": "WebGentle",
+            "channelCustomUrl": "@webgentle",
+            "channelGrowthScoreRank": 40
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCkw4JCwteGrDHIsyIIKo4tQ",
+            "channelName": "edureka!",
+            "channelCustomUrl": "@edurekain",
+            "channelGrowthScoreRank": 3
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UCUstiGIdOUgLeZ8v9kXk7FA",
+            "channelName": "Code with Gauri",
+            "channelCustomUrl": "@codewithgauri",
+            "channelGrowthScoreRank": 151
+        },
+        {
+            "channelId": "UCMndKhkWZp9EOWPrRI4V6bA",
+            "channelName": "Software Engineering With Scott Moore",
+            "channelCustomUrl": "@scottmooreconsultingllc",
+            "channelGrowthScoreRank": 77
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCbg9O0JF3rVKev6wpI5_u5g",
+            "channelName": "Cloud Champ",
+            "channelCustomUrl": "@cloudchamp",
+            "channelGrowthScoreRank": 28
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCbg9O0JF3rVKev6wpI5_u5g",
+            "channelName": "Cloud Champ",
+            "channelCustomUrl": "@cloudchamp",
+            "channelGrowthScoreRank": 28
+        },
+        {
+            "channelId": "UCSWj8mqQCcrcBlXPi4ThRDQ",
+            "channelName": "KodeKloud",
+            "channelCustomUrl": "@kodekloud",
+            "channelGrowthScoreRank": 88
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UCSWj8mqQCcrcBlXPi4ThRDQ",
+            "channelName": "KodeKloud",
+            "channelCustomUrl": "@kodekloud",
+            "channelGrowthScoreRank": 88
+        },
+        {
+            "channelId": "UCMndKhkWZp9EOWPrRI4V6bA",
+            "channelName": "Software Engineering With Scott Moore",
+            "channelCustomUrl": "@scottmooreconsultingllc",
+            "channelGrowthScoreRank": 77
+        },
+        {
+            "channelId": "UCUstiGIdOUgLeZ8v9kXk7FA",
+            "channelName": "Code with Gauri",
+            "channelCustomUrl": "@codewithgauri",
+            "channelGrowthScoreRank": 151
+        },
+        {
+            "channelId": "UCNDfiL0D1LUeKWAkRE1xO5Q",
+            "channelName": "Pragmatic AI Labs",
+            "channelCustomUrl": "@pragmaticai",
+            "channelGrowthScoreRank": 52
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCNwP7KEElaJ7cdDTLP-KbBg",
+            "channelName": "Azizul maqsud",
+            "channelCustomUrl": "@learn_it_with_azizul",
+            "channelGrowthScoreRank": 130
+        },
+        {
+            "channelId": "UCYCwgQAMm9sTJv0rgwQLCxw",
+            "channelName": "Grafana",
+            "channelCustomUrl": "@grafana",
+            "channelGrowthScoreRank": 84
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCdMz6KKEDW_1Qqas-ya7S6w",
+            "channelName": "Beyond Coding",
+            "channelCustomUrl": "@beyondcoding",
+            "channelGrowthScoreRank": 68
+        },
+        {
+            "channelId": "UCYCwgQAMm9sTJv0rgwQLCxw",
+            "channelName": "Grafana",
+            "channelCustomUrl": "@grafana",
+            "channelGrowthScoreRank": 84
+        },
+        {
+            "channelId": "UCmIIOHKgJnGQruIVD_Zx71g",
+            "channelName": "Sleuth TV",
+            "channelCustomUrl": "@sleuthtv",
+            "channelGrowthScoreRank": 104
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCyMr5AFbKecmI_T7y-EK7PQ",
+            "channelName": "Naeem Shahzad ",
+            "channelCustomUrl": "@withnaeem",
+            "channelGrowthScoreRank": 73
+        },
+        {
+            "channelId": "UCsZ4IlYjjVxqe5OZ14tyh5g",
+            "channelName": "Azure Synapse Analytics",
+            "channelCustomUrl": "@azuresynapse",
+            "channelGrowthScoreRank": 91
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCSWj8mqQCcrcBlXPi4ThRDQ",
+            "channelName": "KodeKloud",
+            "channelCustomUrl": "@kodekloud",
+            "channelGrowthScoreRank": 88
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCF-uUxo43IPpnEwnR62WGlA",
+            "channelName": "Learn with Whiteboard",
+            "channelCustomUrl": "@learnwithwhiteboard",
+            "channelGrowthScoreRank": 97
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCdMz6KKEDW_1Qqas-ya7S6w",
+            "channelName": "Beyond Coding",
+            "channelCustomUrl": "@beyondcoding",
+            "channelGrowthScoreRank": 68
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCF-uUxo43IPpnEwnR62WGlA",
+            "channelName": "Learn with Whiteboard",
+            "channelCustomUrl": "@learnwithwhiteboard",
+            "channelGrowthScoreRank": 97
+        },
+        {
+            "channelId": "UCSWj8mqQCcrcBlXPi4ThRDQ",
+            "channelName": "KodeKloud",
+            "channelCustomUrl": "@kodekloud",
+            "channelGrowthScoreRank": 88
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UC30jJ6o-3BCfTgYdwf-XixQ",
+            "channelName": "Luiz Macedo",
+            "channelCustomUrl": "@devopspopz",
+            "channelGrowthScoreRank": 195
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCNDfiL0D1LUeKWAkRE1xO5Q",
+            "channelName": "Pragmatic AI Labs",
+            "channelCustomUrl": "@pragmaticai",
+            "channelGrowthScoreRank": 52
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCJ9905MRHxwLZ2jeNQGIWxA",
+            "channelName": "Microsoft Mechanics",
+            "channelCustomUrl": "@msftmechanics",
+            "channelGrowthScoreRank": 31
+        },
+        {
+            "channelId": "UCUDKcm1wIfE6EWk_SyK0D4w",
+            "channelName": "Fortify Unplugged",
+            "channelCustomUrl": "@fortifyunplugged",
+            "channelGrowthScoreRank": 102
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCH912uDFX3sIaPXMrJa9X_w",
+            "channelName": "Questpond",
+            "channelCustomUrl": "@questpondvideos",
+            "channelGrowthScoreRank": 67
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCMy8psUTJzMfTuoLnr3-9hQ",
+            "channelName": "Techtonic Shift",
+            "channelCustomUrl": "@techtonicshiftai",
+            "channelGrowthScoreRank": 176
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCjGcthjRHGegI8TeJHMS6wA",
+            "channelName": "LogicOps Lab",
+            "channelCustomUrl": "@logicopslab",
+            "channelGrowthScoreRank": 69
+        },
+        {
+            "channelId": "UCJ9905MRHxwLZ2jeNQGIWxA",
+            "channelName": "Microsoft Mechanics",
+            "channelCustomUrl": "@msftmechanics",
+            "channelGrowthScoreRank": 31
+        },
+        {
+            "channelId": "UCjGcthjRHGegI8TeJHMS6wA",
+            "channelName": "LogicOps Lab",
+            "channelCustomUrl": "@logicopslab",
+            "channelGrowthScoreRank": 69
+        },
+        {
+            "channelId": "UCbOutTxbTmB4Dk1R5OsIZIg",
+            "channelName": "Unito",
+            "channelCustomUrl": "@unitoio",
+            "channelGrowthScoreRank": 143
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UC5ZR5TkAP7T7e__FIsDtMdw",
+            "channelName": "iTrellis",
+            "channelCustomUrl": "@itrellis",
+            "channelGrowthScoreRank": 194
+        },
+        {
+            "channelId": "UCF-uUxo43IPpnEwnR62WGlA",
+            "channelName": "Learn with Whiteboard",
+            "channelCustomUrl": "@learnwithwhiteboard",
+            "channelGrowthScoreRank": 97
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCjGcthjRHGegI8TeJHMS6wA",
+            "channelName": "LogicOps Lab",
+            "channelCustomUrl": "@logicopslab",
+            "channelGrowthScoreRank": 69
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+            "channelName": "IBM Technology",
+            "channelCustomUrl": "@ibmtechnology",
+            "channelGrowthScoreRank": 26
+        },
+        {
+            "channelId": "UCTLFNCGOENtbTTZqPYKaXaw",
+            "channelName": "Exalate",
+            "channelCustomUrl": "@exalate-integration",
+            "channelGrowthScoreRank": 72
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCT-nPlVzJI-ccQXlxjSvJmw",
+            "channelName": "AWS Developers",
+            "channelCustomUrl": "@awsdevelopers",
+            "channelGrowthScoreRank": 22
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCjGcthjRHGegI8TeJHMS6wA",
+            "channelName": "LogicOps Lab",
+            "channelCustomUrl": "@logicopslab",
+            "channelGrowthScoreRank": 69
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UC5ZR5TkAP7T7e__FIsDtMdw",
+            "channelName": "iTrellis",
+            "channelCustomUrl": "@itrellis",
+            "channelGrowthScoreRank": 194
+        },
+        {
+            "channelId": "UC5ZR5TkAP7T7e__FIsDtMdw",
+            "channelName": "iTrellis",
+            "channelCustomUrl": "@itrellis",
+            "channelGrowthScoreRank": 194
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCT-nPlVzJI-ccQXlxjSvJmw",
+            "channelName": "AWS Developers",
+            "channelCustomUrl": "@awsdevelopers",
+            "channelGrowthScoreRank": 22
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCnMGQ8QHMAnVIsI3xJrihhg",
+            "channelName": "GitLab",
+            "channelCustomUrl": "@gitlab",
+            "channelGrowthScoreRank": 56
+        },
+        {
+            "channelId": "UC30jJ6o-3BCfTgYdwf-XixQ",
+            "channelName": "Luiz Macedo",
+            "channelCustomUrl": "@devopspopz",
+            "channelGrowthScoreRank": 195
+        },
+        {
+            "channelId": "UCTUaRWNhK3aWX3lxudsEExw",
+            "channelName": "Sematext",
+            "channelCustomUrl": "@sematext",
+            "channelGrowthScoreRank": 167
+        },
+        {
+            "channelId": "UCSWj8mqQCcrcBlXPi4ThRDQ",
+            "channelName": "KodeKloud",
+            "channelCustomUrl": "@kodekloud",
+            "channelGrowthScoreRank": 88
+        },
+        {
+            "channelId": "UC5ZR5TkAP7T7e__FIsDtMdw",
+            "channelName": "iTrellis",
+            "channelCustomUrl": "@itrellis",
+            "channelGrowthScoreRank": 194
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCF-uUxo43IPpnEwnR62WGlA",
+            "channelName": "Learn with Whiteboard",
+            "channelCustomUrl": "@learnwithwhiteboard",
+            "channelGrowthScoreRank": 97
+        },
+        {
+            "channelId": "UCnMGQ8QHMAnVIsI3xJrihhg",
+            "channelName": "GitLab",
+            "channelCustomUrl": "@gitlab",
+            "channelGrowthScoreRank": 56
+        },
+        {
+            "channelId": "UCzWd8lsefYoh42OCrg6FzuQ",
+            "channelName": "BestITCourses",
+            "channelCustomUrl": "@bestitcourse",
+            "channelGrowthScoreRank": 64
+        },
+        {
+            "channelId": "UCUDKcm1wIfE6EWk_SyK0D4w",
+            "channelName": "Fortify Unplugged",
+            "channelCustomUrl": "@fortifyunplugged",
+            "channelGrowthScoreRank": 102
+        },
+        {
+            "channelId": "UCZHb3OEEJ0WkizEH9ErlgvA",
+            "channelName": "Dell Technologies",
+            "channelCustomUrl": "@delltechnologies",
+            "channelGrowthScoreRank": 15
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UCNwP7KEElaJ7cdDTLP-KbBg",
+            "channelName": "Azizul maqsud",
+            "channelCustomUrl": "@learn_it_with_azizul",
+            "channelGrowthScoreRank": 130
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCsZ4IlYjjVxqe5OZ14tyh5g",
+            "channelName": "Azure Synapse Analytics",
+            "channelCustomUrl": "@azuresynapse",
+            "channelGrowthScoreRank": 91
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCFFLP0dKesrKWccYscdAr9A",
+            "channelName": "theurbanpenguin",
+            "channelCustomUrl": "@theurbanpenguin",
+            "channelGrowthScoreRank": 66
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCT-nPlVzJI-ccQXlxjSvJmw",
+            "channelName": "AWS Developers",
+            "channelCustomUrl": "@awsdevelopers",
+            "channelGrowthScoreRank": 22
+        },
+        {
+            "channelId": "UCZD2ggK3cnVD_sLMR6gUx2w",
+            "channelName": "Civo",
+            "channelCustomUrl": "@civocloud",
+            "channelGrowthScoreRank": 94
+        },
+        {
+            "channelId": "UCUDKcm1wIfE6EWk_SyK0D4w",
+            "channelName": "Fortify Unplugged",
+            "channelCustomUrl": "@fortifyunplugged",
+            "channelGrowthScoreRank": 102
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCTUaRWNhK3aWX3lxudsEExw",
+            "channelName": "Sematext",
+            "channelCustomUrl": "@sematext",
+            "channelGrowthScoreRank": 167
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UC5ZFyTivwhmZXUcOoMavyAQ",
+            "channelName": "DevOps For Developers",
+            "channelCustomUrl": "@devopsfordevelopers",
+            "channelGrowthScoreRank": 100
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UCH912uDFX3sIaPXMrJa9X_w",
+            "channelName": "Questpond",
+            "channelCustomUrl": "@questpondvideos",
+            "channelGrowthScoreRank": 67
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCMy8psUTJzMfTuoLnr3-9hQ",
+            "channelName": "Techtonic Shift",
+            "channelCustomUrl": "@techtonicshiftai",
+            "channelGrowthScoreRank": 176
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UC4s3tv0Qq_OSUBfR735Jc6A",
+            "channelName": "Microsoft Security",
+            "channelCustomUrl": "@microsoftsecurity",
+            "channelGrowthScoreRank": 30
+        },
+        {
+            "channelId": "UCJ9905MRHxwLZ2jeNQGIWxA",
+            "channelName": "Microsoft Mechanics",
+            "channelCustomUrl": "@msftmechanics",
+            "channelGrowthScoreRank": 31
+        },
+        {
+            "channelId": "UC4s3tv0Qq_OSUBfR735Jc6A",
+            "channelName": "Microsoft Security",
+            "channelCustomUrl": "@microsoftsecurity",
+            "channelGrowthScoreRank": 30
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCT-nPlVzJI-ccQXlxjSvJmw",
+            "channelName": "AWS Developers",
+            "channelCustomUrl": "@awsdevelopers",
+            "channelGrowthScoreRank": 22
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCFFLP0dKesrKWccYscdAr9A",
+            "channelName": "theurbanpenguin",
+            "channelCustomUrl": "@theurbanpenguin",
+            "channelGrowthScoreRank": 66
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCZD2ggK3cnVD_sLMR6gUx2w",
+            "channelName": "Civo",
+            "channelCustomUrl": "@civocloud",
+            "channelGrowthScoreRank": 94
+        },
+        {
+            "channelId": "UCBwSCyzT3GukpVdUdxMjKYw",
+            "channelName": "Red Hat EMEA",
+            "channelCustomUrl": "@redhatemea",
+            "channelGrowthScoreRank": 120
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UCTlo7dk8tb2w-ymZ7oV55ug",
+            "channelName": "Jarrett Coggin",
+            "channelCustomUrl": "@jarrettcoggin",
+            "channelGrowthScoreRank": 203
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCCktnahuRFYIBtNnKT5IYyg",
+            "channelName": "Intellipaat",
+            "channelCustomUrl": "@intellipaat",
+            "channelGrowthScoreRank": 4
+        },
+        {
+            "channelId": "UC5ZR5TkAP7T7e__FIsDtMdw",
+            "channelName": "iTrellis",
+            "channelCustomUrl": "@itrellis",
+            "channelGrowthScoreRank": 194
+        },
+        {
+            "channelId": "UCZHb3OEEJ0WkizEH9ErlgvA",
+            "channelName": "Dell Technologies",
+            "channelCustomUrl": "@delltechnologies",
+            "channelGrowthScoreRank": 15
+        },
+        {
+            "channelId": "UCZEsU-JpH3a9n9xBY4xlHAw",
+            "channelName": "azurewala",
+            "channelCustomUrl": "@azurewala",
+            "channelGrowthScoreRank": 80
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCJFBnZFBlHfuSWdLM4jX9bw",
+            "channelName": "OutOfDevOps",
+            "channelCustomUrl": "@outofdevops",
+            "channelGrowthScoreRank": 139
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCNIOHOhgmypXQdkviMvMiSQ",
+            "channelName": "DevOpsDays London",
+            "channelCustomUrl": "@devopsdayslondon",
+            "channelGrowthScoreRank": 157
+        },
+        {
+            "channelId": "UCcz_P5ztha3Tn-qkcTvKgxQ",
+            "channelName": "Semaphore",
+            "channelCustomUrl": "@semaphoreio",
+            "channelGrowthScoreRank": 128
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCTlo7dk8tb2w-ymZ7oV55ug",
+            "channelName": "Jarrett Coggin",
+            "channelCustomUrl": "@jarrettcoggin",
+            "channelGrowthScoreRank": 203
+        },
+        {
+            "channelId": "UCZNlvVzPwK2CkkVKiCXezOA",
+            "channelName": "Lionel Gurret - MVP",
+            "channelCustomUrl": "@thedevopsrunner",
+            "channelGrowthScoreRank": 87
+        },
+        {
+            "channelId": "UCJPYBmnie7I6b62LOVFdWqQ",
+            "channelName": "Rajesh Yadav",
+            "channelCustomUrl": "@yadavrajesh",
+            "channelGrowthScoreRank": 136
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UCzd8R3vkpllD4CJn_5g5sKg",
+            "channelName": "VMware Tanzu",
+            "channelCustomUrl": "@vmwaretanzu",
+            "channelGrowthScoreRank": 45
+        },
+        {
+            "channelId": "UCTLFNCGOENtbTTZqPYKaXaw",
+            "channelName": "Exalate",
+            "channelCustomUrl": "@exalate-integration",
+            "channelGrowthScoreRank": 72
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCJPYBmnie7I6b62LOVFdWqQ",
+            "channelName": "Rajesh Yadav",
+            "channelCustomUrl": "@yadavrajesh",
+            "channelGrowthScoreRank": 136
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCZD2ggK3cnVD_sLMR6gUx2w",
+            "channelName": "Civo",
+            "channelCustomUrl": "@civocloud",
+            "channelGrowthScoreRank": 94
+        },
+        {
+            "channelId": "UCAc45SVFATruhRe_kb1iGkA",
+            "channelName": "Cameron McKenzie",
+            "channelCustomUrl": "@cameronmcnz",
+            "channelGrowthScoreRank": 96
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCXvlc9x4zlv5DEqbby55Ivg",
+            "channelName": "Romano Roth",
+            "channelCustomUrl": "@romanoroth",
+            "channelGrowthScoreRank": 142
+        },
+        {
+            "channelId": "UCzd8R3vkpllD4CJn_5g5sKg",
+            "channelName": "VMware Tanzu",
+            "channelCustomUrl": "@vmwaretanzu",
+            "channelGrowthScoreRank": 45
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCJFBnZFBlHfuSWdLM4jX9bw",
+            "channelName": "OutOfDevOps",
+            "channelCustomUrl": "@outofdevops",
+            "channelGrowthScoreRank": 139
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UCbOutTxbTmB4Dk1R5OsIZIg",
+            "channelName": "Unito",
+            "channelCustomUrl": "@unitoio",
+            "channelGrowthScoreRank": 143
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UCJFBnZFBlHfuSWdLM4jX9bw",
+            "channelName": "OutOfDevOps",
+            "channelCustomUrl": "@outofdevops",
+            "channelGrowthScoreRank": 139
+        },
+        {
+            "channelId": "UCqCH_Ihcbzz1bNu5TAkXuQw",
+            "channelName": "Humalect",
+            "channelCustomUrl": "@humalect",
+            "channelGrowthScoreRank": 198
+        },
+        {
+            "channelId": "UCAc45SVFATruhRe_kb1iGkA",
+            "channelName": "Cameron McKenzie",
+            "channelCustomUrl": "@cameronmcnz",
+            "channelGrowthScoreRank": 96
+        },
+        {
+            "channelId": "UC4s3tv0Qq_OSUBfR735Jc6A",
+            "channelName": "Microsoft Security",
+            "channelCustomUrl": "@microsoftsecurity",
+            "channelGrowthScoreRank": 30
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCMAg8ZG-BUrVYsQzlM3bHMA",
+            "channelName": "Global DevOps Experience",
+            "channelCustomUrl": "@globaldevopsexperience",
+            "channelGrowthScoreRank": 164
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCqCH_Ihcbzz1bNu5TAkXuQw",
+            "channelName": "Humalect",
+            "channelCustomUrl": "@humalect",
+            "channelGrowthScoreRank": 198
+        },
+        {
+            "channelId": "UCcz_P5ztha3Tn-qkcTvKgxQ",
+            "channelName": "Semaphore",
+            "channelCustomUrl": "@semaphoreio",
+            "channelGrowthScoreRank": 128
+        },
+        {
+            "channelId": "UC_bJ9Hqj_6uX9f-nNsWMt6A",
+            "channelName": "JOYATRES TECHNOLOGY",
+            "channelCustomUrl": "@joyatrestechnology",
+            "channelGrowthScoreRank": 47
+        },
+        {
+            "channelId": "UCQjE37R-Y4DTq7kUWPO83Wg",
+            "channelName": "ServiceNow Documentation",
+            "channelCustomUrl": "@servicenowdocs",
+            "channelGrowthScoreRank": 118
+        },
+        {
+            "channelId": "UCTMRxtyHoE3LPcrl-kT4AQQ",
+            "channelName": "Google Cloud",
+            "channelCustomUrl": "@googlecloud",
+            "channelGrowthScoreRank": 14
+        },
+        {
+            "channelId": "UCQjE37R-Y4DTq7kUWPO83Wg",
+            "channelName": "ServiceNow Documentation",
+            "channelCustomUrl": "@servicenowdocs",
+            "channelGrowthScoreRank": 118
+        },
+        {
+            "channelId": "UCh2hNg76zo3d1qQqTWIQxDg",
+            "channelName": "JFrog",
+            "channelCustomUrl": "@jfroginc",
+            "channelGrowthScoreRank": 95
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UC_bJ9Hqj_6uX9f-nNsWMt6A",
+            "channelName": "JOYATRES TECHNOLOGY",
+            "channelCustomUrl": "@joyatrestechnology",
+            "channelGrowthScoreRank": 47
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UC-ikyViYMM69joIAv7dlMsA",
+            "channelName": "DevOps on Azure",
+            "channelCustomUrl": "@azuredevops",
+            "channelGrowthScoreRank": 103
+        },
+        {
+            "channelId": "UC0m-80FnNY2Qb7obvTL_2fA",
+            "channelName": "Microsoft Azure",
+            "channelCustomUrl": "@microsoftazure",
+            "channelGrowthScoreRank": 50
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UCAc45SVFATruhRe_kb1iGkA",
+            "channelName": "Cameron McKenzie",
+            "channelCustomUrl": "@cameronmcnz",
+            "channelGrowthScoreRank": 96
+        },
+        {
+            "channelId": "UCuUvJx7xB1vQDRf6w8VwKIw",
+            "channelName": "OpsHub",
+            "channelCustomUrl": "@opshubmarketing",
+            "channelGrowthScoreRank": 177
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UCNIOHOhgmypXQdkviMvMiSQ",
+            "channelName": "DevOpsDays London",
+            "channelCustomUrl": "@devopsdayslondon",
+            "channelGrowthScoreRank": 157
+        },
+        {
+            "channelId": "UCsMica-v34Irf9KVTh6xx-g",
+            "channelName": "Microsoft Developer",
+            "channelCustomUrl": "@microsoftdeveloper",
+            "channelGrowthScoreRank": 9
+        },
+        {
+            "channelId": "UCmIIOHKgJnGQruIVD_Zx71g",
+            "channelName": "Sleuth TV",
+            "channelCustomUrl": "@sleuthtv",
+            "channelGrowthScoreRank": 104
+        },
+        {
+            "channelId": "UCFNSJV7uuvCmW2BRe-xvZWQ",
+            "channelName": "ClickIT DevOps & Software Development",
+            "channelCustomUrl": "@clickittech",
+            "channelGrowthScoreRank": 144
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCZEsU-JpH3a9n9xBY4xlHAw",
+            "channelName": "azurewala",
+            "channelCustomUrl": "@azurewala",
+            "channelGrowthScoreRank": 80
+        },
+        {
+            "channelId": "UCd6MoB9NC6uYN2grvUNT-Zg",
+            "channelName": "Amazon Web Services",
+            "channelCustomUrl": "@amazonwebservices",
+            "channelGrowthScoreRank": 7
+        },
+        {
+            "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+            "channelName": "Google Cloud Tech",
+            "channelCustomUrl": "@googlecloudtech",
+            "channelGrowthScoreRank": 11
+        },
+        {
+            "channelId": "UCAdEqOhSnzlLBtaapu567AQ",
+            "channelName": "Hewlett Packard Enterprise",
+            "channelCustomUrl": "@hpe",
+            "channelGrowthScoreRank": 65
+        },
+        {
+            "channelId": "UCJ0AhC-qsQdc_gUk-kOOs5Q",
+            "channelName": "Eficode",
+            "channelCustomUrl": "@eficode-oy",
+            "channelGrowthScoreRank": 116
+        },
+        {
+            "channelId": "UCMAg8ZG-BUrVYsQzlM3bHMA",
+            "channelName": "Global DevOps Experience",
+            "channelCustomUrl": "@globaldevopsexperience",
+            "channelGrowthScoreRank": 164
+        },
+        {
+            "channelId": "UCAdEqOhSnzlLBtaapu567AQ",
+            "channelName": "Hewlett Packard Enterprise",
+            "channelCustomUrl": "@hpe",
+            "channelGrowthScoreRank": 65
+        },
+        {
+            "channelId": "UCpPg789a-SRZrcQ0GoH74KA",
+            "channelName": "Bitrise",
+            "channelCustomUrl": "@bitriseio",
+            "channelGrowthScoreRank": 127
+        },
+        {
+            "channelId": "UCTLFNCGOENtbTTZqPYKaXaw",
+            "channelName": "Exalate",
+            "channelCustomUrl": "@exalate-integration",
+            "channelGrowthScoreRank": 72
+        },
+        {
+            "channelId": "UCpPg789a-SRZrcQ0GoH74KA",
+            "channelName": "Bitrise",
+            "channelCustomUrl": "@bitriseio",
+            "channelGrowthScoreRank": 127
+        },
+        {
+            "channelId": "UCdoadna9HFHsxXWhafhNvKw",
+            "channelName": "AWS Events",
+            "channelCustomUrl": "@awseventschannel",
+            "channelGrowthScoreRank": 16
+        },
+        {
+            "channelId": "UCBwSCyzT3GukpVdUdxMjKYw",
+            "channelName": "Red Hat EMEA",
+            "channelCustomUrl": "@redhatemea",
+            "channelGrowthScoreRank": 120
+        },
+        {
+            "channelId": "UCh2hNg76zo3d1qQqTWIQxDg",
+            "channelName": "JFrog",
+            "channelCustomUrl": "@jfroginc",
+            "channelGrowthScoreRank": 95
+        },
+        {
+            "channelId": "UCuUvJx7xB1vQDRf6w8VwKIw",
+            "channelName": "OpsHub",
+            "channelCustomUrl": "@opshubmarketing",
+            "channelGrowthScoreRank": 177
+        },
+        {
+            "channelId": "UC_bJ9Hqj_6uX9f-nNsWMt6A",
+            "channelName": "JOYATRES TECHNOLOGY",
+            "channelCustomUrl": "@joyatrestechnology",
+            "channelGrowthScoreRank": 47
+        }
+    ],
+    "inconsistent_records_group2": []
+}
