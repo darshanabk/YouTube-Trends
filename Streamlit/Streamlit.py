@@ -421,8 +421,9 @@ def ITHubVideoClassification(Filter_DataFrame):
         bool: Returns True upon successful execution.
     """
     col1, col2 = st.columns([1,1]) 
+    col3, col4 = st.columns([1,1])
     with col1:
-        
+        st.markdown("<h5>IT Hub Country Distribution</h5>", unsafe_allow_html=True)
         df_it_hub = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({ 
         'channelName': 'first',
         'it_hub_country': 'first',
@@ -452,7 +453,7 @@ def ITHubVideoClassification(Filter_DataFrame):
                         x='it_hub_country', 
                         y='size', 
                         color='country_name', 
-                        title="IT Hub Country Distribution",
+                        title=None,
                         labels={'it_hub_country': 'IT Hub', 'size': 'Channel Count'},
                         barmode='stack', 
                         color_discrete_map=color_map,
@@ -461,10 +462,77 @@ def ITHubVideoClassification(Filter_DataFrame):
         st.plotly_chart(fig_IT)
 
     with col2:
+        st.markdown("<h5>Video Duration Classification</h5>", unsafe_allow_html=True)
         fig_duration = px.pie(Filter_DataFrame, names='videoDurationClassification', 
-                              title="Video Duration Classification",
+                              title=None,
                               color='videoDurationClassification')
         st.plotly_chart(fig_duration)
+
+    with col3:
+        st.markdown("<h5>Duration Classification vs 🎯Like To View Ratio</h5>", unsafe_allow_html=True)
+        custom_order = ['Very Short', 'Short', 'Medium', 'Long', 'Very Long', 'Ultra Long', 'Extended']
+
+        Filter_DataFrame['videoDurationClassification'] = pd.Categorical(Filter_DataFrame['videoDurationClassification'], 
+                                                                        categories=custom_order, 
+                                                                        ordered=True)
+
+        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False).agg({ 
+            'videoViewsPerDay': 'mean',
+            'videoLikeToViewRatio': 'mean'
+        })
+
+        fig_line = px.line(df_classification, 
+                        x='videoDurationClassification', 
+                        y=['videoLikeToViewRatio'], 
+                        labels={"value": 'video Like To View Ratio'},
+                        title=None,
+                        markers=True)  
+
+
+        fig_line.update_traces(marker=dict(symbol='circle', size=10), selector=dict(name='videoLikeToViewRatio'))
+
+        fig_line.update_layout(
+            showlegend=False,
+            height=None,
+            margin=dict(t=100, b=50, l=50, r=50)
+        )
+
+
+        st.plotly_chart(fig_line)
+
+    with col4:
+        st.markdown("<h5>Duration Classification vs 💬Comment To View Ratio</h5>", unsafe_allow_html=True)
+        custom_order = ['Very Short', 'Short', 'Medium', 'Long', 'Very Long', 'Ultra Long', 'Extended']
+
+        Filter_DataFrame['videoDurationClassification'] = pd.Categorical(Filter_DataFrame['videoDurationClassification'], 
+                                                                        categories=custom_order, 
+                                                                        ordered=True)
+
+        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False).agg({ 
+            'videoViewsPerDay': 'mean',
+            'videoCommentToViewRatio': 'mean'
+        })
+
+        fig_line = px.line(df_classification, 
+                        x='videoDurationClassification', 
+                        y=['videoCommentToViewRatio'], 
+                        labels={"value": "video Comment To View Ratio"},
+                        title=None,
+                        markers=True)  
+
+
+        fig_line.update_traces(marker=dict(symbol='square', size=10), selector=dict(name='videoCommentToViewRatio'))
+
+        fig_line.update_layout(
+            showlegend=False,
+            height=None,
+            margin=dict(t=100, b=50, l=50, r=50)
+        )
+
+
+        st.plotly_chart(fig_line)
+
+
     
     return True
 
@@ -500,6 +568,7 @@ def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
     """
     col1, col2 = st.columns(2)  
     with col1:
+        st.markdown(f"<h5>{selected_metric_label} by Continent</h5>", unsafe_allow_html=True)
         df_continent = Filter_DataFrame.groupby('continent', as_index=False).agg({
             'channelGrowthScore': 'mean',
             'videoEngagementScore': 'mean'
@@ -511,20 +580,21 @@ def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
                                 df_continent, 
                                 names="continent",  # Categories for the pie chart
                                 values=selected_metric,  # Values to determine the size of slices
-                                title=f"{selected_metric_label} by Continent",
+                                title=None,
                                 color="continent",  # Color by continent
                                 hole=0.3  # Optional: Set this for a donut chart effect
                             )
         st.plotly_chart(fig_continent)
 
     with col2:
+        st.markdown(f"<h5>{selected_metric_label} by Country (Top 10)</h5>", unsafe_allow_html=True)
         df_country = Filter_DataFrame.groupby('country_name', as_index=False).agg({
             'channelGrowthScore': 'mean',
             'videoEngagementScore': 'mean'
         }).nlargest(10, selected_metric)  # Display Top 10 Countries
         df_country = df_country.sort_values(by=selected_metric,ascending = False)
         fig_country = px.bar(df_country, x='country_name', y=selected_metric,
-                             title=f"{selected_metric_label} by Country (Top 10)")
+                             title=None)
         st.plotly_chart(fig_country)
 
     return True
