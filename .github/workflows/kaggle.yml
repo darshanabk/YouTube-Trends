@@ -20,20 +20,21 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
   
+        - name: Install Kaggle CLI
+          run: pip install kaggle
+        
         - name: Authenticate with Kaggle
           env:
             KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
             KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           run: |
-            mkdir -p ~/.kaggle  # Create the kaggle directory if not exists
+            mkdir -p ~/.kaggle  # Create the Kaggle directory if not exists
             echo '{"username":"'$KAGGLE_USERNAME'","key":"'$KAGGLE_KEY'"}' > ~/.kaggle/kaggle.json
             chmod 600 ~/.kaggle/kaggle.json
             echo "Kaggle authentication file created successfully"
 
-  
         - name: Run Kaggle Notebook and Download Outputs
-          run: |
-            kaggle kernels output darshanabk/YoutubeAnalysis --path Output/
+          run: kaggle kernels output darshanabk/YoutubeAnalysis --path Output/
   
         - name: Commit Changes with Timestamp
           run: |
