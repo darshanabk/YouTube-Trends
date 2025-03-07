@@ -28,13 +28,13 @@ jobs:
             KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
             KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           run: |
-            mkdir -p ~/.kaggle  # Create the Kaggle directory if not exists
+            mkdir -p ~/.kaggle
             echo '{"username":"'$KAGGLE_USERNAME'","key":"'$KAGGLE_KEY'"}' > ~/.kaggle/kaggle.json
             chmod 600 ~/.kaggle/kaggle.json
-            echo "Kaggle authentication file created successfully"
-
-        - name: Run Kaggle Notebook and Download Outputs
+        
+        - name: Download Private Notebook Output
           run: kaggle kernels output darshanabk/YoutubeAnalysis --path Output/
+
   
         - name: Commit Changes with Timestamp
           run: |
