@@ -3,7 +3,7 @@ name: Deploy Streamlit App
 on:
   push:
     branches:
-      - main  # Change this to your branch name if different
+      - main
 
 jobs:
   deploy:
@@ -15,17 +15,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'  # or your preferred version
+          python-version: '3.12'
 
       - name: Install dependencies
-        run: |
-          pip install -r Streamlit/requirements.txt
+        run: pip install -r Streamlit/requirements.txt
 
-      - name: Clear Streamlit cache
-        run: |
-          streamlit cache clear
+      - name: Clear Streamlit Cache
+        run: streamlit cache clear || true
 
-      - name: Restart Streamlit app
+      - name: Restart Streamlit App
         run: |
-          pkill -f Streamlit.py || true  # Kill any previous instance (if running)
-          nohup streamlit run Streamlit/Streamlit.py &  # Restart the app in the background
+          pkill -f Streamlit.py || true
+          nohup streamlit run Streamlit/Streamlit.py &
+
+      - name: Sleep to Allow App Start
+        run: sleep 10  # Wait 10 seconds for the app to restart
