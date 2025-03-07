@@ -1,9 +1,6 @@
 name: Run Kaggle Notebook
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # This schedule is set to run daily at 10:30 AM UTC (4:00 PM IST).
     # YouTube API updates video statistics data between 12 PM and 3 PM IST.
@@ -11,31 +8,44 @@ on:
     # before the Kaggle notebook execution starts.
     - cron: '30 10 * * *'  # Runs daily at 10:30 AM UTC (4:00 PM IST)
 
+  push:
+      branches:
+        - main
+  
 jobs:
-  kaggle:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install Kaggle API
-        run: pip install kaggle
-
-      - name: Upload Notebook to Kaggle
-        run: |
-          mkdir -p ~/.kaggle
-          echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_KEY }}\"}" > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
-          kaggle kernels push -p Streamlit/
-
-      - name: Check Kaggle Kernel Status
-        run: kaggle kernels status darshanabk/devops-youtube-trends
-
-      - name: Download Output
-        run: kaggle kernels output darshanabk/devops-youtube-trends -p output/
+    run-kaggle-notebook:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+  
+        - name: Authenticate with Kaggle
+          env:
+            KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+            KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          run: |
+            echo '{"username":"'$KAGGLE_USERNAME'","key":"'$KAGGLE_KEY'"}' > ~/.kaggle/kaggle.json
+            chmod 600 ~/.kaggle/kaggle.json
+  
+        - name: Run Kaggle Notebook and Download Outputs
+          run: |
+            kaggle kernels output darshanabk/YoutubeAnalysis --path Output/
+  
+        - name: Commit Changes with Timestamp
+          run: |
+            git config --global user.name "github-actions"
+            git config --global user.email "${{ secrets.REPO_OWNER_EMAIL }}"
+  
+            git add DataCleaning/Daily ExecutionTracker/Daily FeatureEngineering/Daily Requirement/Daily Source/Daily || echo "No changes to commit"
+            
+            changed_files=$(git diff --cached --name-only)
+            if [ -n "$changed_files" ]; then
+              git commit -m "Automated update on $(date +'%Y-%m-%d %H:%M:%S') for the following files:
+              $changed_files"
+              git push
+            else
+              echo "No changes detected."
+            fi
+          env:
+            REPO_OWNER_EMAIL: ${{ secrets.REPO_OWNER_EMAIL }}
