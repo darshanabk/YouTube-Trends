@@ -1,4 +1,5 @@
-name: Run Kaggle Notebook
+
+name: Trigger Kaggle Notebook
 
 on:
   schedule:
@@ -6,50 +7,33 @@ on:
     # YouTube API updates video statistics data between 12 PM and 3 PM IST.
     # Setting the schedule to 4 PM IST ensures that the latest data is available 
     # before the Kaggle notebook execution starts.
-    - cron: '30 10 * * *'  # Runs daily at 10:30 AM UTC (4:00 PM IST)
+    - cron: '0 0 * * *'    # 12:00 AM UTC (5:30 AM IST)
+    - cron: '30 18 * * *'  # 12:00 AM IST (6:30 PM UTC)
+  workflow_dispatch:  # Allows manual triggering
 
-  push:
-      branches:
-        - main
-  
 jobs:
-    run-kaggle-notebook:
-      runs-on: ubuntu-latest
-  
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-  
-        - name: Install Kaggle CLI
-          run: pip install kaggle
-        
-        - name: Authenticate with Kaggle
-          env:
-            KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-            KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-          run: |
-            mkdir -p ~/.kaggle
-            echo '{"username":"'$KAGGLE_USERNAME'","key":"'$KAGGLE_KEY'"}' > ~/.kaggle/kaggle.json
-            chmod 600 ~/.kaggle/kaggle.json
-        
-        - name: Download Private Notebook Output
-          run: kaggle kernels output darshanabalakannan/youtubeanalysis --path Output/
+  trigger-kaggle-notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  
-        - name: Commit Changes with Timestamp
-          run: |
-            git config --global user.name "github-actions"
-            git config --global user.email "${{ secrets.REPO_OWNER_EMAIL }}"
-  
-            git add DataCleaning/Daily ExecutionTracker/Daily FeatureEngineering/Daily Requirement/Daily Source/Daily || echo "No changes to commit"
-            
-            changed_files=$(git diff --cached --name-only)
-            if [ -n "$changed_files" ]; then
-              git commit -m "Automated update on $(date +'%Y-%m-%d %H:%M:%S') for the following files:
-              $changed_files"
-              git push
-            else
-              echo "No changes detected."
-            fi
-          env:
-            REPO_OWNER_EMAIL: ${{ secrets.REPO_OWNER_EMAIL }}
+      - name: Install Kaggle CLI
+        run: |
+          pip install kaggle
+
+      - name: Set Kaggle API Credentials
+        run: |
+          mkdir ~/.kaggle
+          echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_KEY }}\"}" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+
+      - name: Trigger Kaggle Notebook
+        run: |
+          kaggle kernels list --mine  # Optional: List your notebooks
+          kaggle kernels push -p .  # Push your kernel to Kaggle
+          kaggle kernels status darshanabalakannan/youtubeanalysis  # Check status
+
+      - name: Success Message
+        run: echo "Kaggle Notebook Scheduled Successfully!"
+
