@@ -33,7 +33,7 @@ jobs:
             chmod 600 ~/.kaggle/kaggle.json
         
         - name: Download Private Notebook Output
-          run: kaggle kernels output darshanabalakannan/YoutubeAnalysis --path Output/
+          run: kaggle kernels output darshanabalakannan/youtubeanalysis --path Output/
 
   
         - name: Commit Changes with Timestamp
