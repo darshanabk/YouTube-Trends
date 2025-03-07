@@ -15,14 +15,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12' # or your preferred version
+          python-version: '3.12'  # or your preferred version
 
       - name: Install dependencies
         run: |
           pip install -r Streamlit/requirements.txt
 
+      - name: Clear Streamlit cache
+        run: |
+          streamlit cache clear
+
       - name: Restart Streamlit app
         run: |
           pkill -f Streamlit.py || true  # Kill any previous instance (if running)
           nohup streamlit run Streamlit/Streamlit.py &  # Restart the app in the background
-
