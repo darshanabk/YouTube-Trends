@@ -931,23 +931,5 @@ if __name__ == "__main__":
                     <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
                 </svg>
                 """
-        # Check if the session has been initialized
-    if "reloaded" not in st.session_state:
-        st.session_state.reloaded = False
-
-    # JavaScript to reload the page once
-    reload_script = """
-    <script>
-        if (!window.sessionStorage.getItem("reloaded")) {
-            window.sessionStorage.setItem("reloaded", "true");
-            location.reload();
-        }
-    </script>
-    """
-
-    # Reload only once per session
-    if not st.session_state.reloaded:
-        st.session_state.reloaded = True
-        st.markdown(reload_script, unsafe_allow_html=True)
     
     main()
