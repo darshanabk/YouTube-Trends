@@ -323,7 +323,7 @@ def FrequencyRatioMain(file, Filter_DataFrame):
         Returns:
             float: Average upload frequency (videos per year) across all channels.
         """
-        dataframe = dataframe.groupby(by='channelId', as_index=False).agg({ 
+        dataframe = dataframe.groupby(by='channelId', as_index=False, observed=True).agg({ 
         'channelName': 'first',
         'channelAgeInYears': 'mean',
         'channelVideoCount': 'mean',
@@ -424,12 +424,12 @@ def ITHubVideoClassification(Filter_DataFrame):
     col3, col4 = st.columns([1,1])
     with col1:
         st.markdown("<h5>IT Hub Country Distribution</h5>", unsafe_allow_html=True)
-        df_it_hub = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({ 
+        df_it_hub = Filter_DataFrame.groupby(by='channelId', as_index=False, observed=True).agg({ 
         'channelName': 'first',
         'it_hub_country': 'first',
         'country_name': 'first',
         })
-        df_it_hub = df_it_hub.groupby(['it_hub_country', 'country_name'], as_index=False).size()
+        df_it_hub = df_it_hub.groupby(['it_hub_country', 'country_name'], as_index=False, observed=True).size()
         df_it_hub = df_it_hub.sort_values(by="size", ascending=False)
         blue_shades = ["#00008B", "#0000CD", "#4169E1", "#4682B4", "#1E90FF"]  # Dark Blue → Medium Blue
         orange_shades = ["#8B4513", "#D2691E", "#FF8C00", "#FFA500", "#FFD700"]  # Dark Orange → Gold
@@ -476,7 +476,7 @@ def ITHubVideoClassification(Filter_DataFrame):
                                                                         categories=custom_order, 
                                                                         ordered=True)
 
-        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False).agg({ 
+        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False, observed=True).agg({ 
             'videoViewsPerDay': 'mean',
             'videoLikeToViewRatio': 'mean'
         })
@@ -508,7 +508,7 @@ def ITHubVideoClassification(Filter_DataFrame):
                                                                         categories=custom_order, 
                                                                         ordered=True)
 
-        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False).agg({ 
+        df_classification = Filter_DataFrame.groupby(by='videoDurationClassification', as_index=False, observed=True).agg({ 
             'videoViewsPerDay': 'mean',
             'videoCommentToViewRatio': 'mean'
         })
@@ -569,7 +569,7 @@ def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
     col1, col2 = st.columns(2)  
     with col1:
         st.markdown(f"<h5>{selected_metric_label} by Continent</h5>", unsafe_allow_html=True)
-        df_continent = Filter_DataFrame.groupby('continent', as_index=False).agg({
+        df_continent = Filter_DataFrame.groupby('continent', as_index=False, observed=True).agg({
             'channelGrowthScore': 'mean',
             'videoEngagementScore': 'mean'
         })
@@ -588,7 +588,7 @@ def GeoScore(Filter_DataFrame, selected_metric_label, selected_metric):
 
     with col2:
         st.markdown(f"<h5>{selected_metric_label} by Country (Top 10)</h5>", unsafe_allow_html=True)
-        df_country = Filter_DataFrame.groupby('country_name', as_index=False).agg({
+        df_country = Filter_DataFrame.groupby('country_name', as_index=False, observed=True).agg({
             'channelGrowthScore': 'mean',
             'videoEngagementScore': 'mean'
         }).nlargest(10, selected_metric)  # Display Top 10 Countries
@@ -611,7 +611,7 @@ def top10channels(Filter_DataFrame, selected_metric):
         plotly.graph_objects.Figure: Plotly bar chart visualization.
     """
     Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
-    Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False).agg({
+    Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False, observed=True).agg({
     'channelName': 'first',  # Keeping the first occurrence of channelName
     'channelSubscriberCount': 'mean',
     'channelViewCount': 'mean',
@@ -666,7 +666,7 @@ def top10videos(Filter_DataFrame,selected_metric):
         tuple: (Plotly bar chart figure, Processed dataframe containing the top 10 videos)
     """
     Filter_DataFrame['videoLink'] = "https://www.youtube.com/watch?v=" + Filter_DataFrame['videoId']
-    Filter_DataFrame = Filter_DataFrame.groupby(by='videoId', as_index=False).agg({
+    Filter_DataFrame = Filter_DataFrame.groupby(by='videoId', as_index=False, observed=True).agg({
     'videoTitle': 'first', 
     'channelName': 'first',
     'videoLikeCount': 'mean',
@@ -931,5 +931,23 @@ if __name__ == "__main__":
                     <path d="M5,20 A7,7 0 0,1 19,20" stroke="#FFFFFF" stroke-width="1" fill="#000000"/>
                 </svg>
                 """
+        # Check if the session has been initialized
+    if "reloaded" not in st.session_state:
+        st.session_state.reloaded = False
+
+    # JavaScript to reload the page once
+    reload_script = """
+    <script>
+        if (!window.sessionStorage.getItem("reloaded")) {
+            window.sessionStorage.setItem("reloaded", "true");
+            location.reload();
+        }
+    </script>
+    """
+
+    # Reload only once per session
+    if not st.session_state.reloaded:
+        st.session_state.reloaded = True
+        st.markdown(reload_script, unsafe_allow_html=True)
     
     main()
