@@ -1,4 +1,4 @@
-# YouTube Video Data Extraction and GitHub Automation
+# YouTube Video Data Extraction and GitHub Automation | Trend Analysis
 ![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)
 
 <p align="left">
