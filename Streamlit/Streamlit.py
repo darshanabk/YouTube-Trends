@@ -546,10 +546,10 @@ def get_selected_metric_label():
                - selected_metric_label: The label chosen by the user from the selectbox.
                - selected_metric: The corresponding column name mapped to the selected label.
     """
-    selected_metric_label= st.selectbox("Select a metric:", ["Channel Growth", "Video Engagement"])
+    selected_metric_label= st.selectbox("Select a metric:", ["Video Engagement", "Channel Growth"])
     metric_mapping = {
-                            "Channel Growth": "channelGrowthScore",
-                            "Video Engagement": "videoEngagementScore"
+                            "Video Engagement": "videoEngagementScore",
+                            "Channel Growth": "channelGrowthScore"
                         }
     selected_metric =  metric_mapping.get(selected_metric_label)
     return selected_metric_label, selected_metric
