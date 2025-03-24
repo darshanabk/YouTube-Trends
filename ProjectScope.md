@@ -47,25 +47,26 @@ This project aims to automate the extraction, analysis, and visualization of You
 
 ## Milestone Timeline
 
-| **Milestone**                   | **Description**                                          | **Target Date**     |
-|----------------------------------|---------------------------------------------------------|---------------------|
-| **Milestone 1**: Project Setup      | Define project scope, set up GitHub repo, configure API. | January 28, 2025    |
-| **Milestone 2**: Data Cleaning      | Clean and validate raw data to ensure consistency.       | February 03, 2025   |
-| **Milestone 3**: Exploratory Data Analysis (EDA) | Analyze trends and calculate key metrics.       | February 11, 2025   |
-| **Milestone 4**: Visualization Scripts | Create Python scripts for key visualizations.          | February 16, 2025   |
-| **Milestone 5**: Streamlit Dashboard  | Develop and test an interactive dashboard.              | February 24, 2025   |
-| **Milestone 6**: Power BI Integration | Build optional Power BI reports for advanced analytics.| March 04, 2025      |
-| **Milestone 7**: Final Documentation  | Complete project documentation and deliverables.       | March 11, 2025      |
+| **Milestone**                   | **Description**                                          | 
+|----------------------------------|---------------------------------------------------------|
+| **Milestone 1**: Project Setup      | Define project scope, set up GitHub repo, configure API. | 
+| **Milestone 2**: Data Cleaning      | Clean and validate raw data to ensure consistency.       | 
+| **Milestone 3**: Exploratory Data Analysis (EDA) | Analyze trends and calculate key metrics.       | 
+| **Milestone 4**: Visualization Scripts | Create Python scripts for key visualizations.          | 
+| **Milestone 5**: Streamlit Dashboard  | Develop and test an interactive dashboard.              | 
+| **Milestone 6**: Power BI Integration | Build optional Power BI reports for advanced analytics.| 
+| **Milestone 7**: Final Documentation  | Complete project documentation and deliverables.       | 
 
 ---
-
+<!--
 ## Constraints
 1. **Budget**: The project will utilize free tools and services to minimize costs.
 2. **Time**: Each milestone must be completed within the defined time frame.
 3. **Data Limitations**: The project is limited by the data available through the YouTube Data API.
 4. **No Database**: Data storage and processing will occur directly through GitHub, with JSON files.
-
 ---
+-->
+
 
 ## Assumptions
 1. The YouTube Data API will provide accurate and up-to-date data for analysis.
