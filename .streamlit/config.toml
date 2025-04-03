@@ -6,7 +6,8 @@
 # textColor = "#000000" # Black text
 [theme]
 base = "dark"  # Set default theme to dark
-primaryColor = "#4682B4"  # Steel Blue accent
+# primaryColor = "#4682B4"  # Steel Blue accent
+primaryColor = "#FF0000"
 backgroundColor = "#0E1117"  # Dark background
 secondaryBackgroundColor = "#262730"  # Dark grey sidebar
 textColor = "#FFFFFF"  # White text
