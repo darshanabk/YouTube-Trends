@@ -841,17 +841,18 @@ def streamlitSideBar(file):
     licensedContent = np.append(licensedContent, 'All')
     licensedContent = licensedContent.astype(str)
 
-
+    st.sidebar.write("Please select at least one of the following: Continent, Country, or Channel")
     FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
-    st.sidebar.write("OR")
+    # st.sidebar.write("OR")
     FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
-    st.sidebar.write("OR")
+    # st.sidebar.write("OR")
     FilterChannelNames = st.sidebar.multiselect("Select Channels", options = channelNames, default = 'All' )
-    st.sidebar.write("AND")
+    # st.sidebar.write("AND")
+    st.sidebar.write("Please select at least one year to proceed")
     FilterYears = st.sidebar.multiselect("Select Years", options = Years, default = 'All')
-    st.sidebar.write("AND")
+    # st.sidebar.write("AND")
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
-    st.sidebar.write("AND")
+    # st.sidebar.write("AND")
     FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
     
     return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
