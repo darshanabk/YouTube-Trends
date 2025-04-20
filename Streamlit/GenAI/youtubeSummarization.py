@@ -49,17 +49,19 @@ def fetch_transcript(video_id):
         return None
 
 
-def download_audio(video_id, output_dir="audio"):
-    os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
+import yt_dlp
+import io
+
+def download_audio(video_id):
+    # Generate filename using video ID and timestamp
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     filename = f"{video_id}_{timestamp}.mp3"
-    output_path = os.path.join(output_dir, filename)
-    
+
     try:
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': output_path,
+            'outtmpl': '/tmp/' + filename,  # Save temporarily in Streamlit's cloud storage path
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
@@ -71,12 +73,13 @@ def download_audio(video_id, output_dir="audio"):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
 
-        # Open the audio file directly as binary data
-        with open(output_path, 'rb') as audio_file:
+        # Open the downloaded audio file from the temporary path and read it as binary data
+        audio_path = f'/tmp/{filename}'
+        with open(audio_path, 'rb') as audio_file:
             audio_data = audio_file.read()
 
         # Provide a download button for the audio file in Streamlit UI
-        st.write(f"Audio saved at: {output_path}")  # Inform user where it's saved
+        st.write(f"Audio ready for download: {filename}")  # Inform user about the file
         st.download_button(
             label="Download Audio",
             data=audio_data,
@@ -84,7 +87,7 @@ def download_audio(video_id, output_dir="audio"):
             mime="audio/mp3"
         )
 
-        return audio_data  # Return the audio data itself
+        return audio_data  # Return audio data in case you need it for further use
 
     except Exception as e:
         # st.error(f"Audio download failed: {e}")
