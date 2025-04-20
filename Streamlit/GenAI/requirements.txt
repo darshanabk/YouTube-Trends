@@ -6,3 +6,4 @@ whisper
 emoji
 pandas
 google-generativeai
+yt_dlp
