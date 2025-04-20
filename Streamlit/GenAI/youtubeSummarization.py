@@ -20,15 +20,16 @@ GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 configure(api_key=GEMINI_API_KEY)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-whisper_model = whisper.load_model("base")
 
 # YouTube Data API v3 setup
 YOUTUBE_API_KEY = st.secrets["YOUTUBE_API_KEY"]
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
+
 def extract_video_id(url):
     match = re.search(r"(?:v=|youtu\.be/)([^&]+)", url)
     return match.group(1) if match else None
+
 
 def datacleaning(text: str) -> str:
     text = emoji.replace_emoji(text, replace='')
@@ -37,24 +38,21 @@ def datacleaning(text: str) -> str:
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
+
 def fetch_transcript(video_id):
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        english_transcripts = [t.language_code for t in transcript_list if t.language_code.startswith('en')]
-        if english_transcripts:
-            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
-            transcript_text = " ".join([t['text'] for t in transcript])
-            return datacleaning(transcript_text)
-        else:
-            return None
-    except:
+        transcript = transcript_list.find_transcript(['en']).fetch()
+        transcript_text = " ".join([t['text'] for t in transcript])
+        return datacleaning(transcript_text)
+    except Exception:
         return None
 
-# Function to download audio
+
 def download_audio(video_id, output_dir="audio"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = f"{video_id}_{timestamp}.mp4"
+    filename = f"{video_id}_{timestamp}.mp3"
     output_path = os.path.join(output_dir, filename)
     try:
         video_url = f"https://www.youtube.com/watch?v={video_id}"
@@ -67,43 +65,37 @@ def download_audio(video_id, output_dir="audio"):
                 'preferredquality': '192',
             }],
         }
-
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
-            
-        return output_path  
-
+        return output_path
     except Exception as e:
         st.error(f"Audio download failed: {e}")
         return None
 
-# Function to transcribe audio
+
 def whisper_transcribe(audio_path):
     try:
-        result = whisper_model.transcribe(audio_path)
-        return datacleaning(result['text'])
+        with st.spinner("Transcribing with Whisper..."):
+            whisper_model = whisper.load_model("base")
+            result = whisper_model.transcribe(audio_path)
+            return datacleaning(result['text'])
     except Exception as e:
         st.error(f"Whisper transcription failed: {e}")
         return None
 
-# Function to search the web and summarize the results
+
 def search_and_summarize(query):
     try:
-        # Perform a web search using the video title or description
         search_results = search(query, num_results=3)
         web_content = ""
-        
-        # Fetch content from the search results
         for url in search_results:
-            web_content += f"URL: {url}\n"
-            web_content += f"Extracted Content:\n{url}\n"  # You can add a more sophisticated content fetcher here
-            
+            web_content += f"URL: {url}\nExtracted Content: {url}\n"
         return web_content
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
 
-# Function to fetch metadata using yt-dlp
+
 def fetch_metadata_yt_dlp(url):
     try:
         with yt_dlp.YoutubeDL() as ydl:
@@ -112,72 +104,69 @@ def fetch_metadata_yt_dlp(url):
             description = info_dict.get('description', 'No description found')
             return title, description
     except Exception as e:
-        st.error(f"yt-dlp metadata fetch failed: {e}")
+        st.warning(f"yt-dlp metadata fetch failed: {e}")
         return None, None
 
-# Function to fetch metadata using YouTube Data API v3
+
 def fetch_metadata_youtube_api(video_id):
     try:
-        request = youtube.videos().list(
-            part="snippet",
-            id=video_id
-        )
+        request = youtube.videos().list(part="snippet", id=video_id)
         response = request.execute()
         title = response['items'][0]['snippet']['title']
         description = response['items'][0]['snippet']['description']
         return title, description
     except HttpError as e:
-        st.error(f"YouTube API metadata fetch failed: {e}")
+        st.warning(f"YouTube API metadata fetch failed: {e}")
         return None, None
 
+
 def summarize_with_any_model(text):
-    # List of Gemini models to try
     gemini_models = [
         "models/gemini-1.5-pro", "models/gemini-1.5-pro-001", "models/gemini-1.5-pro-002",
         "models/gemini-1.5-flash", "models/gemini-1.5-flash-latest", "models/gemini-1.5-flash-001",
         "models/gemini-2.0-flash", "models/gemini-2.0-pro-exp", "models/gemini-2.0-flash-001"
     ]
-
-    # Try Gemini models first
     for model_name in gemini_models:
         try:
             model = GenerativeModel(model_name)
-            gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
-            return  gemini_response.text
-        except Exception as gemini_error:
-            st.warning(f"Gemini model {model_name} failed. Trying next...")
+            with st.spinner(f"Trying Gemini model: {model_name}"):
+                gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
+            return gemini_response.text
+        except Exception:
+            st.warning(f"Gemini model {model_name} failed.")
 
-    st.warning("All Gemini models failed. Falling back to OpenAI...")
+    st.warning("All Gemini models failed. Trying OpenAI GPT...")
 
-    # Try OpenAI GPT-4
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
-            messages=[{"role": "system", "content": "Summarize the following transcript."},
-                      {"role": "user", "content": text}],
+            messages=[
+                {"role": "system", "content": "Summarize the following transcript."},
+                {"role": "user", "content": text}
+            ],
             max_tokens=1024,
             temperature=0.7
         )
         return "[GPT-4] " + response.choices[0].message.content.strip()
-    except Exception as gpt4_error:
-        st.warning("GPT-4 failed. Trying GPT-3.5...")
+    except Exception:
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Summarize the following transcript."},
+                    {"role": "user", "content": text}
+                ],
+                max_tokens=1024,
+                temperature=0.7
+            )
+            return "[GPT-3.5] " + response.choices[0].message.content.strip()
+        except Exception as e:
+            st.error("All summarization models failed.")
+            return None
 
-    # Fallback to GPT-3.5
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "Summarize the following transcript."},
-                      {"role": "user", "content": text}],
-            max_tokens=1024,
-            temperature=0.7
-        )
-        return "[GPT-3.5] " + response.choices[0].message.content.strip()
-    except Exception as gpt35_error:
-        st.error("All summarization models failed. Please try again later.")
-        return None
 
-
-# Streamlit UI
+# --- Streamlit UI ---
+st.set_page_config(page_title="YouTube Summarizer", layout="centered")
 st.title("🎬 YouTube Summarizer with Gemini + Whisper")
 
 url = st.text_input("Enter YouTube URL:")
@@ -193,38 +182,37 @@ if url:
         if transcript:
             st.success("Transcript fetched successfully!")
         else:
-            st.warning("Transcript not available. Downloading audio and using Whisper...")
+            st.warning("Transcript not available. Trying audio transcription...")
             audio_path = download_audio(video_id)
             if audio_path:
                 transcript = whisper_transcribe(audio_path)
                 if transcript:
-                    st.success("Audio transcribed successfully using Whisper!")
-
+                    st.success("Audio transcribed successfully!")
+        
         if not transcript:
-            st.warning("Audio download failed. Fetching metadata and searching the web...")
-            # Try fetching metadata using yt-dlp
+            st.warning("Audio unavailable. Fetching metadata and searching the web...")
             title, description = fetch_metadata_yt_dlp(url)
             if not title or not description:
-                # If yt-dlp fails, try YouTube API
                 title, description = fetch_metadata_youtube_api(video_id)
 
             if title and description:
-                metadata_text = f"Title: {title}\nDescription: {description}"
+                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
                 st.write(metadata_text)
 
-                # Search the web with the video metadata (title, description)
                 web_search_content = search_and_summarize(f"{title} {description}")
                 if web_search_content:
                     st.subheader("🧠 Web Search Summary")
                     web_summary = summarize_with_any_model(web_search_content)
-                    st.write(web_summary)
-
-        if transcript:
+                    if web_summary:
+                        st.write(web_summary)
+        else:
             st.subheader("📄 Transcript")
-            st.write(transcript[:3000])  # Display part of it
+            with st.expander("Click to expand full transcript"):
+                st.write(transcript)
 
             st.subheader("🧠 Summary")
             summary = summarize_with_any_model(transcript)
-            st.write(summary)
-        else:
-            st.error("Could not extract transcript or transcribe audio.")
+            if summary:
+                st.write(summary)
+            else:
+                st.error("Summarization failed.")
