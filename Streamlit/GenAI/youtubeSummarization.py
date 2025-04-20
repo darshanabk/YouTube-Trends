@@ -5,12 +5,13 @@ import emoji
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from pytube import YouTube
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 import openai
 import whisper
 from google.generativeai import GenerativeModel, configure
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 # Set your API keys
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
@@ -18,6 +19,10 @@ configure(api_key=GEMINI_API_KEY)
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 whisper_model = whisper.load_model("base")
+
+# YouTube Data API v3 setup
+YOUTUBE_API_KEY = st.secrets["YOUTUBE_API_KEY"]
+youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 def extract_video_id(url):
     match = re.search(r"(?:v=|youtu\.be/)([^&]+)", url)
@@ -43,22 +48,7 @@ def fetch_transcript(video_id):
     except:
         return None
 
-# def download_audio(video_id, output_dir="audio"):
-#     os.makedirs(output_dir, exist_ok=True)
-#     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-#     filename = f"{video_id}_{timestamp}.mp4"
-#     output_path = os.path.join(output_dir, filename)
-
-#     try:
-#         yt = YouTube(f"https://www.youtube.com/watch?v={video_id}")
-#         audio_stream = yt.streams.filter(only_audio=True).first()
-#         audio_stream.download(filename=output_path)
-#         return output_path
-#     except Exception as e:
-#         st.error(f"Audio download failed: {e}")
-#         return None
-
-
+# Function to download audio
 def download_audio(video_id, output_dir="audio"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -68,7 +58,7 @@ def download_audio(video_id, output_dir="audio"):
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl':output_path,
+            'outtmpl': output_path,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
@@ -79,11 +69,11 @@ def download_audio(video_id, output_dir="audio"):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
 
-     except Exception as e:
-         st.error(f"Audio download failed: {e}")
-         return None
-    
+    except Exception as e:
+        st.error(f"Audio download failed: {e}")
+        return None
 
+# Function to transcribe audio
 def whisper_transcribe(audio_path):
     try:
         result = whisper_model.transcribe(audio_path)
@@ -91,6 +81,50 @@ def whisper_transcribe(audio_path):
     except Exception as e:
         st.error(f"Whisper transcription failed: {e}")
         return None
+
+# Function to search the web and summarize the results
+def search_and_summarize(query):
+    try:
+        # Perform a web search using the video title or description
+        search_results = search(query, num_results=3)
+        web_content = ""
+        
+        # Fetch content from the search results
+        for url in search_results:
+            web_content += f"URL: {url}\n"
+            web_content += f"Extracted Content:\n{url}\n"  # You can add a more sophisticated content fetcher here
+            
+        return web_content
+    except Exception as e:
+        st.error(f"Error searching the web: {e}")
+        return None
+
+# Function to fetch metadata using yt-dlp
+def fetch_metadata_yt_dlp(url):
+    try:
+        with yt_dlp.YoutubeDL() as ydl:
+            info_dict = ydl.extract_info(url, download=False)
+            title = info_dict.get('title', 'No title found')
+            description = info_dict.get('description', 'No description found')
+            return title, description
+    except Exception as e:
+        st.error(f"yt-dlp metadata fetch failed: {e}")
+        return None, None
+
+# Function to fetch metadata using YouTube Data API v3
+def fetch_metadata_youtube_api(video_id):
+    try:
+        request = youtube.videos().list(
+            part="snippet",
+            id=video_id
+        )
+        response = request.execute()
+        title = response['items'][0]['snippet']['title']
+        description = response['items'][0]['snippet']['description']
+        return title, description
+    except HttpError as e:
+        st.error(f"YouTube API metadata fetch failed: {e}")
+        return None, None
 
 def summarize_with_any_model(text):
     # List of Gemini models to try
@@ -161,6 +195,25 @@ if url:
                 transcript = whisper_transcribe(audio_path)
                 if transcript:
                     st.success("Audio transcribed successfully using Whisper!")
+
+        if not transcript:
+            st.warning("Audio download failed. Fetching metadata and searching the web...")
+            # Try fetching metadata using yt-dlp
+            title, description = fetch_metadata_yt_dlp(url)
+            if not title or not description:
+                # If yt-dlp fails, try YouTube API
+                title, description = fetch_metadata_youtube_api(video_id)
+
+            if title and description:
+                metadata_text = f"Title: {title}\nDescription: {description}"
+                st.write(metadata_text)
+
+                # Search the web with the video metadata (title, description)
+                web_search_content = search_and_summarize(f"{title} {description}")
+                if web_search_content:
+                    st.subheader("🧠 Web Search Summary")
+                    web_summary = summarize_with_any_model(web_search_content)
+                    st.write(web_summary)
 
         if transcript:
             st.subheader("📄 Transcript")
