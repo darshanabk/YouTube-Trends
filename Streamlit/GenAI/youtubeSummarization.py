@@ -50,42 +50,51 @@ def fetch_transcript(video_id):
 
 
 def download_audio(video_id, output_dir="audio"):
+    """Download YouTube audio in native M4A format (no FFmpeg needed)"""
     try:
+        os.makedirs(output_dir, exist_ok=True)
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"{video_id}_{timestamp}.m4a"
+        output_path = os.path.join(output_dir, filename)
+        
         ydl_opts = {
-            'format': 'bestaudio[ext=m4a]',  # Downloads YouTube's native audio
-            'outtmpl': os.path.join(output_dir, f'{video_id}.%(ext)s'),
+            'format': 'bestaudio[ext=m4a]',
+            'outtmpl': output_path.replace('.m4a', '.%(ext)s'),  # Preserve extension
             'quiet': True,
+            'no_warnings': True,
         }
         
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(f"https://youtube.com/watch?v={video_id}", download=True)
-            filename = ydl.prepare_filename(info)
-            
-        with open(filename, "rb") as f:
-            st.download_button(
-                label="⬇️ Download Audio",
-                data=f,
-                file_name=os.path.basename(filename),
-                mime="audio/mp4"  # M4A uses mp4 MIME type
-            )
-        return filename
+        with st.spinner(f"Downloading audio for video {video_id}..."):
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([f"https://youtube.com/watch?v={video_id}"])
         
+        if os.path.exists(output_path):
+            return output_path
+        else:
+            st.error("Download completed but file not found")
+            return None
+            
     except Exception as e:
-        # st.error(f"Download failed: {str(e)}")
-        st.error(f"Download failed")
+        st.error(f"Download failed: {str(e)}")
         return None
 
-
-
-
-def whisper_transcribe(audio_path):
+def whisper_transcribe(audio_path, model_size="base"):
+    """Transcribe audio using Whisper with progress feedback"""
     try:
-        with st.spinner("Transcribing with Whisper..."):
-            whisper_model = whisper.load_model("base")
-            result = whisper_model.transcribe(audio_path)
-            return datacleaning(result['text'])
+        if not os.path.exists(audio_path):
+            st.error("Audio file not found for transcription")
+            return None
+            
+        with st.spinner(f"Loading Whisper {model_size} model..."):
+            model = whisper.load_model(model_size)
+            
+        with st.spinner("Transcribing audio..."):
+            result = model.transcribe(audio_path)
+            
+        return result['text']
+        
     except Exception as e:
-        st.error(f"Whisper transcription failed: {e}")
+        st.error(f"Transcription failed: {str(e)}")
         return None
 
 
