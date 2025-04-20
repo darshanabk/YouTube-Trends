@@ -12,4 +12,5 @@ git+https://github.com/openai/whisper.git
 torch
 torchaudio
 ffmpeg
+googlesearch-python
 
