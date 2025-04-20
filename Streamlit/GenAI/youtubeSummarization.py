@@ -65,12 +65,52 @@ def whisper_transcribe(audio_path):
         st.error(f"Whisper transcription failed: {e}")
         return None
 
-def summarize_with_gemini(text):
-    model = GenerativeModel("gemini-1.5-pro")
-    response = model.generate_content(
-        f"Summarize the following transcript:\n\n{text}"
-    )
-    return response.text
+def summarize_with_any_model(text):
+    # List of Gemini models to try
+    gemini_models = [
+        "models/gemini-1.5-pro", "models/gemini-1.5-pro-001", "models/gemini-1.5-pro-002",
+        "models/gemini-1.5-flash", "models/gemini-1.5-flash-latest", "models/gemini-1.5-flash-001",
+        "models/gemini-2.0-flash", "models/gemini-2.0-pro-exp", "models/gemini-2.0-flash-001"
+    ]
+
+    # Try Gemini models first
+    for model_name in gemini_models:
+        try:
+            model = GenerativeModel(model_name)
+            gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
+            return f"[Gemini: {model_name}] " + gemini_response.text
+        except Exception as gemini_error:
+            st.warning(f"Gemini model {model_name} failed. Trying next...")
+
+    st.warning("All Gemini models failed. Falling back to OpenAI...")
+
+    # Try OpenAI GPT-4
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "system", "content": "Summarize the following transcript."},
+                      {"role": "user", "content": text}],
+            max_tokens=1024,
+            temperature=0.7
+        )
+        return "[GPT-4] " + response.choices[0].message.content.strip()
+    except Exception as gpt4_error:
+        st.warning("GPT-4 failed. Trying GPT-3.5...")
+
+    # Fallback to GPT-3.5
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "system", "content": "Summarize the following transcript."},
+                      {"role": "user", "content": text}],
+            max_tokens=1024,
+            temperature=0.7
+        )
+        return "[GPT-3.5] " + response.choices[0].message.content.strip()
+    except Exception as gpt35_error:
+        st.error("All summarization models failed. Please try again later.")
+        return None
+
 
 # Streamlit UI
 st.title("🎬 YouTube Summarizer with Gemini + Whisper")
@@ -99,8 +139,8 @@ if url:
             st.subheader("📄 Transcript")
             st.write(transcript[:3000])  # Display part of it
 
-            st.subheader("🧠 Gemini Summary")
-            summary = summarize_with_gemini(transcript)
+            st.subheader("🧠 Summary")
+            summary = summarize_with_any_model(transcript)
             st.write(summary)
         else:
             st.error("Could not extract transcript or transcribe audio.")
