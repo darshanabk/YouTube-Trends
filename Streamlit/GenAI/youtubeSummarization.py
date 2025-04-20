@@ -32,10 +32,10 @@ def extract_video_id(url):
 
 
 def datacleaning(text: str) -> str:
-    text = emoji.replace_emoji(text, replace='')
-    text = html.unescape(text)
-    text = re.sub(r'[^\x00-\x7F]+', '', text)
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = emoji.replace_emoji(text, replace='')  # Remove emojis
+    text = html.unescape(text)  # Decode HTML entities
+    text = re.sub(r'[^\x00-\x7F]+', '', text)  # Remove non-ASCII characters
+    text = re.sub(r'\s+', ' ', text).strip()  # Remove extra spaces
     return text
 
 
@@ -69,7 +69,7 @@ def download_audio(video_id, output_dir="audio"):
             ydl.download([video_url])
         return output_path
     except Exception as e:
-        st.error(f"Audio download failed: {e}")
+        # st.error(f"Audio download failed: {e}")
         return None
 
 
@@ -81,18 +81,6 @@ def whisper_transcribe(audio_path):
             return datacleaning(result['text'])
     except Exception as e:
         st.error(f"Whisper transcription failed: {e}")
-        return None
-
-
-def search_and_summarize(query):
-    try:
-        search_results = search(query, num_results=3)
-        web_content = ""
-        for url in search_results:
-            web_content += f"URL: {url}\nExtracted Content: {url}\n"
-        return web_content
-    except Exception as e:
-        st.error(f"Error searching the web: {e}")
         return None
 
 
@@ -122,7 +110,6 @@ Summarize the content above in 5-7 sentences focusing on the key takeaways or su
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
-
 
 
 def fetch_metadata_youtube_api(video_id):
@@ -208,9 +195,7 @@ if url:
         
         if not transcript:
             st.warning("Audio unavailable. Fetching metadata and searching the web...")
-            title, description = fetch_metadata_yt_dlp(url)
-            if not title or not description:
-                title, description = fetch_metadata_youtube_api(video_id)
+            title, description = fetch_metadata_youtube_api(video_id)
 
             if title and description:
                 metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
@@ -220,12 +205,6 @@ if url:
                 if web_summary:
                     st.subheader("🧠 Web Search Summary")
                     st.write(web_summary)
-
-                if web_search_content:
-                    st.subheader("🧠 Web Search Summary")
-                    web_summary = summarize_with_any_model(web_search_content)
-                    if web_summary:
-                        st.write(web_summary)
         else:
             st.subheader("📄 Transcript")
             with st.expander("Click to expand full transcript"):
