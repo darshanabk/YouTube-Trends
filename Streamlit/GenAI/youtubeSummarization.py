@@ -78,25 +78,15 @@ def download_audio(video_id, output_dir="audio"):
         st.error(f"Download failed: {str(e)}")
         return None
 
-def whisper_transcribe(audio_path, model_size="base"):
-    """Transcribe audio using Whisper with progress feedback"""
+def whisper_transcribe(audio_path):
     try:
-        if not os.path.exists(audio_path):
-            st.error("Audio file not found for transcription")
-            return None
-            
-        with st.spinner(f"Loading Whisper {model_size} model..."):
-            model = whisper.load_model(model_size)
-            
-        with st.spinner("Transcribing audio..."):
-            result = model.transcribe(audio_path)
-            
-        return result['text']
-        
+        with st.spinner("Transcribing with Whisper..."):
+            whisper_model = whisper.load_model("base")
+            result = whisper_model.transcribe(audio_path)
+            return datacleaning(result['text'])
     except Exception as e:
-        st.error(f"Transcription failed: {str(e)}")
+        st.error(f"Whisper transcription failed: {e}")
         return None
-
 
 def search_and_summarize(title, description):
     try:
