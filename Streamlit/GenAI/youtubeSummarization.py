@@ -12,6 +12,8 @@ import whisper
 from google.generativeai import GenerativeModel, configure
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from googlesearch import search
+
 
 # Set your API keys
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
