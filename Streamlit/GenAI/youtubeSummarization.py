@@ -6,6 +6,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from pytube import YouTube
+import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 import openai
 import whisper
@@ -42,20 +43,46 @@ def fetch_transcript(video_id):
     except:
         return None
 
+# def download_audio(video_id, output_dir="audio"):
+#     os.makedirs(output_dir, exist_ok=True)
+#     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+#     filename = f"{video_id}_{timestamp}.mp4"
+#     output_path = os.path.join(output_dir, filename)
+
+#     try:
+#         yt = YouTube(f"https://www.youtube.com/watch?v={video_id}")
+#         audio_stream = yt.streams.filter(only_audio=True).first()
+#         audio_stream.download(filename=output_path)
+#         return output_path
+#     except Exception as e:
+#         st.error(f"Audio download failed: {e}")
+#         return None
+
+
 def download_audio(video_id, output_dir="audio"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     filename = f"{video_id}_{timestamp}.mp4"
     output_path = os.path.join(output_dir, filename)
-
     try:
-        yt = YouTube(f"https://www.youtube.com/watch?v={video_id}")
-        audio_stream = yt.streams.filter(only_audio=True).first()
-        audio_stream.download(filename=output_path)
-        return output_path
-    except Exception as e:
-        st.error(f"Audio download failed: {e}")
-        return None
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl':output_path,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+        }
+
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_url])
+
+     except Exception as e:
+         st.error(f"Audio download failed: {e}")
+         return None
+    
 
 def whisper_transcribe(audio_path):
     try:
