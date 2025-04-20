@@ -1,7 +1,6 @@
 streamlit
 yt-dlp
 openai
-whisper
 google-api-python-client
 youtube-transcript-api
 google-generativeai
@@ -9,5 +8,7 @@ emoji
 html5lib
 beautifulsoup4
 pandas
+git+https://github.com/openai/whisper.git
 torch
 torchaudio
+
