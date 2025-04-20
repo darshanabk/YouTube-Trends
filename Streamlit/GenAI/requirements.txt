@@ -1,3 +1,4 @@
+ffmpeg
 streamlit
 openai
 google-generativeai
