@@ -96,16 +96,33 @@ def search_and_summarize(query):
         return None
 
 
-def fetch_metadata_yt_dlp(url):
+def search_and_summarize(title, description):
     try:
-        with yt_dlp.YoutubeDL() as ydl:
-            info_dict = ydl.extract_info(url, download=False)
-            title = info_dict.get('title', 'No title found')
-            description = info_dict.get('description', 'No description found')
-            return title, description
+        query = f"{title} {description}"
+        search_results = search(query, num_results=3)
+        web_content = ""
+        for url in search_results:
+            web_content += f"\nURL: {url}\nExtracted Content: This is a top search result related to the title and description.\n"
+
+        prompt = f"""
+You are a helpful assistant. Based on the following YouTube video metadata and search results, generate a concise summary:
+
+Title: {title}
+Description: {description}
+
+Search Result Context:
+{web_content}
+
+Summarize the content above in 5-7 sentences focusing on the key takeaways or subject matter.
+"""
+        # Use Gemini or fallback to GPT
+        summary = summarize_with_any_model(prompt)
+        return summary
+
     except Exception as e:
-        st.warning(f"yt-dlp metadata fetch failed: {e}")
-        return None, None
+        st.error(f"Error searching the web: {e}")
+        return None
+
 
 
 def fetch_metadata_youtube_api(video_id):
@@ -199,7 +216,11 @@ if url:
                 metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
                 st.write(metadata_text)
 
-                web_search_content = search_and_summarize(f"{title} {description}")
+                web_summary = search_and_summarize(title, description)
+                if web_summary:
+                    st.subheader("🧠 Web Search Summary")
+                    st.write(web_summary)
+
                 if web_search_content:
                     st.subheader("🧠 Web Search Summary")
                     web_summary = summarize_with_any_model(web_search_content)
