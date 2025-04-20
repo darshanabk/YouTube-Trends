@@ -1,0 +1,6 @@
+streamlit
+pandas
+yt_dlp
+google-generativeai
+youtube-transcript-api
+emoji
