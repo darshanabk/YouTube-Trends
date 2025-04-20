@@ -50,10 +50,11 @@ def fetch_transcript(video_id):
 
 
 def download_audio(video_id, output_dir="audio"):
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     filename = f"{video_id}_{timestamp}.mp3"
     output_path = os.path.join(output_dir, filename)
+    
     try:
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         ydl_opts = {
@@ -67,10 +68,23 @@ def download_audio(video_id, output_dir="audio"):
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
+        
+        st.write(f"Audio saved at: {output_path}")  # Inform user where it's saved
+
+        # Provide a download button for the audio file in Streamlit UI
+        with open(output_path, 'rb') as audio_file:
+            st.download_button(
+                label="Download Audio",
+                data=audio_file,
+                file_name=filename,
+                mime="audio/mp3"
+            )
+        
         return output_path
     except Exception as e:
         # st.error(f"Audio download failed: {e}")
         return None
+
 
 
 def whisper_transcribe(audio_path):
