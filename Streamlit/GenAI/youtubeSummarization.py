@@ -78,7 +78,7 @@ def summarize_with_any_model(text):
         try:
             model = GenerativeModel(model_name)
             gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
-            return f"[Gemini: {model_name}] " + gemini_response.text
+            return  gemini_response.text
         except Exception as gemini_error:
             st.warning(f"Gemini model {model_name} failed. Trying next...")
 
