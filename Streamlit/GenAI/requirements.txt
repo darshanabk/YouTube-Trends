@@ -7,3 +7,4 @@ yt_dlp
 youtube-transcript-api
 google-generativeai
 ffmpeg-python
+
