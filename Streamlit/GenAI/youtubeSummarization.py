@@ -66,24 +66,30 @@ def download_audio(video_id, output_dir="audio"):
                 'preferredquality': '192',
             }],
         }
+
+        # Perform the download
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
-        
-        st.write(f"Audio saved at: {output_path}")  # Inform user where it's saved
+
+        # Open the audio file directly as binary data
+        with open(output_path, 'rb') as audio_file:
+            audio_data = audio_file.read()
 
         # Provide a download button for the audio file in Streamlit UI
-        with open(output_path, 'rb') as audio_file:
-            st.download_button(
-                label="Download Audio",
-                data=audio_file,
-                file_name=filename,
-                mime="audio/mp3"
-            )
-        
-        return output_path
+        st.write(f"Audio saved at: {output_path}")  # Inform user where it's saved
+        st.download_button(
+            label="Download Audio",
+            data=audio_data,
+            file_name=filename,
+            mime="audio/mp3"
+        )
+
+        return audio_data  # Return the audio data itself
+
     except Exception as e:
         # st.error(f"Audio download failed: {e}")
         return None
+
 
 
 
