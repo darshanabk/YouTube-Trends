@@ -1,10 +1,8 @@
 streamlit
-pandas
-emoji
-openai-whisper
-openai
-yt_dlp
+pytube
 youtube-transcript-api
+openai
+whisper
+emoji
+pandas
 google-generativeai
-ffmpeg-python
-
