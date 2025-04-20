@@ -49,48 +49,58 @@ def fetch_transcript(video_id):
         return None
 
 
-import yt_dlp
-import io
-
-def download_audio(video_id):
-    # Generate filename using video ID and timestamp
-    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = f"{video_id}_{timestamp}.mp3"
-
+def download_audio(video_id, output_dir="audio"):
+    """Robust audio downloader for Streamlit Cloud"""
     try:
-        video_url = f"https://www.youtube.com/watch?v={video_id}"
-        ydl_opts = {
-            'format': 'bestaudio/best',
-            'outtmpl': '/tmp/' + filename,  # Save temporarily in Streamlit's cloud storage path
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-        }
-
-        # Perform the download
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([video_url])
-
-        # Open the downloaded audio file from the temporary path and read it as binary data
-        audio_path = f'/tmp/{filename}'
-        with open(audio_path, 'rb') as audio_file:
-            audio_data = audio_file.read()
-
-        # Provide a download button for the audio file in Streamlit UI
-        st.write(f"Audio ready for download: {filename}")  # Inform user about the file
-        st.download_button(
-            label="Download Audio",
-            data=audio_data,
-            file_name=filename,
-            mime="audio/mp3"
-        )
-
-        return audio_data  # Return audio data in case you need it for further use
-
+        # Initialize paths
+        os.makedirs(output_dir, exist_ok=True)
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"{video_id}_{timestamp}.mp3"
+        output_path = os.path.join(output_dir, filename)
+        temp_path = output_path + '.temp'
+        
+        # Download with progress
+        with st.spinner(f"Downloading audio for video {video_id}..."):
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'outtmpl': temp_path,
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'quiet': True,
+                'no_warnings': True,
+            }
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([f"https://youtube.com/watch?v={video_id}"])
+                
+            # Verify download completed
+            if not os.path.exists(temp_path):
+                st.error("Download failed - no file created")
+                return None
+                
+            # Rename to final path
+            os.rename(temp_path, output_path)
+            
+        # Create download button
+        if os.path.exists(output_path):
+            with open(output_path, "rb") as f:
+                st.download_button(
+                    label="⬇️ Download MP3",
+                    data=f,
+                    file_name=filename,
+                    mime="audio/mpeg",
+                    key=f"dl_{video_id}"
+                )
+            return output_path
+            
     except Exception as e:
-        # st.error(f"Audio download failed: {e}")
+        st.error(f"❌ Download failed: {str(e)}")
+        # Cleanup temp files if they exist
+        if 'temp_path' in locals() and os.path.exists(temp_path):
+            os.remove(temp_path)
         return None
 
 
