@@ -70,6 +70,8 @@ def download_audio(video_id, output_dir="audio"):
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
+            
+        return output_path  
 
     except Exception as e:
         st.error(f"Audio download failed: {e}")
