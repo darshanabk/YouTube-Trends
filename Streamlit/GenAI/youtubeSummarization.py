@@ -50,57 +50,29 @@ def fetch_transcript(video_id):
 
 
 def download_audio(video_id, output_dir="audio"):
-    """Robust audio downloader for Streamlit Cloud"""
     try:
-        # Initialize paths
-        os.makedirs(output_dir, exist_ok=True)
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"{video_id}_{timestamp}.mp3"
-        output_path = os.path.join(output_dir, filename)
-        temp_path = output_path + '.temp'
+        ydl_opts = {
+            'format': 'bestaudio[ext=m4a]',  # Downloads YouTube's native audio
+            'outtmpl': os.path.join(output_dir, f'{video_id}.%(ext)s'),
+            'quiet': True,
+        }
         
-        # Download with progress
-        with st.spinner(f"Downloading audio for video {video_id}..."):
-            ydl_opts = {
-                'format': 'bestaudio/best',
-                'outtmpl': temp_path,
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                    'preferredquality': '192',
-                }],
-                'quiet': True,
-                'no_warnings': True,
-            }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(f"https://youtube.com/watch?v={video_id}", download=True)
+            filename = ydl.prepare_filename(info)
             
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([f"https://youtube.com/watch?v={video_id}"])
-                
-            # Verify download completed
-            if not os.path.exists(temp_path):
-                st.error("Download failed - no file created")
-                return None
-                
-            # Rename to final path
-            os.rename(temp_path, output_path)
-            
-        # Create download button
-        if os.path.exists(output_path):
-            with open(output_path, "rb") as f:
-                st.download_button(
-                    label="⬇️ Download MP3",
-                    data=f,
-                    file_name=filename,
-                    mime="audio/mpeg",
-                    key=f"dl_{video_id}"
-                )
-            return output_path
-            
+        with open(filename, "rb") as f:
+            st.download_button(
+                label="⬇️ Download Audio",
+                data=f,
+                file_name=os.path.basename(filename),
+                mime="audio/mp4"  # M4A uses mp4 MIME type
+            )
+        return filename
+        
     except Exception as e:
-        st.error(f"❌ Download failed: {str(e)}")
-        # Cleanup temp files if they exist
-        if 'temp_path' in locals() and os.path.exists(temp_path):
-            os.remove(temp_path)
+        # st.error(f"Download failed: {str(e)}")
+        st.error(f"Download failed")
         return None
 
 
