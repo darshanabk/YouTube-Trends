@@ -78,6 +78,7 @@ url = st.text_input("Enter YouTube URL:")
 
 if url:
     video_id = extract_video_id(url)
+    st.write(video_id)
     if not video_id:
         st.error("Invalid YouTube URL.")
     else:
