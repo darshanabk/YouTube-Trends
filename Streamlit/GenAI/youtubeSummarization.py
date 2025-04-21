@@ -230,133 +230,54 @@ def summarize_with_any_model(text):
             return None
 
 
-# # --- Streamlit UI ---
-# st.set_page_config(page_title="YouTube Summarizer", layout="centered")
-# st.title("🎬 YouTube Summarizer with Gemini + Whisper")
-
-# url = st.text_input("Enter YouTube URL:")
-
-# if url:
-#     video_id = extract_video_id(url)
-#     if not video_id:
-#         st.error("Invalid YouTube URL.")
-#     else:
-#         st.info("Processing...")
-#         transcript = fetch_transcript(video_id)
-
-#         if transcript:
-#             st.success("Transcript fetched successfully!")
-#         else:
-#             st.warning("Transcript not available. Trying audio transcription...")
-#             audio_path = download_audio(video_id)
-#             if audio_path:
-#                 transcript = whisper_transcribe(audio_path)
-#                 if transcript:
-#                     st.success("Audio transcribed successfully!")
-        
-#         if not transcript:
-#             st.warning("Audio unavailable. Fetching metadata and searching the web...")
-#             title, description = fetch_metadata_youtube_api(video_id)
-
-#             if title and description:
-#                 metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
-#                 st.write(metadata_text)
-
-#                 web_summary = search_and_summarize(title, description)
-#                 if web_summary:
-#                     st.subheader("🧠 Web Search Summary")
-#                     st.write(web_summary)
-#         else:
-#             st.subheader("📄 Transcript")
-#             with st.expander("Click to expand full transcript"):
-#                 st.write(transcript)
-
-#             st.subheader("🧠 Summary")
-#             summary = summarize_with_any_model(transcript)
-#             if summary:
-#                 st.write(summary)
-#             else:
-#                 st.error("Summarization failed.")
-
-
-
-
 # --- Streamlit UI ---
-st.set_page_config(page_title="YouTube Summarizer Pro", layout="centered")
-st.title("🎬 YouTube Summarizer Pro")
+st.set_page_config(page_title="YouTube Summarizer", layout="centered")
+st.title("🎬 YouTube Summarizer with Gemini + Whisper")
 
-# Model selection at the top
-col1, col2 = st.columns([3, 1])
-with col1:
-    url = st.text_input("Enter YouTube URL:", placeholder="https://www.youtube.com/watch?v=...")
-with col2:
-    model_choice = st.selectbox("Summary Model", ["Gemini", "OpenAI"], index=0)
+url = st.text_input("Enter YouTube URL:")
 
-if url and st.button("Generate Summary"):
+if url:
     video_id = extract_video_id(url)
     if not video_id:
-        st.error("Invalid YouTube URL")
-        st.stop()
-    
-    with st.status("Processing...", expanded=True) as status:
-        # 1. Try to get transcript directly first
-        st.write("🔍 Checking for available transcript...")
+        st.error("Invalid YouTube URL.")
+    else:
+        st.info("Processing...")
         transcript = fetch_transcript(video_id)
-        
-        if transcript:
-            st.success("Transcript found!")
-        else:
-            # 2. Fallback to audio transcription
-            st.write("🎧 No transcript found. Trying audio transcription...")
-            transcript = get_audio_transcription(video_id)
-            
-            if transcript:
-                st.success("Audio successfully transcribed!")
-            else:
-                # 3. Final fallback to metadata
-                st.write("📡 Fetching video metadata...")
-                title, description = fetch_metadata_youtube_api(video_id)
-                
-                if title and description:
-                    transcript = f"Title: {title}\n\nDescription: {description}"
-                    st.warning("Using video metadata only")
-                else:
-                    st.error("Could not retrieve any content")
-                    st.stop()
-        
-        status.update(label="Processing complete!", state="complete")
 
-    # Display results
-    tab1, tab2 = st.tabs(["📝 Summary", "📜 Full Content"])
-    
-    with tab1:
         if transcript:
-            summary = summarize_with_any_model(transcript, model_type=model_choice.lower())
+            st.success("Transcript fetched successfully!")
+        else:
+            st.warning("Transcript not available. Trying audio transcription...")
+            transcript = get_audio_transcription(video_id)
+            # if audio_path:
+            #     transcript = whisper_transcribe(audio_path)
+            if transcript:
+                st.success("Audio transcribed successfully!")
+        
+        if not transcript:
+            st.warning("Audio unavailable. Fetching metadata and searching the web...")
+            title, description = fetch_metadata_youtube_api(video_id)
+
+            if title and description:
+                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
+                st.write(metadata_text)
+
+                web_summary = search_and_summarize(title, description)
+                if web_summary:
+                    st.subheader("🧠 Web Search Summary")
+                    st.write(web_summary)
+        else:
+            st.subheader("📄 Transcript")
+            with st.expander("Click to expand full transcript"):
+                st.write(transcript)
+
+            st.subheader("🧠 Summary")
+            summary = summarize_with_any_model(transcript)
             if summary:
                 st.write(summary)
-                st.download_button(
-                    "Download Summary",
-                    data=summary,
-                    file_name=f"{video_id}_summary.txt",
-                    mime="text/plain"
-                )
             else:
-                st.error("Summarization failed")
-    
-    with tab2:
-        if transcript:
-            st.write(transcript)
-            st.download_button(
-                "Download Full Text",
-                data=transcript,
-                file_name=f"{video_id}_full_text.txt",
-                mime="text/plain"
-            )
-        
-        # Show web search results if we used metadata
-        if 'title' in locals() and 'description' in locals():
-            st.divider()
-            web_summary = search_and_summarize(title, description)
-            if web_summary:
-                st.subheader("🌐 Web Search Summary")
-                st.write(web_summary)
+                st.error("Summarization failed.")
+
+
+
+
