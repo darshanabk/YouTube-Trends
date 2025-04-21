@@ -288,10 +288,12 @@ from youtube_transcript_api._errors import VideoUnavailable
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from pytube import extract
-from gemini_api_module import gemini_api_function
+# from gemini_api_module import gemini_api_function
 import yt_dlp
 from openai import OpenAI
 from dotenv import load_dotenv
+from google.generativeai import GenerativeModel, configure
+
 
 # Load environment variables
 load_dotenv()
