@@ -392,7 +392,19 @@ def download_audio(video_id):
         st.error(f"Audio download failed: {str(e)}")
         return None
 
-
+def get_audio_duration(audio_path):
+    """Helper to get audio duration without loading full file"""
+    try:
+        import wave
+        with wave.open(audio_path, 'rb') as wf:
+            return wf.getnframes() / float(wf.getframerate())
+    except:
+        try:
+            import librosa
+            return librosa.get_duration(filename=audio_path)
+        except:
+            return 0  # Default if duration can't be determined
+                
 def whisper_transcribe(audio_path):
     try:
         with st.spinner("Transcribing with Whisper..."):
