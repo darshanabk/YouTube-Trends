@@ -49,39 +49,7 @@ def fetch_transcript(video_id):
         return None
 
 
-def download_audio(video_id, output_dir="audio"):
-    os.makedirs(output_dir, exist_ok=True)
-    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = f"{video_id}_{timestamp}.mp3"
-    output_path = os.path.join(output_dir, filename)
-    try:
-        video_url = f"https://www.youtube.com/watch?v={video_id}"
-        ydl_opts = {
-            'format': 'bestaudio/best',
-            'outtmpl': output_path,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-        }
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([video_url])
-        return output_path
-    except Exception as e:
-        st.error(f"Audio download failed: {e}")
-        return None
 
-
-def whisper_transcribe(audio_path):
-    try:
-        with st.spinner("Transcribing with Whisper..."):
-            whisper_model = whisper.load_model("base")
-            result = whisper_model.transcribe(audio_path)
-            return datacleaning(result['text'])
-    except Exception as e:
-        st.error(f"Whisper transcription failed: {e}")
-        return None
 
 
 def search_and_summarize(query, title, description):
