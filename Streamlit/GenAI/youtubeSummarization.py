@@ -8,7 +8,6 @@ from datetime import datetime
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 import openai
-import whisper
 from google.generativeai import GenerativeModel, configure
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
