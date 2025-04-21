@@ -44,7 +44,7 @@ def datacleaning(text: str) -> str:
     return text
 
 
-ddef fetch_transcript(video_id):
+def fetch_transcript(video_id):
     """
     Fetches and cleans transcript from a YouTube video.
     Priority: 'en' > English variants > any available language.
