@@ -189,7 +189,6 @@ def summarize_with_any_model(text):
             st.error("All summarization models failed.")
             return None
 
-
 # --- Streamlit UI ---
 st.set_page_config(page_title="YouTube Summarizer", layout="centered")
 st.title("🎬 YouTube Summarizer with Gemini + Whisper")
@@ -208,19 +207,6 @@ if url:
         
         if transcript:
             st.success("Transcript fetched successfully!")
-        else:
-            st.warning("Transcript not available. Fetching metadata and searching the web...")            
-
-            title, description = fetch_metadata_yt_dlp(url)
-            if not title or not description:
-                title, description = fetch_metadata_youtube_api(video_id)
-
-            if title and description:
-                web_search_summary = search_and_summarize(f"{title} {description}", title, description)
-                if web_search_summary:
-                    st.subheader("🧠 Web Search Summary")
-                    st.write(web_search_summary)
-        else:
             st.subheader("📄 Transcript")
             with st.expander("Click to expand full transcript"):
                 st.write(transcript)
@@ -231,3 +217,15 @@ if url:
                 st.write(summary)
             else:
                 st.error("Summarization failed.")
+        else:
+            st.warning("Transcript not available. Fetching metadata and searching the web...")            
+
+            title, description = fetch_metadata_yt_dlp(url)
+            if not title or not description:
+                title, description = fetch_metadata_youtube_api(video_id)
+
+            # Use metadata + search results for summarization
+            web_search_summary = search_and_summarize(f"{title} {description}", title, description)
+            if web_search_summary:
+                st.subheader("🧠 Web Search Summary")
+                st.write(web_search_summary)
