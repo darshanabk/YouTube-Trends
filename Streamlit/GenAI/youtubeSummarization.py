@@ -32,10 +32,10 @@ def extract_video_id(url):
 
 
 def datacleaning(text: str) -> str:
-    text = emoji.replace_emoji(text, replace='')  # Remove emojis
-    text = html.unescape(text)  # Decode HTML entities
-    text = re.sub(r'[^\x00-\x7F]+', '', text)  # Remove non-ASCII characters
-    text = re.sub(r'\s+', ' ', text).strip()  # Remove extra spaces
+    text = emoji.replace_emoji(text, replace='')
+    text = html.unescape(text)
+    text = re.sub(r'[^\x00-\x7F]+', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
     return text
 
 
@@ -48,74 +48,64 @@ def fetch_transcript(video_id):
     except Exception:
         return None
 
-def download_and_transcribe(video_id, output_dir="audio"):
-    """
-    Download YouTube audio in native format (no FFmpeg conversion)
-    and transcribe using Whisper
-    """
+
+def download_audio(video_id, output_dir="audio"):
+    os.makedirs(output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"{video_id}_{timestamp}.mp3"
+    output_path = os.path.join(output_dir, filename)
     try:
-        # 1. Download audio in native format
-        os.makedirs(output_dir, exist_ok=True)
-        filename = f"{video_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.m4a"
-        output_path = os.path.join(output_dir, filename)
-        
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
         ydl_opts = {
-            'format': 'bestaudio[ext=m4a]',  # Direct M4A download
-            'outtmpl': output_path.replace('.m4a', '.%(ext)s'),
-            'quiet': True,
-            'no_warnings': True,
-            'socket_timeout': 30,
-            'retries': 3
+            'format': 'bestaudio/best',
+            'outtmpl': output_path,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
         }
-        
-        with st.spinner(f"🎧 Downloading audio for {video_id}..."):
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([f"https://youtube.com/watch?v={video_id}"])
-        
-        # Verify download
-        if not os.path.exists(output_path):
-            st.error("Download completed but file not found")
-            return None, None
-
-        # 2. Transcribe with Whisper (no FFmpeg needed)
-        with st.spinner("🔊 Transcribing with Whisper..."):
-            model = whisper.load_model("base")
-            result = model.transcribe(output_path)
-            return output_path, result['text']
-            
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_url])
+        return output_path
     except Exception as e:
-        st.error(f"Processing failed: {str(e)}")
-        return None, None
+        st.error(f"Audio download failed: {e}")
+        return None
 
 
-
-
-def search_and_summarize(title, description):
+def whisper_transcribe(audio_path):
     try:
-        query = f"{title} {description}"
+        with st.spinner("Transcribing with Whisper..."):
+            whisper_model = whisper.load_model("base")
+            result = whisper_model.transcribe(audio_path)
+            return datacleaning(result['text'])
+    except Exception as e:
+        st.error(f"Whisper transcription failed: {e}")
+        return None
+
+
+def search_and_summarize(query):
+    try:
         search_results = search(query, num_results=3)
         web_content = ""
         for url in search_results:
-            web_content += f"\nURL: {url}\nExtracted Content: This is a top search result related to the title and description.\n"
-
-        prompt = f"""
-You are a helpful assistant. Based on the following YouTube video metadata and search results, generate a concise summary:
-
-Title: {title}
-Description: {description}
-
-Search Result Context:
-{web_content}
-
-Summarize the content above in 5-7 sentences focusing on the key takeaways or subject matter.
-"""
-        # Use Gemini or fallback to GPT
-        summary = summarize_with_any_model(prompt)
-        return summary
-
+            web_content += f"URL: {url}\nExtracted Content: {url}\n"
+        return web_content
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
+
+
+def fetch_metadata_yt_dlp(url):
+    try:
+        with yt_dlp.YoutubeDL() as ydl:
+            info_dict = ydl.extract_info(url, download=False)
+            title = info_dict.get('title', 'No title found')
+            description = info_dict.get('description', 'No description found')
+            return title, description
+    except Exception as e:
+        st.warning(f"yt-dlp metadata fetch failed: {e}")
+        return None, None
 
 
 def fetch_metadata_youtube_api(video_id):
@@ -174,42 +164,55 @@ def summarize_with_any_model(text):
             st.error("All summarization models failed.")
             return None
 
-# Example usage in your Streamlit UI:
 
 # --- Streamlit UI ---
-st.set_page_config(page_title="YouTube Summarizer Pro", layout="centered")
-st.title("🎬 YouTube Summarizer Pro")
+st.set_page_config(page_title="YouTube Summarizer", layout="centered")
+st.title("🎬 YouTube Summarizer with Gemini + Whisper")
 
 url = st.text_input("Enter YouTube URL:")
 
 if url:
-    video_id = url.split("v=")[-1].split("&")[0]  # Simple ID extraction
+    video_id = extract_video_id(url)
     if not video_id:
-        st.error("Invalid YouTube URL")
+        st.error("Invalid YouTube URL.")
     else:
-        # Try direct transcript first
-        transcript = fetch_transcript(video_id)  # Your existing function
+        st.info("Processing...")
+        transcript = fetch_transcript(video_id)
+
+        if transcript:
+            st.success("Transcript fetched successfully!")
+        else:
+            st.warning("Transcript not available. Trying audio transcription...")
+            audio_path = download_audio(video_id)
+            if audio_path:
+                transcript = whisper_transcribe(audio_path)
+                if transcript:
+                    st.success("Audio transcribed successfully!")
         
         if not transcript:
-            # Fallback to audio transcription
-            audio_path, transcript = download_and_transcribe(video_id)
-            
-            if audio_path:
-                st.audio(audio_path)
-                
-            if not transcript:
-                # Final fallback to metadata
+            st.warning("Audio unavailable. Fetching metadata and searching the web...")
+            title, description = fetch_metadata_yt_dlp(url)
+            if not title or not description:
                 title, description = fetch_metadata_youtube_api(video_id)
-                if title and description:
-                    transcript = f"Title: {title}\n\nDescription: {description}"
-        
-        # Display results
-        if transcript:
-            col1, col2 = st.columns(2)
-            with col1:
-                with st.expander("📜 Full Transcript"):
-                    st.write(transcript)
-            with col2:
-                summary = summarize_with_any_model(transcript)
-                st.subheader("🧠 Summary")
-                st.write(summary or "Summary unavailable")
+
+            if title and description:
+                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
+                st.write(metadata_text)
+
+                web_search_content = search_and_summarize(f"{title} {description}")
+                if web_search_content:
+                    st.subheader("🧠 Web Search Summary")
+                    web_summary = summarize_with_any_model(web_search_content)
+                    if web_summary:
+                        st.write(web_summary)
+        else:
+            st.subheader("📄 Transcript")
+            with st.expander("Click to expand full transcript"):
+                st.write(transcript)
+
+            st.subheader("🧠 Summary")
+            summary = summarize_with_any_model(transcript)
+            if summary:
+                st.write(summary)
+            else:
+                st.error("Summarization failed.")
