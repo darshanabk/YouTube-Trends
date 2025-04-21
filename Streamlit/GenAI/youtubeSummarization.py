@@ -84,13 +84,19 @@ def whisper_transcribe(audio_path):
         return None
 
 
-def search_and_summarize(query):
+def search_and_summarize(query, title, description):
     try:
+        # Perform a web search using the query
         search_results = search(query, num_results=3)
-        web_content = ""
+        web_content = f"**Title:** {title}\n**Description:** {description}\n\n"
+        
+        # Collect relevant URLs and extract basic content for summarization
         for url in search_results:
-            web_content += f"URL: {url}\nExtracted Content: {url}\n"
-        return web_content
+            web_content += f"URL: {url}\nExtracted Content: {url}\n\n"
+        
+        # Now summarize this combined content using Gemini or OpenAI
+        web_summary = summarize_with_any_model(web_content)
+        return web_summary
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
@@ -126,24 +132,25 @@ def summarize_with_any_model(text):
         "models/gemini-1.5-flash", "models/gemini-1.5-flash-latest", "models/gemini-1.5-flash-001",
         "models/gemini-2.0-flash", "models/gemini-2.0-pro-exp", "models/gemini-2.0-flash-001"
     ]
+    
+    # First try Gemini models
     for model_name in gemini_models:
         try:
             model = GenerativeModel(model_name)
             with st.spinner(f"Trying Gemini model: {model_name}"):
-                gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
+                gemini_response = model.generate_content(f"Summarize the following content:\n\n{text}")
             return gemini_response.text
         except Exception:
             st.warning(f"Gemini model {model_name} failed.")
 
+    # If Gemini models fail, try OpenAI GPT-4 and fallback to GPT-3.5
     st.warning("All Gemini models failed. Trying OpenAI GPT...")
 
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
-            messages=[
-                {"role": "system", "content": "Summarize the following transcript."},
-                {"role": "user", "content": text}
-            ],
+            messages=[{"role": "system", "content": "Summarize the following content."},
+                      {"role": "user", "content": text}],
             max_tokens=1024,
             temperature=0.7
         )
@@ -152,10 +159,8 @@ def summarize_with_any_model(text):
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "Summarize the following transcript."},
-                    {"role": "user", "content": text}
-                ],
+                messages=[{"role": "system", "content": "Summarize the following content."},
+                          {"role": "user", "content": text}],
                 max_tokens=1024,
                 temperature=0.7
             )
@@ -163,6 +168,7 @@ def summarize_with_any_model(text):
         except Exception as e:
             st.error("All summarization models failed.")
             return None
+
 
 
 # --- Streamlit UI ---
@@ -177,8 +183,10 @@ if url:
         st.error("Invalid YouTube URL.")
     else:
         st.info("Processing...")
-        transcript = fetch_transcript(video_id)
 
+        # Fetch transcript or audio transcription
+        transcript = fetch_transcript(video_id)
+        
         if transcript:
             st.success("Transcript fetched successfully!")
         else:
@@ -188,9 +196,11 @@ if url:
                 transcript = whisper_transcribe(audio_path)
                 if transcript:
                     st.success("Audio transcribed successfully!")
-        
+
+        # Fetch metadata and web search if transcript is unavailable
         if not transcript:
             st.warning("Audio unavailable. Fetching metadata and searching the web...")
+
             title, description = fetch_metadata_yt_dlp(url)
             if not title or not description:
                 title, description = fetch_metadata_youtube_api(video_id)
@@ -199,12 +209,11 @@ if url:
                 metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
                 st.write(metadata_text)
 
-                web_search_content = search_and_summarize(f"{title} {description}")
-                if web_search_content:
+                # Use metadata + search results for summarization
+                web_search_summary = search_and_summarize(f"{title} {description}", title, description)
+                if web_search_summary:
                     st.subheader("🧠 Web Search Summary")
-                    web_summary = summarize_with_any_model(web_search_content)
-                    if web_summary:
-                        st.write(web_summary)
+                    st.write(web_search_summary)
         else:
             st.subheader("📄 Transcript")
             with st.expander("Click to expand full transcript"):
