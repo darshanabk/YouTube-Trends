@@ -44,13 +44,15 @@ def datacleaning(text: str) -> str:
     return text
 
 
-def fetch_transcript(video_id):
+ddef fetch_transcript(video_id):
     """
-    Fetches and cleans a transcript from a YouTube video.
+    Fetches and cleans transcript from a YouTube video.
     Priority: 'en' > English variants > any available language.
     """
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+
+        transcript = None
 
         # 1. Try exact 'en'
         try:
@@ -62,16 +64,21 @@ def fetch_transcript(video_id):
                 transcript = transcript_list.find_transcript(['en-US', 'en-GB']).fetch()
                 st.info("Fetched English variant transcript.")
             except NoTranscriptFound:
-                # 3. Fall back to any available transcript
-                try:
-                    transcript = transcript_list.find_transcript([t.language_code for t in transcript_list]).fetch()
-                    st.info(f"Fetched fallback transcript in language: {transcript_list.find_transcript([t.language_code for t in transcript_list]).language_code}")
-                except Exception:
-                    st.warning("No transcripts found in any language.")
-                    return None
+                # 3. Fall back to the first available transcript in any language
+                for available_transcript in transcript_list:
+                    try:
+                        transcript = available_transcript.fetch()
+                        st.info(f"Fetched fallback transcript in language: {available_transcript.language_code}")
+                        break
+                    except Exception:
+                        continue  # Try next available transcript
 
-        # Clean and return transcript
-        transcript_text = " ".join([t['text'] for t in transcript])
+        if not transcript:
+            st.warning("No transcripts found in any language.")
+            return None
+
+        # Now process the fetched transcript
+        transcript_text = " ".join([item['text'] for item in transcript])
         return datacleaning(transcript_text)
 
     except TranscriptsDisabled:
@@ -82,7 +89,7 @@ def fetch_transcript(video_id):
         st.warning("Could not retrieve transcript.")
     except Exception as e:
         st.error(f"Unexpected error while fetching transcript: {e}")
-    
+
     return None
 
 
