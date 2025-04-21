@@ -363,35 +363,35 @@ def fetch_transcript(video_id):
 #     except Exception as e:
 #         st.error(f"Whisper transcription failed: {e}")
 #         return None
-def download_audio(video_id, output_dir="audio"):
-    """Download YouTube audio in native format (no conversion)"""
+
+def download_audio(video_id):
+    """Download YouTube audio in native format to a temporary location"""
     try:
-        os.makedirs(output_dir, exist_ok=True)
         timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        
-        # Download in native format (usually m4a or webm)
-        filename = f"{video_id}_{timestamp}"
-        output_path = os.path.join(output_dir, filename)
-        
+        filename = f"{video_id}_{timestamp}.%(ext)s"
+        output_path = f"/tmp/{filename}"  # Use Streamlit's temporary path
+
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
         ydl_opts = {
             'format': 'bestaudio/best',
-            'outtmpl': output_path + '.%(ext)s',  # Let yt-dlp determine extension
+            'outtmpl': output_path,  # Save to /tmp/
             'quiet': True,
             'no_warnings': True,
             'socket_timeout': 30,
             'retries': 3
         }
-        
+
         with st.spinner(f"Downloading audio for {video_id}..."):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=True)
-                actual_path = ydl.prepare_filename(info)  # Get the actual downloaded file path
-        
+                actual_path = ydl.prepare_filename(info)  # This resolves final filename with extension
+
         return actual_path if os.path.exists(actual_path) else None
-        
+
     except Exception as e:
         st.error(f"Audio download failed: {str(e)}")
         return None
+
 
 def whisper_transcribe(audio_path):
     try:
