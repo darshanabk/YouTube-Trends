@@ -3,7 +3,6 @@ import re
 import html
 import emoji
 import streamlit as st
-import pandas as pd
 from datetime import datetime
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -14,209 +13,195 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googlesearch import search
 
-
-# Set your API keys
-GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-configure(api_key=GEMINI_API_KEY)
-
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-
-# YouTube Data API v3 setup
-YOUTUBE_API_KEY = st.secrets["YOUTUBE_API_KEY"]
-youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
-
-
-def extract_video_id(url):
-    match = re.search(r"(?:v=|youtu\.be/)([^&]+)", url)
-    return match.group(1) if match else None
-
-
-def datacleaning(text: str) -> str:
-    text = emoji.replace_emoji(text, replace='')  # Remove emojis
-    text = html.unescape(text)  # Decode HTML entities
-    text = re.sub(r'[^\x00-\x7F]+', '', text)  # Remove non-ASCII characters
-    text = re.sub(r'\s+', ' ', text).strip()  # Remove extra spaces
-    return text
-
-
-def fetch_transcript(video_id):
+# --- Configuration ---
+def setup_apis():
+    """Initialize all API clients with error handling"""
     try:
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        transcript = transcript_list.find_transcript(['en']).fetch()
-        transcript_text = " ".join([t['text'] for t in transcript])
-        return datacleaning(transcript_text)
-    except Exception:
+        # Set API keys from Streamlit secrets
+        configure(api_key=st.secrets["GEMINI_API_KEY"])
+        openai.api_key = st.secrets["OPENAI_API_KEY"]
+        youtube = build("youtube", "v3", developerKey=st.secrets["YOUTUBE_API_KEY"])
+        return youtube
+    except Exception as e:
+        st.error(f"API initialization failed: {str(e)}")
         return None
 
+youtube = setup_apis()
 
-def download_audio(video_id, output_dir="audio"):
-    """Download YouTube audio in native M4A format (no FFmpeg needed)"""
+# --- Core Functions ---
+def extract_video_id(url: str) -> str:
+    """Extract video ID from various YouTube URL formats"""
+    patterns = [
+        r"(?:v=|youtu\.be/)([^&]+)",  # Standard URLs
+        r"embed/([^?]+)",              # Embed URLs
+        r"shorts/([^?]+)"              # Shorts URLs
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, url)
+        if match:
+            return match.group(1)
+    return None
+
+def clean_text(text: str) -> str:
+    """Clean text by removing emojis, HTML entities, and non-ASCII characters"""
+    if not isinstance(text, str):
+        return ""
+    text = emoji.replace_emoji(text, replace='')
+    text = html.unescape(text)
+    text = re.sub(r'[^\x00-\x7F]+', '', text)
+    return re.sub(r'\s+', ' ', text).strip()
+
+def get_transcript(video_id: str) -> str:
+    """Fetch transcript with fallback to different languages"""
+    try:
+        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+        
+        # Try English variants first
+        for lang in ['en', 'en-US', 'en-GB', 'en-AU']:
+            try:
+                transcript = transcript_list.find_transcript([lang]).fetch()
+                return " ".join([t['text'] for t in transcript])
+            except:
+                continue
+                
+        # Fallback to any available transcript
+        transcript = transcript_list.find_manually_created_transcript().fetch()
+        return " ".join([t['text'] for t in transcript])
+        
+    except Exception as e:
+        st.warning(f"Transcript unavailable: {str(e)}")
+        return None
+
+def download_audio(video_id: str, output_dir: str = "audio") -> str:
+    """Download audio with robust error handling"""
     try:
         os.makedirs(output_dir, exist_ok=True)
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"{video_id}_{timestamp}.m4a"
+        filename = f"{video_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.m4a"
         output_path = os.path.join(output_dir, filename)
         
         ydl_opts = {
             'format': 'bestaudio[ext=m4a]',
-            'outtmpl': output_path.replace('.m4a', '.%(ext)s'),  # Preserve extension
+            'outtmpl': output_path.replace('.m4a', '.%(ext)s'),
             'quiet': True,
             'no_warnings': True,
+            'socket_timeout': 30,
+            'retries': 3
         }
         
-        with st.spinner(f"Downloading audio for video {video_id}..."):
+        with st.spinner(f"Downloading audio for {video_id}..."):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([f"https://youtube.com/watch?v={video_id}"])
         
-        if os.path.exists(output_path):
-            return output_path
-        else:
-            st.error("Download completed but file not found")
-            return None
-            
+        return output_path if os.path.exists(output_path) else None
+        
     except Exception as e:
-        st.error(f"Download failed: {str(e)}")
+        st.error(f"Audio download failed: {str(e)}")
         return None
 
-def whisper_transcribe(audio_path):
+def transcribe_audio(audio_path: str) -> str:
+    """Transcribe audio with configurable model size"""
     try:
-        with st.spinner("Transcribing with Whisper..."):
-            whisper_model = whisper.load_model("base")
-            result = whisper_model.transcribe(audio_path)
-            return datacleaning(result['text'])
-    except Exception as e:
-        st.error(f"Whisper transcription failed: {e}")
-        return None
-
-def search_and_summarize(title, description):
-    try:
-        query = f"{title} {description}"
-        search_results = search(query, num_results=3)
-        web_content = ""
-        for url in search_results:
-            web_content += f"\nURL: {url}\nExtracted Content: This is a top search result related to the title and description.\n"
-
-        prompt = f"""
-You are a helpful assistant. Based on the following YouTube video metadata and search results, generate a concise summary:
-
-Title: {title}
-Description: {description}
-
-Search Result Context:
-{web_content}
-
-Summarize the content above in 5-7 sentences focusing on the key takeaways or subject matter.
-"""
-        # Use Gemini or fallback to GPT
-        summary = summarize_with_any_model(prompt)
-        return summary
-
-    except Exception as e:
-        st.error(f"Error searching the web: {e}")
-        return None
-
-
-def fetch_metadata_youtube_api(video_id):
-    try:
-        request = youtube.videos().list(part="snippet", id=video_id)
-        response = request.execute()
-        title = response['items'][0]['snippet']['title']
-        description = response['items'][0]['snippet']['description']
-        return title, description
-    except HttpError as e:
-        st.warning(f"YouTube API metadata fetch failed: {e}")
-        return None, None
-
-
-def summarize_with_any_model(text):
-    gemini_models = [
-        "models/gemini-1.5-pro", "models/gemini-1.5-pro-001", "models/gemini-1.5-pro-002",
-        "models/gemini-1.5-flash", "models/gemini-1.5-flash-latest", "models/gemini-1.5-flash-001",
-        "models/gemini-2.0-flash", "models/gemini-2.0-pro-exp", "models/gemini-2.0-flash-001"
-    ]
-    for model_name in gemini_models:
-        try:
-            model = GenerativeModel(model_name)
-            with st.spinner(f"Trying Gemini model: {model_name}"):
-                gemini_response = model.generate_content(f"Summarize the following transcript:\n\n{text}")
-            return gemini_response.text
-        except Exception:
-            st.warning(f"Gemini model {model_name} failed.")
-
-    st.warning("All Gemini models failed. Trying OpenAI GPT...")
-
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": "Summarize the following transcript."},
-                {"role": "user", "content": text}
-            ],
-            max_tokens=1024,
-            temperature=0.7
+        model_size = st.selectbox(
+            "Select Whisper model", 
+            ["tiny", "base", "small", "medium", "large"],
+            index=1
         )
-        return "[GPT-4] " + response.choices[0].message.content.strip()
-    except Exception:
-        try:
+        
+        with st.spinner(f"Loading Whisper {model_size} model..."):
+            model = whisper.load_model(model_size)
+            
+        with st.spinner("Transcribing audio..."):
+            result = model.transcribe(audio_path)
+            
+        return clean_text(result['text'])
+        
+    except Exception as e:
+        st.error(f"Transcription failed: {str(e)}")
+        return None
+
+# --- Summarization Functions ---
+def generate_summary(text: str, model_type: str = "gemini") -> str:
+    """Generate summary using selected model"""
+    try:
+        if model_type == "gemini":
+            model = GenerativeModel("models/gemini-1.5-pro")
+            response = model.generate_content(
+                f"Create a concise 5-7 sentence summary of this content:\n\n{text}"
+            )
+            return clean_text(response.text)
+            
+        elif model_type == "openai":
+            model = "gpt-4" if "gpt-4" in openai.Model.list() else "gpt-3.5-turbo"
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[
-                    {"role": "system", "content": "Summarize the following transcript."},
+                    {"role": "system", "content": "Summarize in 5-7 concise sentences."},
                     {"role": "user", "content": text}
                 ],
-                max_tokens=1024,
                 temperature=0.7
             )
-            return "[GPT-3.5] " + response.choices[0].message.content.strip()
-        except Exception as e:
-            st.error("All summarization models failed.")
-            return None
-
+            return clean_text(response.choices[0].message.content)
+            
+    except Exception as e:
+        st.warning(f"{model_type} failed: {str(e)}")
+        return None
 
 # --- Streamlit UI ---
-st.set_page_config(page_title="YouTube Summarizer", layout="centered")
-st.title("🎬 YouTube Summarizer with Gemini + Whisper")
-
-url = st.text_input("Enter YouTube URL:")
-
-if url:
-    video_id = extract_video_id(url)
-    if not video_id:
-        st.error("Invalid YouTube URL.")
-    else:
-        st.info("Processing...")
-        transcript = fetch_transcript(video_id)
-
-        if transcript:
-            st.success("Transcript fetched successfully!")
-        else:
-            st.warning("Transcript not available. Trying audio transcription...")
-            audio_path = download_audio(video_id)
-            if audio_path:
-                transcript = whisper_transcribe(audio_path)
-                if transcript:
-                    st.success("Audio transcribed successfully!")
+def main():
+    st.set_page_config(page_title="YouTube Summarizer Pro", layout="wide")
+    st.title("🎬 YouTube Summarizer Pro")
+    
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        url = st.text_input("Enter YouTube URL:", placeholder="https://www.youtube.com/watch?v=...")
         
-        if not transcript:
-            st.warning("Audio unavailable. Fetching metadata and searching the web...")
-            title, description = fetch_metadata_youtube_api(video_id)
-
-            if title and description:
-                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
-                st.write(metadata_text)
-
-                web_summary = search_and_summarize(title, description)
-                if web_summary:
-                    st.subheader("🧠 Web Search Summary")
-                    st.write(web_summary)
-        else:
-            st.subheader("📄 Transcript")
-            with st.expander("Click to expand full transcript"):
+    with col2:
+        model_choice = st.selectbox("Summary Model", ["Gemini", "OpenAI"], index=0)
+    
+    if url and st.button("Generate Summary"):
+        with st.spinner("Processing..."):
+            video_id = extract_video_id(url)
+            if not video_id:
+                st.error("Invalid YouTube URL")
+                return
+                
+            # Try transcript first
+            transcript = get_transcript(video_id)
+            
+            # Fallback to audio transcription
+            if not transcript:
+                audio_path = download_audio(video_id)
+                if audio_path:
+                    st.audio(audio_path)
+                    transcript = transcribe_audio(audio_path)
+            
+            # Final fallback to metadata
+            if not transcript:
+                try:
+                    title, description = fetch_metadata_youtube_api(video_id)
+                    transcript = f"Title: {title}\n\nDescription: {description}"
+                    st.warning("Using video metadata only")
+                except:
+                    st.error("Could not retrieve any content")
+                    return
+            
+            # Display results
+            with st.expander("📜 Full Transcript", expanded=False):
                 st.write(transcript)
-
-            st.subheader("🧠 Summary")
-            summary = summarize_with_any_model(transcript)
+                
+            summary = generate_summary(transcript, model_type=model_choice.lower())
             if summary:
+                st.subheader("📝 Summary")
                 st.write(summary)
-            else:
-                st.error("Summarization failed.")
+                
+                # Additional features
+                with st.expander("🔍 Key Insights"):
+                    insights = generate_summary(transcript, model_type="gemini")
+                    st.write(insights or "No insights generated")
+                    
+                with st.expander("📌 Chapter Markers"):
+                    chapters = generate_chapters(transcript)
+                    st.write(chapters or "No chapters detected")
+
+if __name__ == "__main__":
+    main()
