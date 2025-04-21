@@ -10,3 +10,4 @@ googlesearch-python
 emoji
 torch
 openai-whisper
+pytube 
