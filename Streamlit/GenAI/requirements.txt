@@ -11,3 +11,4 @@ emoji
 torch
 openai-whisper
 pytube 
+gemini_api_module 
