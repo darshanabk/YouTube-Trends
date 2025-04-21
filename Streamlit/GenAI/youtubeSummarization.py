@@ -141,7 +141,7 @@ def get_audio_transcription(video_id, output_dir="audio"):
             return datacleaning(result['text'])
 
     except Exception as e:
-        st.error(f"Audio transcription failed: {str(e)}")
+        # st.error(f"Audio transcription failed: {str(e)}")
         return None
 
 
