@@ -6,12 +6,18 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import yt_dlp
-from youtube_transcript_api import YouTubeTranscriptApi
 import openai
 from google.generativeai import GenerativeModel, configure
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googlesearch import search
+from youtube_transcript_api import (
+    YouTubeTranscriptApi,
+    NoTranscriptFound,
+    TranscriptsDisabled,
+    VideoUnavailable,
+    CouldNotRetrieveTranscript
+)
 
 
 # Set your API keys
@@ -39,13 +45,45 @@ def datacleaning(text: str) -> str:
 
 
 def fetch_transcript(video_id):
+    """
+    Fetches and cleans a transcript from a YouTube video.
+    Priority: 'en' > English variants > any available language.
+    """
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        transcript = transcript_list.find_transcript(['en']).fetch()
+
+        # 1. Try exact 'en'
+        try:
+            transcript = transcript_list.find_transcript(['en']).fetch()
+            st.info("Fetched exact 'en' transcript.")
+        except NoTranscriptFound:
+            # 2. Try English variants
+            try:
+                transcript = transcript_list.find_transcript(['en-US', 'en-GB']).fetch()
+                st.info("Fetched English variant transcript.")
+            except NoTranscriptFound:
+                # 3. Fall back to any available transcript
+                try:
+                    transcript = transcript_list.find_transcript([t.language_code for t in transcript_list]).fetch()
+                    st.info(f"Fetched fallback transcript in language: {transcript_list.find_transcript([t.language_code for t in transcript_list]).language_code}")
+                except Exception:
+                    st.warning("No transcripts found in any language.")
+                    return None
+
+        # Clean and return transcript
         transcript_text = " ".join([t['text'] for t in transcript])
         return datacleaning(transcript_text)
-    except Exception:
-        return None
+
+    except TranscriptsDisabled:
+        st.warning("Transcripts are disabled for this video.")
+    except VideoUnavailable:
+        st.warning("The video is unavailable.")
+    except CouldNotRetrieveTranscript:
+        st.warning("Could not retrieve transcript.")
+    except Exception as e:
+        st.error(f"Unexpected error while fetching transcript: {e}")
+    
+    return None
 
 
 
