@@ -115,34 +115,51 @@ def fetch_transcript(video_id):
 #         st.error(f"Whisper transcription failed: {e}")
 #         return None
 
-def get_audio_transcription(video_id, output_dir="audio"):
-    """Combined function to download audio and transcribe with Whisper"""
+def download_and_transcribe(video_id, output_dir="audio"):
+    """
+    Download YouTube audio in M4A format and transcribe using Whisper in one step
+    Returns tuple: (audio_path, transcription) or (None, None) if failed
+    """
     try:
         # 1. Download audio
-        audio_path = download_audio(video_id, output_dir)
-        if not audio_path or not os.path.exists(audio_path):
-            st.warning("Audio download failed")
-            return None
+        os.makedirs(output_dir, exist_ok=True)
+        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        filename = f"{video_id}_{timestamp}.m4a"
+        output_path = os.path.join(output_dir, filename)
+
+        ydl_opts = {
+            'format': 'bestaudio[ext=m4a]',
+            'outtmpl': output_path,
+            'quiet': True,
+            'no_warnings': True,
+            'socket_timeout': 30,
+            'retries': 3,
+        }
+
+        with st.spinner(f"🎧 Downloading audio for {video_id}..."):
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([f"https://www.youtube.com/watch?v={video_id}"])
+
+        if not os.path.exists(output_path):
+            st.error("Download completed but file not found")
+            return None, None
 
         # 2. Transcribe with Whisper
-        with st.spinner("Transcribing with Whisper..."):
-            # Let user select model size
-            model_size = st.selectbox(
-                "Select Whisper model size",
-                ["tiny", "base", "small", "medium", "large"],
-                index=1,
-                key=f"whisper_{video_id}"
-            )
-            
-            model = whisper.load_model(model_size)
-            result = model.transcribe(audio_path)
-            
-            # Clean and return text
-            return datacleaning(result['text'])
+        with st.spinner("🔊 Transcribing audio with Whisper..."):
+            try:
+                model = whisper.load_model("base")
+                result = model.transcribe(output_path)
+                transcription = datacleaning(result['text'])
+                return output_path, transcription
+            except Exception as e:
+                st.error(f"Transcription failed: {str(e)}")
+                return output_path, None
 
     except Exception as e:
-        # st.error(f"Audio transcription failed: {str(e)}")
-        return None
+        st.error(f"Audio processing failed: {str(e)}")
+        return None, None
+
+
 
 
 def search_and_summarize(title, description):
@@ -229,6 +246,7 @@ def summarize_with_any_model(text):
             st.error("All summarization models failed.")
             return None
 
+# Example usage in your Streamlit UI:
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="YouTube Summarizer", layout="centered")
@@ -242,31 +260,38 @@ if url:
         st.error("Invalid YouTube URL.")
     else:
         st.info("Processing...")
+        
+        # First try to get transcript directly
         transcript = fetch_transcript(video_id)
-
+        
         if transcript:
             st.success("Transcript fetched successfully!")
         else:
+            # If no transcript, try audio transcription
             st.warning("Transcript not available. Trying audio transcription...")
-            transcript = get_audio_transcription(video_id)
-            # if audio_path:
-            #     transcript = whisper_transcribe(audio_path)
+            audio_path, transcript = download_and_transcribe(video_id)
+            
+            if audio_path:
+                st.audio(audio_path)  # Audio player for user
+                
             if transcript:
                 st.success("Audio transcribed successfully!")
-        
-        if not transcript:
-            st.warning("Audio unavailable. Fetching metadata and searching the web...")
-            title, description = fetch_metadata_youtube_api(video_id)
+            else:
+                # Final fallback to metadata
+                st.warning("Audio unavailable. Fetching metadata and searching the web...")
+                title, description = fetch_metadata_youtube_api(video_id)
 
-            if title and description:
-                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
-                st.write(metadata_text)
+                if title and description:
+                    metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
+                    st.write(metadata_text)
 
-                web_summary = search_and_summarize(title, description)
-                if web_summary:
-                    st.subheader("🧠 Web Search Summary")
-                    st.write(web_summary)
-        else:
+                    web_summary = search_and_summarize(title, description)
+                    if web_summary:
+                        st.subheader("🧠 Web Search Summary")
+                        st.write(web_summary)
+
+        # Display results if we have transcript
+        if transcript:
             st.subheader("📄 Transcript")
             with st.expander("Click to expand full transcript"):
                 st.write(transcript)
