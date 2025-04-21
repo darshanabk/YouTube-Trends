@@ -84,23 +84,59 @@ def whisper_transcribe(audio_path):
         return None
 
 
+# def search_and_summarize(query, title, description):
+#     try:
+#         # Perform a web search using the query
+#         search_results = search(query, num_results=3)
+#         web_content = f"**Title:** {title}\n**Description:** {description}\n\n"
+        
+#         # Collect relevant URLs and extract basic content for summarization
+#         for url in search_results:
+#             web_content += f"URL: {url}\nExtracted Content: {url}\n\n"
+        
+#         # Now summarize this combined content using Gemini or OpenAI
+#         web_summary = summarize_with_any_model(web_content)
+#         return web_summary
+#     except Exception as e:
+#         st.error(f"Error searching the web: {e}")
+#         return None
+
 def search_and_summarize(query, title, description):
     try:
         # Perform a web search using the query
         search_results = search(query, num_results=3)
+        
+        # Start constructing the input for the summarization model
         web_content = f"**Title:** {title}\n**Description:** {description}\n\n"
         
-        # Collect relevant URLs and extract basic content for summarization
+        # Collect relevant URLs and their extracted content for summarization
         for url in search_results:
-            web_content += f"URL: {url}\nExtracted Content: {url}\n\n"
+            web_content += f"URL: {url}\nExtracted Content: [Placeholder for content extraction from {url}]\n\n"
+
+        # RAG (Retrieval Augmented Generation) and Few-shot prompting:
+        # We'll use the search results and example prompts to help the model understand what content to extract and summarize
+
+        # Few-shot prompting setup: provide example contexts and instructions to the AI model
+        example_prompt = """
+        You are a helpful assistant. Here's how you should summarize web content:
+
+        - Read the title, description, and extracted content from the web pages.
+        - Identify the key points, trends, or main topics discussed in the content.
+        - Provide a concise summary of the content, adding relevant context from the title and description.
+
+        Here are the details to summarize:
+        """
+
+        # Add the example prompt and web-based content
+        model_input = example_prompt + web_content
         
-        # Now summarize this combined content using Gemini or OpenAI
-        web_summary = summarize_with_any_model(web_content)
+        # Use either Gemini or OpenAI for summarization
+        web_summary = summarize_with_any_model(model_input)
+        
         return web_summary
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
-
 
 def fetch_metadata_yt_dlp(url):
     try:
@@ -190,24 +226,15 @@ if url:
         if transcript:
             st.success("Transcript fetched successfully!")
         else:
-            st.warning("Transcript not available. Trying audio transcription...")
-            audio_path = download_audio(video_id)
-            if audio_path:
-                transcript = whisper_transcribe(audio_path)
-                if transcript:
-                    st.success("Audio transcribed successfully!")
-
-        # Fetch metadata and web search if transcript is unavailable
-        if not transcript:
-            st.warning("Audio unavailable. Fetching metadata and searching the web...")
+            st.warning("Transcript not available. Fetching metadata and searching the web...")            
 
             title, description = fetch_metadata_yt_dlp(url)
             if not title or not description:
                 title, description = fetch_metadata_youtube_api(video_id)
 
-            if title and description:
-                metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
-                st.write(metadata_text)
+            # if title and description:
+            #     metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
+            #     st.write(metadata_text)
 
                 # Use metadata + search results for summarization
                 web_search_summary = search_and_summarize(f"{title} {description}", title, description)
