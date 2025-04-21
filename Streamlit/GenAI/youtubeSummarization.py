@@ -84,23 +84,6 @@ def whisper_transcribe(audio_path):
         return None
 
 
-# def search_and_summarize(query, title, description):
-#     try:
-#         # Perform a web search using the query
-#         search_results = search(query, num_results=3)
-#         web_content = f"**Title:** {title}\n**Description:** {description}\n\n"
-        
-#         # Collect relevant URLs and extract basic content for summarization
-#         for url in search_results:
-#             web_content += f"URL: {url}\nExtracted Content: {url}\n\n"
-        
-#         # Now summarize this combined content using Gemini or OpenAI
-#         web_summary = summarize_with_any_model(web_content)
-#         return web_summary
-#     except Exception as e:
-#         st.error(f"Error searching the web: {e}")
-#         return None
-
 def search_and_summarize(query, title, description):
     try:
         # Perform a web search using the query
@@ -137,6 +120,7 @@ def search_and_summarize(query, title, description):
     except Exception as e:
         st.error(f"Error searching the web: {e}")
         return None
+
 
 def fetch_metadata_yt_dlp(url):
     try:
@@ -206,7 +190,6 @@ def summarize_with_any_model(text):
             return None
 
 
-
 # --- Streamlit UI ---
 st.set_page_config(page_title="YouTube Summarizer", layout="centered")
 st.title("🎬 YouTube Summarizer with Gemini + Whisper")
@@ -232,11 +215,7 @@ if url:
             if not title or not description:
                 title, description = fetch_metadata_youtube_api(video_id)
 
-            # if title and description:
-            #     metadata_text = f"**Title:** {title}\n\n**Description:** {description}"
-            #     st.write(metadata_text)
-
-                # Use metadata + search results for summarization
+            if title and description:
                 web_search_summary = search_and_summarize(f"{title} {description}", title, description)
                 if web_search_summary:
                     st.subheader("🧠 Web Search Summary")
