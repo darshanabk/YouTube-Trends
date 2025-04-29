@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 import base64
 
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def FetchLatestFile():
     """
     Fetches the latest JSON file from a specified GitHub repository directory.
