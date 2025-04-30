@@ -822,7 +822,7 @@ def streamlitSideBar(file):
     st.sidebar.header("Filter")
     if st.sidebar.button("🔁 Refresh"):
         st.cache_data.clear()
-        st.experimental_rerun()
+        # st.experimental_rerun()
     file = file.sort_values(by = 'continent', ascending = True)
     continents = file['continent'].unique()
     continents= np.append(continents, 'All')
