@@ -6,7 +6,8 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-import base64
+import base64            
+import pyautogui
 
 
 @st.cache_data
@@ -819,6 +820,15 @@ def streamlitSideBar(file):
     Returns:
         tuple: Selected filter options including Continents, Countries, Category, Years, Channel Names, and Licensed Content.
     """
+    col1, col2 = st.sidebar.columns(2)  
+    with col1:
+        if st.button("Refresh"):
+            st.cache_data.clear()
+
+    with col2:
+        if st.button("Reset"):
+            pyautogui.hotkey("ctrl","F5")
+
     st.sidebar.header("Filter")
     file = file.sort_values(by = 'continent', ascending = True)
     continents = file['continent'].unique()
@@ -853,6 +863,7 @@ def streamlitSideBar(file):
     FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
     st.sidebar.write("AND")
     FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
+        
     
     return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
 
