@@ -17,15 +17,15 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
   -->
  
 ## **Workflow**
-  - **Source**: Kaggle -> Google Cloud Console (YouTube Data API v3) -> Data Extraction -> GitHub Automation
+  - **Source**: Kaggle -> Google Cloud Console (YouTube Data API v3) -> Data Extraction -> GitHub File Storage
       
-  - **Data Cleaning**: Kaggle -> Fetch Source File from GitHub -> Data Cleaning -> GitHub Automation
+  - **Data Cleaning**: Kaggle -> Fetch Source File from GitHub -> Data Cleaning -> GitHub File Storage
   
-  - **Requirement**: Kaggle -> Fetch ISO Code from Rest API -> Process -> GitHub Automation
+  - **Requirement**: Kaggle -> Fetch ISO Code from Rest API -> Process -> GitHub File Storage
   
-  - **Feature Engineering**: Kaggle Fetch Data Cleaning and Requirement Files -> Process -> GitHub Automation
+  - **Feature Engineering**: Kaggle Fetch Data Cleaned and Requirement Files -> Process -> GitHub File Storage
   
-  - **Streamlit**: Streamlit Cloud -> Fetch Processed File from GitHub -> Process and Visualize on Streamlit -> Deployed App
+  - **Streamlit**: Streamlit Cloud -> Fetch Feature Engineering File from GitHub -> Process and Visualize on Streamlit -> Deployed App
 
 Every process fetches the most recent file to ensure up-to-date data. The process runs daily for real-time data.
 <!-- 
