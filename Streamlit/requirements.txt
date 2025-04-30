@@ -4,4 +4,4 @@ requests
 pandas
 numpy
 streamlit
-pyautogui
+

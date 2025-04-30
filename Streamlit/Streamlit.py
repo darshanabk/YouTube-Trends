@@ -7,7 +7,6 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import base64            
-import pyautogui
 
 
 @st.cache_data(ttl=3600)
@@ -820,54 +819,68 @@ def streamlitSideBar(file):
     Returns:
         tuple: Selected filter options including Continents, Countries, Category, Years, Channel Names, and Licensed Content.
     """
-    col1, col2 = st.sidebar.columns(2)  
+
+    # Initialize session state if not already set
+    if "FilterContinents" not in st.session_state:
+        st.session_state["FilterContinents"] = ['All']
+    if "FilterCountries" not in st.session_state:
+        st.session_state["FilterCountries"] = ['All']
+    if "FilterChannelNames" not in st.session_state:
+        st.session_state["FilterChannelNames"] = ['All']
+    if "FilterYears" not in st.session_state:
+        st.session_state["FilterYears"] = ['All']
+    if "FilterCategory" not in st.session_state:
+        st.session_state["FilterCategory"] = 'All'
+    if "FilterLicensedContent" not in st.session_state:
+        st.session_state["FilterLicensedContent"] = 'All'
+
+    # Buttons
+    col1, col2 = st.sidebar.columns(2)
     with col1:
         if st.button("Refresh"):
             st.cache_data.clear()
-
     with col2:
         if st.button("Reset"):
-            pyautogui.hotkey("ctrl","F5")
+            st.session_state["FilterContinents"] = ['All']
+            st.session_state["FilterCountries"] = ['All']
+            st.session_state["FilterChannelNames"] = ['All']
+            st.session_state["FilterYears"] = ['All']
+            st.session_state["FilterCategory"] = 'All'
+            st.session_state["FilterLicensedContent"] = 'All'
+            st.rerun()
 
+    # Filter options
     st.sidebar.header("Filter")
-    file = file.sort_values(by = 'continent', ascending = True)
-    continents = file['continent'].unique()
-    continents= np.append(continents, 'All')
-    file = file.sort_values(by = 'country_name', ascending = True)
-    countries = file['country_name'].unique()
-    countries = np.append(countries, 'All')
-    file = file.sort_values(by ="videoPublishYear",ascending = True)
-    Years = file['videoPublishYear'].unique()
-    Years = np.append(Years, 'All')
-    Years = Years.astype(str)
-    file = file.sort_values(by = 'videoContentType', ascending = True)
-    category = file['videoContentType'].unique()
-    category = np.append(category, 'All')
-    file = file.sort_values(by = 'channelName', ascending = True)
-    channelNames = file['channelName'].unique()
-    channelNames = np.append(channelNames, 'All')
-    file = file.sort_values(by = 'videoLicensedContent', ascending = True)
-    licensedContent = file['videoLicensedContent'].unique()
-    licensedContent = np.append(licensedContent, 'All')
-    licensedContent = licensedContent.astype(str)
+    file = file.sort_values(by='continent')
+    continents = np.append(file['continent'].unique(), 'All')
+
+    file = file.sort_values(by='country_name')
+    countries = np.append(file['country_name'].unique(), 'All')
+
+    file = file.sort_values(by="videoPublishYear")
+    Years = np.append(file['videoPublishYear'].unique(), 'All').astype(str)
+
+    file = file.sort_values(by='videoContentType')
+    category = np.append(file['videoContentType'].unique(), 'All')
+
+    file = file.sort_values(by='channelName')
+    channelNames = np.append(file['channelName'].unique(), 'All')
+
+    file = file.sort_values(by='videoLicensedContent')
+    licensedContent = np.append(file['videoLicensedContent'].unique(), 'All').astype(str)
 
     st.sidebar.write("Please select at least one of the following: Continent, Country, or Channel")
-    FilterContinents = st.sidebar.multiselect("Select Continents", options = continents, default = 'All')
-    # st.sidebar.write("OR")
-    FilterCountries = st.sidebar.multiselect("Select Countries", options = countries, default = 'All')
-    # st.sidebar.write("OR")
-    FilterChannelNames = st.sidebar.multiselect("Select Channels", options = channelNames, default = 'All' )
-    # st.sidebar.write("AND")
-    st.sidebar.write("Please select at least one year to proceed")
-    FilterYears = st.sidebar.multiselect("Select Years", options = Years, default = 'All')
-    # st.sidebar.write("AND")
-    FilterCategory = st.sidebar.radio("Select Category", options  = category, index=len(category) - 1)
-    # st.sidebar.write("AND")
-    FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options = licensedContent, index=len(category) - 1)
-        
-    
-    return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
+    FilterContinents = st.sidebar.multiselect("Select Continents", options=continents, key="FilterContinents")
+    FilterCountries = st.sidebar.multiselect("Select Countries", options=countries, key="FilterCountries")
+    FilterChannelNames = st.sidebar.multiselect("Select Channels", options=channelNames, key="FilterChannelNames")
 
+    st.sidebar.write("Please select at least one year to proceed")
+    FilterYears = st.sidebar.multiselect("Select Years", options=Years, key="FilterYears")
+
+    FilterCategory = st.sidebar.radio("Select Category", options=category, key="FilterCategory")
+    FilterLicensedContent = st.sidebar.radio("Select Licensed Content", options=licensedContent, key="FilterLicensedContent")
+
+    return FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent
 
 def main():
     """
