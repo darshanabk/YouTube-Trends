@@ -1,0 +1,17 @@
+ffmpeg
+streamlit
+openai
+google-generativeai
+yt-dlp
+youtube-transcript-api
+pandas
+google-api-python-client
+googlesearch-python
+emoji
+torch
+openai-whisper
+pytube 
+
+python-dotenv
+google-api-python-client
+
