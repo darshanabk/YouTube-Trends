@@ -746,7 +746,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
         f"""
         <div style="display: flex; align-items: center;">
             <div class="animated-box"><img src="data:image/png;base64,{base64_image}" width="35" height = "35" style="border-radius: 50%;"margin-right: 10px;"></div>
-            <h1 style="margin: 0; font-size: 40px"> &nbsp; DevOps YouTube Trends</h1>
+            <h1 style="margin: 0; font-size: 40px"> &nbsp; YouTube Trend Analysis: A Data-Driven Deep Dive into DevOps Content</h1>
         </div>
         """,
         unsafe_allow_html=True
