@@ -1,0 +1,30 @@
+[
+    {
+        "ScriptFile":"sourcedaily.ipynb",
+        "StartTime":"2025-05-13 20:26:10",
+        "EndTime":"2025-05-13 20:26:28",
+        "TimeTaken":"0:00:17.488828",
+        "Date":"2025-05-14_01_56_28"
+    },
+    {
+        "ScriptFile":"dataCleaning.ipynb",
+        "StartTime":"2025-05-13 20:26:28",
+        "EndTime":"2025-05-13 20:26:35",
+        "TimeTaken":"0:00:07.223092",
+        "Date":"2025-05-14_01_56_35"
+    },
+    {
+        "ScriptFile":"country-codes-iso-3166-1-alpha-2-continent-code.ipynb",
+        "StartTime":"2025-05-13 20:26:35",
+        "EndTime":"2025-05-13 20:26:37",
+        "TimeTaken":"0:00:02.207766",
+        "Date":"2025-05-14_01_56_37"
+    },
+    {
+        "ScriptFile":"feature-engineering.ipynb",
+        "StartTime":"2025-05-13 20:26:37",
+        "EndTime":"2025-05-13 20:26:41",
+        "TimeTaken":"0:00:03.902156",
+        "Date":"2025-05-14_01_56_41"
+    }
+]
