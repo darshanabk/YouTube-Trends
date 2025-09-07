@@ -2,7 +2,8 @@
 ![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)
 
 <p align="left">
-  <img src="https://github.com/darshanabk/YouTube-Trends/blob/main/Other/youtube_icon.png" width="1000" height = "100" title="hover text">
+  
+  <img src="https://github.com/darshanabk/YouTube-Trends/blob/main/Other/youtube_icon.png" width="1000" height = "500" title="hover text">
 </p>
 
 ## [Check out YouTube Trend Analysis: A Data-Driven Deep Dive into DevOps Content](https://devops-youtube-trends.streamlit.app/)
