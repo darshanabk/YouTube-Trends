@@ -1,0 +1,23 @@
+[
+    {
+        "ScriptFile":"sourcedaily.ipynb",
+        "StartTime":"2025-06-22 18:49:06",
+        "EndTime":"2025-06-22 18:49:26",
+        "TimeTaken":"0:00:19.136334",
+        "Date":"2025-06-23_00_19_26"
+    },
+    {
+        "ScriptFile":"dataCleaning.ipynb",
+        "StartTime":"2025-06-22 18:49:26",
+        "EndTime":"2025-06-22 18:49:34",
+        "TimeTaken":"0:00:08.325091",
+        "Date":"2025-06-23_00_19_34"
+    },
+    {
+        "ScriptFile":"feature-engineering.ipynb",
+        "StartTime":"2025-06-22 18:49:34",
+        "EndTime":"2025-06-22 18:49:39",
+        "TimeTaken":"0:00:04.452519",
+        "Date":"2025-06-23_00_19_39"
+    }
+]

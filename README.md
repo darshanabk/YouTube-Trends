@@ -1,11 +1,17 @@
 # YouTube Video Data Extraction and GitHub Automation | Trend Analysis
 ![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)
+<!--
+<p align="center">
+  <img src="https://github.com/darshanabk/YouTube-Trends/blob/main/Other/youtube_icon_.png" width="650" height = "100" title="YouTube">
+</p>    
+-->
 
-<p align="left">
-  <img src="https://github.com/darshanabk/YouTubeFoodChannelAnalysis/blob/main/youtube_icon.png" width="1000" height = "500" title="hover text">
-</p>
+## [Check out YouTube Trend Analysis: A Data-Driven Deep Dive into DevOps Content](https://devops-youtube-trends.streamlit.app/)
 
-## [Check out DevOps YouTube Trends](https://devops-youtube-trends.streamlit.app/)
+- Interactive Streamlit app showcasing real-time trending DevOps videos from YouTube.
+- Provides dynamic filters and clear visualizations of views, likes, and engagement metrics.
+- Daily refreshed data empowers users to explore and stay updated with the latest DevOps content trends.
+  
 ## **Overview**
 This project is an ongoing initiative aimed at developing an automated pipeline to extract and process video data from YouTube based on specific keywords. Leveraging the YouTube Data API, the pipeline retrieves the most-viewed videos matching the criteria and systematically stores the data in a GitHub repository. The goal is to automate data retrieval, analysis, and storage, enabling actionable insights.
 
@@ -17,6 +23,13 @@ This project is an ongoing initiative aimed at developing an automated pipeline 
   -->
  
 ## **Workflow**
+ 
+
+ <p align="center">
+  
+  <img src="https://github.com/darshanabk/YouTube-Trends/blob/main/Other/WorkFlowSS.png" width="1000" height = "500" title="Workflow Diagram">
+</p>
+
   - **Source**: Kaggle -> Google Cloud Console (YouTube Data API v3) -> Data Extraction -> GitHub File Storage
       
   - **Data Cleaning**: Kaggle -> Fetch Source File from GitHub -> Data Cleaning -> GitHub File Storage
