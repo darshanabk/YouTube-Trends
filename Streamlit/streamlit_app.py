@@ -802,19 +802,52 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
 
     # Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears & videoLicensedContent in @FilterLicensedContent")
     # Filter_DataFrame = file.query("(continent in @FilterContinents & videoPublishYear in @FilterYears)| (country_name in @FilterCountries & videoPublishYear in @FilterYears) & videoContentType in @FilterCategory")
-    Filter_DataFrame = file.query("""
-    (continent in @FilterContinents or 'All' in @FilterContinents)
-    and
-    (country_name in @FilterCountries or 'All' in @FilterCountries)
-    and
-    (channelName in @FilterChannelNames or 'All' in @FilterChannelNames)
-    and
-    videoContentType in @FilterCategory
-    and
-    videoPublishYear in @FilterYears
-    and
-    videoLicensedContent in @FilterLicensedContent
-    """).copy()
+    
+    # Filter_DataFrame = file.query("""
+    # (continent in @FilterContinents or 'All' in @FilterContinents)
+    # and
+    # (country_name in @FilterCountries or 'All' in @FilterCountries)
+    # and
+    # (channelName in @FilterChannelNames or 'All' in @FilterChannelNames)
+    # and
+    # videoContentType in @FilterCategory
+    # and
+    # videoPublishYear in @FilterYears
+    # and
+    # videoLicensedContent in @FilterLicensedContent
+    # """).copy()
+    Filter_DataFrame = file.copy()
+    
+    if "All" not in FilterContinents:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["continent"].isin(FilterContinents)
+        ]
+    
+    if "All" not in FilterCountries:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["country_name"].isin(FilterCountries)
+        ]
+    
+    if "All" not in FilterCategory:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["category"].isin(FilterCategory)
+        ]
+    
+    if "All" not in FilterYears:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["year"].isin(FilterYears)
+        ]
+    
+    if "All" not in FilterChannelNames:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["channel_name"].isin(FilterChannelNames)
+        ]
+    
+    if "All" not in FilterLicensedContent:
+        Filter_DataFrame = Filter_DataFrame[
+            Filter_DataFrame["licensed_content"].isin(FilterLicensedContent)
+        ]
+
 
     if Filter_DataFrame.empty:
         st.warning("No data available based on the current filter.")
