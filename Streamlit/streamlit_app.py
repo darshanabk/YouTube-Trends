@@ -1,5 +1,5 @@
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import requests
 import pandas as pd
 import numpy as np
@@ -7,7 +7,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import base64            
-
+st.write("APP STARTED ✅")
 st.set_page_config(layout="wide")
 person_icon = f"""
                 <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
@@ -762,8 +762,14 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     # st.title("DevOps YouTube Trends")
     # st.markdown("##")
 
+    # image_path = "./Streamlit/DevOps2.png"
+    # base64_image = get_base64_image(image_path)
     image_path = "./Streamlit/DevOps2.png"
-    base64_image = get_base64_image(image_path)
+    if os.path.exists(image_path):
+        base64_image = get_base64_image(image_path)
+    else:
+        base64_image = ""
+
     # Display title and image in one line using HTML + CSS
     st.markdown(
         f"""
@@ -930,10 +936,10 @@ def main():
     Returns:
         bool: Returns True upon successful execution.
     """
-    file =FetchLatestFile()
+    # file =FetchLatestFile()
     FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
-    # continentCountryMapping = ContinentCountryMapping(file)
+    continentCountryMapping = ContinentCountryMapping(file)
     return True
 
 
