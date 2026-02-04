@@ -1,7 +1,9 @@
-python-dotenv
-plotly
-requests
+streamlit>=1.30
+altair>=5
 pandas
 numpy
-streamlit
+requests
+plotly
+python-dotenv
+gitpython
 
