@@ -7,7 +7,6 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import base64            
-st.write("APP STARTED ✅")
 st.set_page_config(layout="wide")
 person_icon = f"""
                 <svg width="30" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
@@ -440,7 +439,7 @@ def ITHubVideoClassification(Filter_DataFrame):
     Returns:
         bool: Returns True upon successful execution.
     """
-    Filter_DataFrame = Filter_DataFrame.copy()
+    # Filter_DataFrame = Filter_DataFrame.copy()
     col1, col2 = st.columns([1,1]) 
     col3, col4 = st.columns([1,1])
     with col1:
@@ -631,7 +630,7 @@ def top10channels(Filter_DataFrame, selected_metric):
     Returns:
         plotly.graph_objects.Figure: Plotly bar chart visualization.
     """
-    Filter_DataFrame = Filter_DataFrame.copy()
+    # Filter_DataFrame = Filter_DataFrame.copy()
     Filter_DataFrame['channelLink'] = "https://www.youtube.com/channel/" + Filter_DataFrame["channelId"]
     Filter_DataFrame = Filter_DataFrame.groupby(by='channelId', as_index=False, observed=True).agg({
     'channelName': 'first',  # Keeping the first occurrence of channelName
@@ -687,7 +686,7 @@ def top10videos(Filter_DataFrame,selected_metric):
     Returns:
         tuple: (Plotly bar chart figure, Processed dataframe containing the top 10 videos)
     """
-    Filter_DataFrame = Filter_DataFrame.copy()
+    # Filter_DataFrame = Filter_DataFrame.copy()
     Filter_DataFrame['videoLink'] = "https://www.youtube.com/watch?v=" + Filter_DataFrame['videoId']
     Filter_DataFrame = Filter_DataFrame.groupby(by='videoId', as_index=False, observed=True).agg({
     'videoTitle': 'first', 
@@ -800,7 +799,7 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     else:
         FilterLicensedContent = [FilterLicensedContent]
 
-    # Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears & videoLicensedContent in @FilterLicensedContent")
+    Filter_DataFrame  = file.query("(continent in @FilterContinents | country_name in @FilterCountries | channelName in @FilterChannelNames) & videoContentType in @FilterCategory & videoPublishYear in @FilterYears & videoLicensedContent in @FilterLicensedContent")
     # Filter_DataFrame = file.query("(continent in @FilterContinents & videoPublishYear in @FilterYears)| (country_name in @FilterCountries & videoPublishYear in @FilterYears) & videoContentType in @FilterCategory")
     
     # Filter_DataFrame = file.query("""
@@ -816,37 +815,37 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     # and
     # videoLicensedContent in @FilterLicensedContent
     # """).copy()
-    Filter_DataFrame = file.copy()
+  
+    # Filter_DataFrame = file.copy()
+    # if "All" not in FilterContinents:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["continent"].isin(FilterContinents)
+    #     ]
     
-    if "All" not in FilterContinents:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["continent"].isin(FilterContinents)
-        ]
+    # if "All" not in FilterCountries:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["country_name"].isin(FilterCountries)
+    #     ]
     
-    if "All" not in FilterCountries:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["country_name"].isin(FilterCountries)
-        ]
+    # if "All" not in FilterCategory:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["videoContentType"].isin(FilterCategory)
+    #     ]
     
-    if "All" not in FilterCategory:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["videoContentType"].isin(FilterCategory)
-        ]
+    # if "All" not in FilterYears:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["videoPublishYear"].isin(FilterYears)
+    #     ]
     
-    if "All" not in FilterYears:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["videoPublishYear"].isin(FilterYears)
-        ]
+    # if "All" not in FilterChannelNames:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["channelName"].isin(FilterChannelNames)
+    #     ]
     
-    if "All" not in FilterChannelNames:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["channelName"].isin(FilterChannelNames)
-        ]
-    
-    if "All" not in FilterLicensedContent:
-        Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["videoLicensedContent"].isin(FilterLicensedContent)
-        ]
+    # if "All" not in FilterLicensedContent:
+    #     Filter_DataFrame = Filter_DataFrame[
+    #         Filter_DataFrame["videoLicensedContent"].isin(FilterLicensedContent)
+    #     ]
 
 
     if Filter_DataFrame.empty:
