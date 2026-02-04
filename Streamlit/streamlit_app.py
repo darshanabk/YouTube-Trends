@@ -936,7 +936,7 @@ def main():
     Returns:
         bool: Returns True upon successful execution.
     """
-    # file =FetchLatestFile()
+    file =FetchLatestFile()
     FilterContinents, FilterCountries, FilterCategory, FilterYears, FilterChannelNames, FilterLicensedContent  = streamlitSideBar(file)
     streamlitMain(file,FilterContinents,FilterCountries,FilterCategory, FilterYears, FilterChannelNames,FilterLicensedContent)
     continentCountryMapping = ContinentCountryMapping(file)
