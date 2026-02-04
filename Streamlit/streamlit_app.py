@@ -830,22 +830,22 @@ def streamlitMain(file,FilterContinents,FilterCountries,FilterCategory,FilterYea
     
     if "All" not in FilterCategory:
         Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["category"].isin(FilterCategory)
+            Filter_DataFrame["videoContentType"].isin(FilterCategory)
         ]
     
     if "All" not in FilterYears:
         Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["year"].isin(FilterYears)
+            Filter_DataFrame["videoPublishYear"].isin(FilterYears)
         ]
     
     if "All" not in FilterChannelNames:
         Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["channel_name"].isin(FilterChannelNames)
+            Filter_DataFrame["channelName"].isin(FilterChannelNames)
         ]
     
     if "All" not in FilterLicensedContent:
         Filter_DataFrame = Filter_DataFrame[
-            Filter_DataFrame["licensed_content"].isin(FilterLicensedContent)
+            Filter_DataFrame["videoLicensedContent"].isin(FilterLicensedContent)
         ]
 
 
