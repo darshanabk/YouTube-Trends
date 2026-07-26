@@ -1,0 +1,871 @@
+{
+    "AF": {
+        "country_name": "Afghanistan",
+        "official_name": "Islamic Republic of Afghanistan",
+        "continent": "Asia",
+        "continent_code": "AS",
+        "region": "Asia",
+        "subregion": "Southern Asia",
+        "latitude": 33,
+        "longitude": 65,
+        "area_km2": 652230,
+        "population": 43844000,
+        "capital": "Kabul",
+        "currencies": [
+            "AFN"
+        ],
+        "languages": [
+            "Dari",
+            "Pashto",
+            "Turkmen"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddeb",
+        "flag_png": "https://flags.restcountries.com/v5/w640/af.png",
+        "timezones": [
+            "UTC+04:30"
+        ],
+        "borders": [
+            "IRN",
+            "PAK",
+            "TKM",
+            "UZB",
+            "TJK",
+            "CHN"
+        ],
+        "gini_index": {},
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AL": {
+        "country_name": "Albania",
+        "official_name": "Republic of Albania",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Europe",
+        "subregion": "Southeast Europe",
+        "latitude": 41,
+        "longitude": 20,
+        "area_km2": 28748,
+        "population": 2335930,
+        "capital": "Tirana",
+        "currencies": [
+            "ALL"
+        ],
+        "languages": [
+            "Albanian"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf1",
+        "flag_png": "https://flags.restcountries.com/v5/w640/al.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "MNE",
+            "GRC",
+            "MKD",
+            "UNK"
+        ],
+        "gini_index": {
+            "2016": 33.7,
+            "2017": 33.1,
+            "2018": 30.1,
+            "2019": 30.1,
+            "2020": 29.4
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "DZ": {
+        "country_name": "Algeria",
+        "official_name": "People's Democratic Republic of Algeria",
+        "continent": "Africa",
+        "continent_code": "AF",
+        "region": "Africa",
+        "subregion": "Northern Africa",
+        "latitude": 28,
+        "longitude": 3,
+        "area_km2": 2381741,
+        "population": 47400000,
+        "capital": "Algiers",
+        "currencies": [
+            "DZD"
+        ],
+        "languages": [
+            "Arabic"
+        ],
+        "flag_emoji": "\ud83c\udde9\ud83c\uddff",
+        "flag_png": "https://flags.restcountries.com/v5/w640/dz.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "TUN",
+            "LBY",
+            "NER",
+            "ESH",
+            "MRT",
+            "MLI",
+            "MAR"
+        ],
+        "gini_index": {
+            "1988": 37.4,
+            "1995": 35.3,
+            "2011": 27.6
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AS": {
+        "country_name": "American Samoa",
+        "official_name": "American Samoa",
+        "continent": "Oceania",
+        "continent_code": "OC",
+        "region": "Oceania",
+        "subregion": "Polynesia",
+        "latitude": -14.33333333,
+        "longitude": -170,
+        "area_km2": 199,
+        "population": 43268,
+        "capital": "Pago Pago",
+        "currencies": [
+            "USD"
+        ],
+        "languages": [
+            "English",
+            "Samoan"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf8",
+        "flag_png": "https://flags.restcountries.com/v5/w640/as.png",
+        "timezones": [
+            "UTC-11:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": false,
+        "sovereign": false,
+        "it_hub_country": "No"
+    },
+    "AD": {
+        "country_name": "Andorra",
+        "official_name": "Principality of Andorra",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Europe",
+        "subregion": "Southern Europe",
+        "latitude": 42.5,
+        "longitude": 1.5,
+        "area_km2": 468,
+        "population": 89484,
+        "capital": "Andorra la Vella",
+        "currencies": [
+            "EUR"
+        ],
+        "languages": [
+            "Catalan"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\udde9",
+        "flag_png": "https://flags.restcountries.com/v5/w640/ad.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "FRA",
+            "ESP"
+        ],
+        "gini_index": {},
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AO": {
+        "country_name": "Angola",
+        "official_name": "Republic of Angola",
+        "continent": "Africa",
+        "continent_code": "AF",
+        "region": "Africa",
+        "subregion": "Middle Africa",
+        "latitude": -12.5,
+        "longitude": 18.5,
+        "area_km2": 1246700,
+        "population": 38778554,
+        "capital": "Luanda",
+        "currencies": [
+            "AOA"
+        ],
+        "languages": [
+            "Portuguese"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf4",
+        "flag_png": "https://flags.restcountries.com/v5/w640/ao.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "COG",
+            "COD",
+            "ZMB",
+            "NAM"
+        ],
+        "gini_index": {
+            "2000": 51.9,
+            "2008": 42.7,
+            "2018": 51.3
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AI": {
+        "country_name": "Anguilla",
+        "official_name": "Anguilla",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Caribbean",
+        "latitude": 18.25,
+        "longitude": -63.16666666,
+        "area_km2": 91,
+        "population": 16010,
+        "capital": "The Valley",
+        "currencies": [
+            "XCD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddee",
+        "flag_png": "https://flags.restcountries.com/v5/w640/ai.png",
+        "timezones": [
+            "UTC-04:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": false,
+        "sovereign": false,
+        "it_hub_country": "No"
+    },
+    "AQ": {
+        "country_name": "Antarctica",
+        "official_name": "Antarctica",
+        "continent": "Antarctica",
+        "continent_code": "AN",
+        "region": "Antarctic",
+        "subregion": "",
+        "latitude": -90,
+        "longitude": 0,
+        "area_km2": 14000000,
+        "population": 1300,
+        "capital": null,
+        "currencies": [],
+        "languages": [],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf6",
+        "flag_png": "https://flags.restcountries.com/v5/w640/aq.png",
+        "timezones": [
+            "UTC-03:00",
+            "UTC+03:00",
+            "UTC+05:00",
+            "UTC+06:00",
+            "UTC+07:00",
+            "UTC+08:00",
+            "UTC+10:00",
+            "UTC+12:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": false,
+        "sovereign": false,
+        "it_hub_country": "No"
+    },
+    "AG": {
+        "country_name": "Antigua and Barbuda",
+        "official_name": "Antigua and Barbuda",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Caribbean",
+        "latitude": 17.05,
+        "longitude": -61.8,
+        "area_km2": 442,
+        "population": 106365,
+        "capital": "Saint John's",
+        "currencies": [
+            "XCD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddec",
+        "flag_png": "https://flags.restcountries.com/v5/w640/ag.png",
+        "timezones": [
+            "UTC-04:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AR": {
+        "country_name": "Argentina",
+        "official_name": "Argentine Republic",
+        "continent": "South America",
+        "continent_code": "SA",
+        "region": "Americas",
+        "subregion": "South America",
+        "latitude": -34,
+        "longitude": -64,
+        "area_km2": 2780400,
+        "population": 46387098,
+        "capital": "Buenos Aires",
+        "currencies": [
+            "ARS"
+        ],
+        "languages": [
+            "Guarani",
+            "Spanish"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf7",
+        "flag_png": "https://flags.restcountries.com/v5/w640/ar.png",
+        "timezones": [
+            "UTC-03:00"
+        ],
+        "borders": [
+            "BOL",
+            "BRA",
+            "CHL",
+            "PRY",
+            "URY"
+        ],
+        "gini_index": {
+            "2020": 42.7,
+            "2021": 42.4,
+            "2022": 40.7,
+            "2023": 42.4,
+            "2024": 42.4
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AM": {
+        "country_name": "Armenia",
+        "official_name": "Republic of Armenia",
+        "continent": "Asia",
+        "continent_code": "AS",
+        "region": "Asia",
+        "subregion": "Western Asia",
+        "latitude": 40,
+        "longitude": 45,
+        "area_km2": 29743,
+        "population": 3096900,
+        "capital": "Yerevan",
+        "currencies": [
+            "AMD"
+        ],
+        "languages": [
+            "Armenian"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf2",
+        "flag_png": "https://flags.restcountries.com/v5/w640/am.png",
+        "timezones": [
+            "UTC+04:00"
+        ],
+        "borders": [
+            "AZE",
+            "GEO",
+            "IRN",
+            "TUR"
+        ],
+        "gini_index": {
+            "2020": 25.1,
+            "2021": 27.9,
+            "2022": 27.9,
+            "2023": 27.2,
+            "2024": 27.4
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AW": {
+        "country_name": "Aruba",
+        "official_name": "Aruba",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Caribbean",
+        "latitude": 12.5,
+        "longitude": -69.96666666,
+        "area_km2": 180,
+        "population": 110625,
+        "capital": "Oranjestad",
+        "currencies": [
+            "AWG"
+        ],
+        "languages": [
+            "Dutch",
+            "Papiamento"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddfc",
+        "flag_png": "https://flags.restcountries.com/v5/w640/aw.png",
+        "timezones": [
+            "UTC-04:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": false,
+        "sovereign": false,
+        "it_hub_country": "No"
+    },
+    "AU": {
+        "country_name": "Australia",
+        "official_name": "Commonwealth of Australia",
+        "continent": "Oceania",
+        "continent_code": "OC",
+        "region": "Oceania",
+        "subregion": "Australia and New Zealand",
+        "latitude": -27,
+        "longitude": 133,
+        "area_km2": 7692024,
+        "population": 27801023,
+        "capital": "Canberra",
+        "currencies": [
+            "AUD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddfa",
+        "flag_png": "https://flags.restcountries.com/v5/w640/au.png",
+        "timezones": [
+            "UTC+05:00",
+            "UTC+06:30",
+            "UTC+07:00",
+            "UTC+08:00",
+            "UTC+09:30",
+            "UTC+10:00",
+            "UTC+10:30",
+            "UTC+11:30"
+        ],
+        "borders": [],
+        "gini_index": {
+            "2010": 34.7,
+            "2014": 34.4,
+            "2016": 33.7,
+            "2018": 34.3,
+            "2020": 33.8
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "Yes"
+    },
+    "AT": {
+        "country_name": "Austria",
+        "official_name": "Republic of Austria",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Europe",
+        "subregion": "Central Europe",
+        "latitude": 47.33333333,
+        "longitude": 13.33333333,
+        "area_km2": 83871,
+        "population": 9220882,
+        "capital": "Vienna",
+        "currencies": [
+            "EUR"
+        ],
+        "languages": [
+            "German"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddf9",
+        "flag_png": "https://flags.restcountries.com/v5/w640/at.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "CZE",
+            "DEU",
+            "HUN",
+            "ITA",
+            "LIE",
+            "SVK",
+            "SVN",
+            "CHE"
+        ],
+        "gini_index": {
+            "2019": 30.2,
+            "2020": 29.8,
+            "2021": 30.7,
+            "2022": 30.9,
+            "2023": 31.2
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "AZ": {
+        "country_name": "Azerbaijan",
+        "official_name": "Republic of Azerbaijan",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Asia",
+        "subregion": "Western Asia",
+        "latitude": 40.5,
+        "longitude": 47.5,
+        "area_km2": 86600,
+        "population": 10266627,
+        "capital": "Baku",
+        "currencies": [
+            "AZN"
+        ],
+        "languages": [
+            "Azerbaijani"
+        ],
+        "flag_emoji": "\ud83c\udde6\ud83c\uddff",
+        "flag_png": "https://flags.restcountries.com/v5/w640/az.png",
+        "timezones": [
+            "UTC+04:00"
+        ],
+        "borders": [
+            "ARM",
+            "GEO",
+            "IRN",
+            "RUS",
+            "TUR"
+        ],
+        "gini_index": {
+            "2001": 36.5,
+            "2002": 25.3,
+            "2003": 26.8,
+            "2004": 26.6,
+            "2005": 26.6
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BS": {
+        "country_name": "Bahamas",
+        "official_name": "Commonwealth of the Bahamas",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Caribbean",
+        "latitude": 25.0343,
+        "longitude": -77.3963,
+        "area_km2": 13943,
+        "population": 398165,
+        "capital": "Nassau",
+        "currencies": [
+            "BSD",
+            "USD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddf8",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bs.png",
+        "timezones": [
+            "UTC-05:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BH": {
+        "country_name": "Bahrain",
+        "official_name": "Kingdom of Bahrain",
+        "continent": "Asia",
+        "continent_code": "AS",
+        "region": "Asia",
+        "subregion": "Western Asia",
+        "latitude": 26,
+        "longitude": 50.55,
+        "area_km2": 765,
+        "population": 1603260,
+        "capital": "Manama",
+        "currencies": [
+            "BHD"
+        ],
+        "languages": [
+            "Arabic"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\udded",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bh.png",
+        "timezones": [
+            "UTC+03:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BD": {
+        "country_name": "Bangladesh",
+        "official_name": "People's Republic of Bangladesh",
+        "continent": "Asia",
+        "continent_code": "AS",
+        "region": "Asia",
+        "subregion": "Southern Asia",
+        "latitude": 24,
+        "longitude": 90,
+        "area_km2": 147570,
+        "population": 169828911,
+        "capital": "Dhaka",
+        "currencies": [
+            "BDT"
+        ],
+        "languages": [
+            "Bengali"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\udde9",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bd.png",
+        "timezones": [
+            "UTC+06:00"
+        ],
+        "borders": [
+            "MMR",
+            "IND"
+        ],
+        "gini_index": {
+            "2000": 33.4,
+            "2005": 33.2,
+            "2010": 32.1,
+            "2016": 32.4,
+            "2022": 30.9
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BB": {
+        "country_name": "Barbados",
+        "official_name": "Barbados",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Caribbean",
+        "latitude": 13.16666666,
+        "longitude": -59.53333333,
+        "area_km2": 430,
+        "population": 261692,
+        "capital": "Bridgetown",
+        "currencies": [
+            "BBD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\udde7",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bb.png",
+        "timezones": [
+            "UTC-04:00"
+        ],
+        "borders": [],
+        "gini_index": {
+            "2016": 34.1
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BY": {
+        "country_name": "Belarus",
+        "official_name": "Republic of Belarus",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Europe",
+        "subregion": "Eastern Europe",
+        "latitude": 53,
+        "longitude": 28,
+        "area_km2": 207600,
+        "population": 9056080,
+        "capital": "Minsk",
+        "currencies": [
+            "BYN"
+        ],
+        "languages": [
+            "Belarusian",
+            "Russian"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddfe",
+        "flag_png": "https://flags.restcountries.com/v5/w640/by.png",
+        "timezones": [
+            "UTC+03:00"
+        ],
+        "borders": [
+            "LVA",
+            "LTU",
+            "POL",
+            "RUS",
+            "UKR"
+        ],
+        "gini_index": {
+            "2016": 25.3,
+            "2017": 25.4,
+            "2018": 25.2,
+            "2019": 25.3,
+            "2020": 24.4
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BE": {
+        "country_name": "Belgium",
+        "official_name": "Kingdom of Belgium",
+        "continent": "Europe",
+        "continent_code": "EU",
+        "region": "Europe",
+        "subregion": "Western Europe",
+        "latitude": 50.83333333,
+        "longitude": 4,
+        "area_km2": 30528,
+        "population": 11936546,
+        "capital": "Brussels",
+        "currencies": [
+            "EUR"
+        ],
+        "languages": [
+            "German",
+            "French",
+            "Dutch"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddea",
+        "flag_png": "https://flags.restcountries.com/v5/w640/be.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "FRA",
+            "DEU",
+            "LUX",
+            "NLD"
+        ],
+        "gini_index": {
+            "2019": 27.2,
+            "2020": 26,
+            "2021": 26.6,
+            "2022": 26.4,
+            "2023": 26.8
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BZ": {
+        "country_name": "Belize",
+        "official_name": "Belize",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "Central America",
+        "latitude": 17.25,
+        "longitude": -88.75,
+        "area_km2": 22966,
+        "population": 417634,
+        "capital": "Belmopan",
+        "currencies": [
+            "BZD"
+        ],
+        "languages": [
+            "Belize Kriol",
+            "English",
+            "Spanish"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddff",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bz.png",
+        "timezones": [
+            "UTC-06:00"
+        ],
+        "borders": [
+            "GTM",
+            "MEX"
+        ],
+        "gini_index": {
+            "1996": 56.6,
+            "1997": 60.4,
+            "1998": 54.9,
+            "1999": 53.2,
+            "2018": 39.9
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BJ": {
+        "country_name": "Benin",
+        "official_name": "Republic of Benin",
+        "continent": "Africa",
+        "continent_code": "AF",
+        "region": "Africa",
+        "subregion": "Western Africa",
+        "latitude": 9.5,
+        "longitude": 2.25,
+        "area_km2": 112622,
+        "population": 13224860,
+        "capital": "Porto-Novo",
+        "currencies": [
+            "XOF"
+        ],
+        "languages": [
+            "French"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddef",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bj.png",
+        "timezones": [
+            "UTC+01:00"
+        ],
+        "borders": [
+            "BFA",
+            "NER",
+            "NGA",
+            "TGO"
+        ],
+        "gini_index": {
+            "2003": 38.6,
+            "2011": 43.4,
+            "2015": 47.6,
+            "2018": 37.9,
+            "2021": 34.4
+        },
+        "un_member": true,
+        "sovereign": true,
+        "it_hub_country": "No"
+    },
+    "BM": {
+        "country_name": "Bermuda",
+        "official_name": "Bermuda",
+        "continent": "North America",
+        "continent_code": "NA",
+        "region": "Americas",
+        "subregion": "North America",
+        "latitude": 32.33333333,
+        "longitude": -64.75,
+        "area_km2": 54,
+        "population": 64055,
+        "capital": "Hamilton",
+        "currencies": [
+            "BMD"
+        ],
+        "languages": [
+            "English"
+        ],
+        "flag_emoji": "\ud83c\udde7\ud83c\uddf2",
+        "flag_png": "https://flags.restcountries.com/v5/w640/bm.png",
+        "timezones": [
+            "UTC-04:00"
+        ],
+        "borders": [],
+        "gini_index": {},
+        "un_member": false,
+        "sovereign": false,
+        "it_hub_country": "No"
+    }
+}
